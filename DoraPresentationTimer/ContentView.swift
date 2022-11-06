@@ -8,47 +8,43 @@
 import SwiftUI
 
 struct ContentView: View {
+    @ObservedObject private var viewModel: ContentViewModel
     
-    @State var RemainingTimeText = "XX:XX"
-    @State var isStartable = true
+    init(viewModel: ContentViewModel) {
+        self.viewModel = viewModel
+    }
     
     var body: some View {
         VStack {
-            Text(RemainingTimeText)
+            Text("\(viewModel.count)")
                 .font(.largeTitle)
                 .padding(.bottom)
             
             HStack {
                 Button(action: {
-                    self.RemainingTimeText = "Start !"
-                    self.isStartable.toggle()
-                    // TODO: タイマー開始
+                    self.viewModel.startCounting()
                 }){
                     Text("Start")
                         .font(.largeTitle)
                         .foregroundColor(Color.white)
                 }
-                .disabled(!isStartable)
+                .disabled(viewModel.isTimerRunning)
                 .padding(.all)
-                .background(isStartable ? Color.orange : Color(UIColor.lightGray))
+                .background(viewModel.isTimerRunning ? Color(UIColor.lightGray) : Color.orange)
                 
                 Button(action: {
-                    self.RemainingTimeText = "Stop !"
-                    self.isStartable.toggle()
-                    // TODO: タイマー停止
+                    self.viewModel.stopCounting()
                 }){
                     Text("Pause")
                         .font(.largeTitle)
                         .foregroundColor(Color.white)
                 }
-                .disabled(isStartable)
+                .disabled(!viewModel.isTimerRunning)
                 .padding(.all)
-                .background(isStartable ? Color(UIColor.lightGray) : Color.orange)
+                .background(viewModel.isTimerRunning ? Color.orange : Color(UIColor.lightGray))
                 
                 Button(action: {
-                    self.RemainingTimeText = "XX:XX"
-                    self.isStartable = true
-                    // TODO: タイマーリセット
+                    self.viewModel.resetCount()
                 }){
                     Text("Reset")
                         .font(.largeTitle)
@@ -63,6 +59,6 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        ContentView(viewModel: ContentViewModel())
     }
 }
