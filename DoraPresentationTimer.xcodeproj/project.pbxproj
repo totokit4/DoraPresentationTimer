@@ -55,9 +55,9 @@
 			children = (
 				C54EC7922916B70700CC131C /* DoraPresentationTimerApp.swift */,
 				C54EC7942916B70700CC131C /* ContentView.swift */,
+				C58860A72918002600D3D4DA /* ContentViewModel.swift */,
 				C54EC7962916B70800CC131C /* Assets.xcassets */,
 				C54EC7982916B70800CC131C /* Preview Content */,
-				C58860A72918002600D3D4DA /* ContentViewModel.swift */,
 			);
 			path = DoraPresentationTimer;
 			sourceTree = "<group>";

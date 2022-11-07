@@ -16,13 +16,13 @@ struct ContentView: View {
     
     var body: some View {
         VStack {
-            Text("\(viewModel.count)")
+            Text("\(viewModel.count / (60 * 60)):\(String(format: "%02d", viewModel.count / 60)):\(String(format: "%02d", viewModel.count % 60))")
                 .font(.largeTitle)
                 .padding(.bottom)
             
             HStack {
                 Button(action: {
-                    self.viewModel.startCounting()
+                    self.viewModel.startTimer(second: 15)
                 }){
                     Text("Start")
                         .font(.largeTitle)
@@ -33,7 +33,7 @@ struct ContentView: View {
                 .background(viewModel.isTimerRunning ? Color(UIColor.lightGray) : Color.orange)
                 
                 Button(action: {
-                    self.viewModel.stopCounting()
+                    self.viewModel.stopTimer()
                 }){
                     Text("Pause")
                         .font(.largeTitle)

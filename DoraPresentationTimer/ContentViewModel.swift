@@ -9,27 +9,33 @@ import Foundation
 import Combine
 
 final class ContentViewModel: ObservableObject {
-    @Published var count = 0
-    @Published var isTimerRunning = false
+    @Published private(set) var count = 0
+    @Published private(set) var isTimerRunning = false
     
     private var cancellable: AnyCancellable?
     
-    func startCounting() {
+    func startTimer(second: Int) {
         isTimerRunning = true
+        count = second
+        
         cancellable = Timer.publish(every: 1.0, on: .main, in: .common)
             .autoconnect()
             .sink { _ in
-                self.count += 1
+                self.count -= 1
+                if self.count == 0 {
+                    self.stopTimer()
+                    print("銅鑼を鳴らす")
+                }
             }
     }
     
-    
-    func stopCounting() {
+    func stopTimer() {
         isTimerRunning = false
         cancellable?.cancel()
     }
     
     func resetCount() {
-        count = 0
+        stopTimer()
+        // TODO: カウントをもとに戻す
     }
 }
