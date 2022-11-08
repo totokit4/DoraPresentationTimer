@@ -11,6 +11,7 @@
 		C54EC7952916B70700CC131C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54EC7942916B70700CC131C /* ContentView.swift */; };
 		C54EC7972916B70800CC131C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C54EC7962916B70800CC131C /* Assets.xcassets */; };
 		C54EC79A2916B70800CC131C /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C54EC7992916B70800CC131C /* Preview Assets.xcassets */; };
+		C58860A82918002600D3D4DA /* ContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C58860A72918002600D3D4DA /* ContentViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,6 +20,7 @@
 		C54EC7942916B70700CC131C /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		C54EC7962916B70800CC131C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C54EC7992916B70800CC131C /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		C58860A72918002600D3D4DA /* ContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,6 +55,7 @@
 			children = (
 				C54EC7922916B70700CC131C /* DoraPresentationTimerApp.swift */,
 				C54EC7942916B70700CC131C /* ContentView.swift */,
+				C58860A72918002600D3D4DA /* ContentViewModel.swift */,
 				C54EC7962916B70800CC131C /* Assets.xcassets */,
 				C54EC7982916B70800CC131C /* Preview Content */,
 			);
@@ -139,6 +142,7 @@
 			files = (
 				C54EC7952916B70700CC131C /* ContentView.swift in Sources */,
 				C54EC7932916B70700CC131C /* DoraPresentationTimerApp.swift in Sources */,
+				C58860A82918002600D3D4DA /* ContentViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
