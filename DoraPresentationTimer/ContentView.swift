@@ -9,6 +9,9 @@ import SwiftUI
 
 struct ContentView: View {
     @ObservedObject private var viewModel: ContentViewModel
+    @State private var selectedHour = 0
+    @State private var selectedMinute = 0
+    @State private var selectedSecond = 10
     
     init(viewModel: ContentViewModel) {
         self.viewModel = viewModel
@@ -22,7 +25,8 @@ struct ContentView: View {
             
             HStack {
                 Button(action: {
-                    self.viewModel.startTimer(second: 15)
+                    let count = selectedHour * 60 * 60  + selectedMinute * 60 + selectedSecond
+                    self.viewModel.startTimer(second: count)
                 }){
                     Text("Start")
                         .font(.largeTitle)
@@ -53,6 +57,43 @@ struct ContentView: View {
                 .padding(.all)
                 .background(Color.orange)
             }
+            
+            GeometryReader { geometry in
+                HStack {
+                    Picker(selection: self.$selectedHour, label: EmptyView()) {
+                        ForEach(0 ..< 24) {
+                            Text("\($0)")
+                        }
+                    }.pickerStyle(WheelPickerStyle())
+                        .onReceive([self.selectedHour].publisher.first()) { (value) in
+                            print("hour: \(value)")
+                        }
+                        .frame(width: geometry.size.width / 3, height: geometry.size.height / 2)
+                        .clipped()
+                    
+                    Picker(selection: self.$selectedMinute, label: EmptyView()) {
+                        ForEach(0 ..< 60) {
+                            Text("\($0)")
+                        }
+                    }.pickerStyle(WheelPickerStyle())
+                        .onReceive([self.selectedMinute].publisher.first()) { (value) in
+                            print("minute: \(value)")
+                        }.labelsHidden()
+                        .frame(width: geometry.size.width / 3, height: geometry.size.height / 2)
+                        .clipped()
+                    
+                    Picker(selection: self.$selectedSecond, label: EmptyView()) {
+                        ForEach(0 ..< 60) {
+                            Text("\($0)")
+                        }
+                    }.pickerStyle(WheelPickerStyle())
+                        .onReceive([self.selectedSecond].publisher.first()) { (value) in
+                            print("minute: \(value)")
+                        }.labelsHidden()
+                        .frame(width: geometry.size.width / 3, height: geometry.size.height / 2)
+                        .clipped()
+                }
+            }.padding(.top)
         }
     }
 }
