@@ -57,44 +57,39 @@ struct ContentView: View {
                 .padding(.all)
                 .background(Color.orange)
             }
-            
-            GeometryReader { geometry in
-                HStack {
-                    Picker(selection: self.$selectedHour, label: EmptyView()) {
-                        ForEach(0 ..< 24) {
-                            Text("\($0)")
-                        }
-                    }.pickerStyle(WheelPickerStyle())
-                        .onReceive([self.selectedHour].publisher.first()) { (value) in
-                            print("hour: \(value)")
-                        }
-                        .frame(width: geometry.size.width / 3, height: geometry.size.height / 2)
-                        .clipped()
-                    
-                    Picker(selection: self.$selectedMinute, label: EmptyView()) {
-                        ForEach(0 ..< 60) {
-                            Text("\($0)")
-                        }
-                    }.pickerStyle(WheelPickerStyle())
-                        .onReceive([self.selectedMinute].publisher.first()) { (value) in
-                            print("minute: \(value)")
-                        }.labelsHidden()
-                        .frame(width: geometry.size.width / 3, height: geometry.size.height / 2)
-                        .clipped()
-                    
-                    Picker(selection: self.$selectedSecond, label: EmptyView()) {
-                        ForEach(0 ..< 60) {
-                            Text("\($0)")
-                        }
-                    }.pickerStyle(WheelPickerStyle())
-                        .onReceive([self.selectedSecond].publisher.first()) { (value) in
-                            print("minute: \(value)")
-                        }.labelsHidden()
-                        .frame(width: geometry.size.width / 3, height: geometry.size.height / 2)
-                        .clipped()
-                }
-            }.padding(.top)
-        }
+
+            HStack {
+                Picker(selection: self.$selectedHour, label: EmptyView()) {
+                    ForEach(0 ..< 24) {
+                        Text("\($0)")
+                    }
+                }.pickerStyle(WheelPickerStyle())
+                    .onReceive([self.selectedHour].publisher.first()) { (value) in
+                        print("hour: \(value)")
+                    }
+                    .clipped()
+
+                Picker(selection: self.$selectedMinute, label: EmptyView()) {
+                    ForEach(0 ..< 60) {
+                        Text("\($0)")
+                    }
+                }.pickerStyle(WheelPickerStyle())
+                    .onReceive([self.selectedMinute].publisher.first()) { (value) in
+                        print("minute: \(value)")
+                    }.labelsHidden()
+                    .clipped()
+
+                Picker(selection: self.$selectedSecond, label: EmptyView()) {
+                    ForEach(0 ..< 60) {
+                        Text("\($0)")
+                    }
+                }.pickerStyle(WheelPickerStyle())
+                    .onReceive([self.selectedSecond].publisher.first()) { (value) in
+                        print("minute: \(value)")
+                    }.labelsHidden()
+                    .clipped()
+            }
+        }.padding(.top)
     }
 }
 
