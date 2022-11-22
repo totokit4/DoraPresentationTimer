@@ -23,12 +23,17 @@ final class ContentViewModel: ObservableObject {
         
         cancellable = Timer.publish(every: 1.0, on: .main, in: .common)
             .autoconnect()
-            .sink { _ in
-                self.count -= 1
-                if self.count == 0 {
-                    self.stopTimer()
-                    self.playSound()
-                }
+            .subscribe(on: DispatchQueue.global())
+            .handleEvents(receiveOutput: { [weak self] _ in
+                self?.count -= 1
+            })
+            .filter { [weak self] _ in
+                self?.count == 0
+            }
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.stopTimer()
+                self?.playSound()
             }
     }
     
