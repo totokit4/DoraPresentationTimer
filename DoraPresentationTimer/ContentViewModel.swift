@@ -19,6 +19,8 @@ final class ContentViewModel: ObservableObject {
     private var initCount = 0
     
     func startTimer(second: Int) {
+        guard second > 0 else { return }
+
         isTimerRunning = true
         initCount = second
         count = second
