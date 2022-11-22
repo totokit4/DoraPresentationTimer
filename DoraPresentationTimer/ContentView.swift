@@ -95,6 +95,7 @@ private extension ContentView {
                 print("\(value)")
             }
             .clipped()
+            .disabled(viewModel.isTimerRunning)
     }
 }
 
