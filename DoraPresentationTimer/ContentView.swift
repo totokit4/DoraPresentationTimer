@@ -20,8 +20,8 @@ struct ContentView: View {
     var body: some View {
         VStack {
             Text("\(viewModel.count / (60 * 60)):\(String(format: "%02d", viewModel.count / 60)):\(String(format: "%02d", viewModel.count % 60))")
-                .font(.largeTitle)
-                .padding(.bottom)
+                .font(.system(size: 500))
+                .minimumScaleFactor(0.2)
             
             HStack {
                 Button(action: {
