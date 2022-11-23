@@ -36,8 +36,8 @@ final class ContentViewModel: ObservableObject {
             }
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
-                self?.stopTimer()
                 self?.playSound()
+                self?.resetCount()
             }
     }
     
