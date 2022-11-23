@@ -6,11 +6,13 @@
 //
 
 import SwiftUI
+import Combine
 
 struct ContentView: View {
     @ObservedObject private var viewModel: ContentViewModel
     @State private var selectedMinute = 0
-    @State private var selectedSecond = 10
+    @State private var selectedSecond = 0
+    @State private var cancellable: AnyCancellable?
     
     init(viewModel: ContentViewModel) {
         self.viewModel = viewModel
@@ -27,7 +29,7 @@ struct ContentView: View {
 
 private extension ContentView {
     var timeSection: some View {
-        Text("\(String(format: "%02d", viewModel.count / 60)):\(String(format: "%02d", viewModel.count % 60))")
+        Text("\(String(format: "%02d", selectedMinute)):\(String(format: "%02d", selectedSecond))")
             .font(.system(size: 500))
             .minimumScaleFactor(0.2)
     }
@@ -38,6 +40,12 @@ private extension ContentView {
             Button(action: {
                 let count = selectedMinute * 60 + selectedSecond
                 self.viewModel.startTimer(second: count)
+
+                self.cancellable = self.viewModel.$count
+                    .sink { count in
+                        selectedMinute = count / 60
+                        selectedSecond = count % 60
+                    }
             }){
                 Text("Start")
                     .font(.largeTitle)
@@ -84,9 +92,10 @@ private extension ContentView {
             }
         }.pickerStyle(WheelPickerStyle())
             .onReceive([selection].publisher.first()) { (value) in
-                print("hour: \(value)")
+                print("\(value)")
             }
             .clipped()
+            .disabled(viewModel.isTimerRunning)
     }
 }
 
