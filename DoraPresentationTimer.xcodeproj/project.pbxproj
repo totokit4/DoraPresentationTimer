@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C5379557292F866C000ECABC /* SoundPlayModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5379556292F866C000ECABC /* SoundPlayModel.swift */; };
 		C54EC7932916B70700CC131C /* DoraPresentationTimerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54EC7922916B70700CC131C /* DoraPresentationTimerApp.swift */; };
 		C54EC7952916B70700CC131C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54EC7942916B70700CC131C /* ContentView.swift */; };
 		C54EC7972916B70800CC131C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C54EC7962916B70800CC131C /* Assets.xcassets */; };
@@ -15,6 +16,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C5379556292F866C000ECABC /* SoundPlayModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundPlayModel.swift; sourceTree = "<group>"; };
 		C54EC78F2916B70600CC131C /* DoraPresentationTimer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DoraPresentationTimer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C54EC7922916B70700CC131C /* DoraPresentationTimerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoraPresentationTimerApp.swift; sourceTree = "<group>"; };
 		C54EC7942916B70700CC131C /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -56,6 +58,7 @@
 				C54EC7922916B70700CC131C /* DoraPresentationTimerApp.swift */,
 				C54EC7942916B70700CC131C /* ContentView.swift */,
 				C58860A72918002600D3D4DA /* ContentViewModel.swift */,
+				C5379556292F866C000ECABC /* SoundPlayModel.swift */,
 				C54EC7962916B70800CC131C /* Assets.xcassets */,
 				C54EC7982916B70800CC131C /* Preview Content */,
 			);
@@ -143,6 +146,7 @@
 				C54EC7952916B70700CC131C /* ContentView.swift in Sources */,
 				C54EC7932916B70700CC131C /* DoraPresentationTimerApp.swift in Sources */,
 				C58860A82918002600D3D4DA /* ContentViewModel.swift in Sources */,
+				C5379557292F866C000ECABC /* SoundPlayModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
