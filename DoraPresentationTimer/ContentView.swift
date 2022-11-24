@@ -13,6 +13,7 @@ struct ContentView: View {
     @State private var selectedMinute = 0
     @State private var selectedSecond = 0
     @State private var cancellable: AnyCancellable?
+    let soundViewModel = SoundPlayModel()
     
     init(viewModel: ContentViewModel) {
         self.viewModel = viewModel
@@ -21,8 +22,9 @@ struct ContentView: View {
     var body: some View {
         VStack {
             timeSection
-            buttonsSection
+            timerButtonsSection
             pickersSection
+            soundTestButtonsSection
         }
     }
 }
@@ -30,12 +32,12 @@ struct ContentView: View {
 private extension ContentView {
     var timeSection: some View {
         Text("\(String(format: "%02d", selectedMinute)):\(String(format: "%02d", selectedSecond))")
-            .font(.system(size: 500))
-            .minimumScaleFactor(0.2)
+            .font(.system(size: 300))
+            .minimumScaleFactor(0.1)
     }
 
     // TODO: ボタンのサイズ大きくする
-    var buttonsSection: some View {
+    var timerButtonsSection: some View {
         HStack {
             Button(action: {
                 let count = selectedMinute * 60 + selectedSecond
@@ -96,6 +98,31 @@ private extension ContentView {
             }
             .clipped()
             .disabled(viewModel.isTimerRunning)
+    }
+
+    var soundTestButtonsSection: some View {
+        VStack {
+            Text("SoundTest")
+                .font(.largeTitle)
+                .foregroundColor(Color.brown)
+            HStack {
+                soundTestButton(type: .clappers1)
+                soundTestButton(type: .clappers2)
+                soundTestButton(type: .dora)
+            }
+        }
+    }
+
+    func soundTestButton(type: SoundPlayModel.SoundType) -> some View {
+        Button(action: {
+            soundViewModel.playSound(type: type)
+        }){
+            Text(type.buttonTitle)
+                .font(.largeTitle)
+                .foregroundColor(Color.white)
+        }
+        .padding(.all)
+        .background(Color.brown)
     }
 }
 
