@@ -16,6 +16,17 @@ class SoundPlayModel{
         case clappers2
         case dora
 
+        var buttonTitle: String {
+            switch self {
+            case .clappers1:
+                return "3分前"
+            case .clappers2:
+                return "1分前"
+            case .dora:
+                return "終了"
+            }
+        }
+
         var fileName: String {
             switch self {
             case .clappers1:
