@@ -21,22 +21,17 @@ final class ContentViewModel: ObservableObject {
         isTimerRunning = true
         initCount = second
         count = second
-        
+
+        let soundViewModel = SoundPlayModel()
         cancellable = Timer.publish(every: 1.0, on: .main, in: .common)
             .autoconnect()
             .subscribe(on: DispatchQueue.global())
             .handleEvents(receiveOutput: { [weak self] _ in
                 self?.count -= 1
             })
-            .filter { [weak self] _ in
-                self?.count == 3 * 60
-                || self?.count == 1 * 60
-                || self?.count == 0
-            }
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
                 guard let initCount = self?.initCount else { return }
-                let soundViewModel = SoundPlayModel()
 
                 switch self?.count {
                 case 3 * 60:
