@@ -29,12 +29,30 @@ final class ContentViewModel: ObservableObject {
                 self?.count -= 1
             })
             .filter { [weak self] _ in
-                self?.count == 0
+                self?.count == 3 * 60
+                || self?.count == 1 * 60
+                || self?.count == 0
             }
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
-                self?.playSound()
-                self?.resetCount()
+                guard let initCount = self?.initCount else { return }
+                let soundViewModel = SoundPlayModel()
+
+                switch self?.count {
+                case 3 * 60:
+                    if initCount > 3 * 60 {
+                        soundViewModel.playSound(type: .clappers1)
+                    }
+                case 1 * 60:
+                    if initCount > 1 * 60 {
+                        soundViewModel.playSound(type: .clappers2)
+                    }
+                case 0:
+                    soundViewModel.playSound(type: .dora)
+                    self?.resetCount()
+                default:
+                    break
+                }
             }
     }
     
