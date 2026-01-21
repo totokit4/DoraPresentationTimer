@@ -9,42 +9,56 @@ import Foundation
 import Combine
 
 final class ContentViewModel: ObservableObject {
-    @Published private(set) var count = 0
-    @Published private(set) var isTimerRunning = false
+    /// 残り秒
+    @Published private(set) var remainingSeconds: Int = 0
+    /// タイマーが稼働中か
+    @Published private(set) var isTimerRunning: Bool = false
+    
+    /// タイマーの初期値
+    private var initCount: Int = 0
     
     private var cancellable: AnyCancellable?
-    private var initCount = 0
     
-    func startTimer(second: Int) {
-        guard second > 0 else { return }
-
+    func setInitialTime(minutes: Int, seconds: Int) {
+        // 秒に変換
+        let total = max(0, minutes * 60 + seconds)
+        initCount = total
+        
+        // タイマーが稼働中は何もしない
+        if !isTimerRunning {
+            remainingSeconds = total
+        }
+    }
+    
+    func startTimer() {
+        guard initCount > 0 else { return }
+        
         isTimerRunning = true
-        initCount = second
-        count = second
-
+        remainingSeconds = initCount
+        
         let soundViewModel = SoundPlayModel()
+        
+        // 1秒ごとに更新する
         cancellable = Timer.publish(every: 1.0, on: .main, in: .common)
             .autoconnect()
-            .subscribe(on: DispatchQueue.global())
-            .handleEvents(receiveOutput: { [weak self] _ in
-                self?.count -= 1
-            })
-            .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
-                guard let initCount = self?.initCount else { return }
-
-                switch self?.count {
+                guard let self else { return }
+                
+                // 残り秒数を1減らす
+                self.remainingSeconds -= 1
+                
+                switch self.remainingSeconds {
                 case 3 * 60:
-                    if initCount > 3 * 60 {
+                    if self.initCount > 3 * 60 {
                         soundViewModel.playSound(type: .clappers1)
                     }
                 case 1 * 60:
-                    if initCount > 1 * 60 {
+                    if self.initCount > 1 * 60 {
                         soundViewModel.playSound(type: .clappers2)
                     }
                 case 0:
                     soundViewModel.playSound(type: .dora)
-                    self?.resetCount()
+                    self.resetCount()
                 default:
                     break
                 }
@@ -54,10 +68,12 @@ final class ContentViewModel: ObservableObject {
     func stopTimer() {
         isTimerRunning = false
         cancellable?.cancel()
+        cancellable = nil
     }
     
     func resetCount() {
         stopTimer()
-        count = initCount
+        // 初期値に戻す
+        remainingSeconds = initCount
     }
 }

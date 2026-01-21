@@ -6,13 +6,13 @@
 //
 
 import SwiftUI
-import Combine
 
 struct ContentView: View {
     @ObservedObject private var viewModel: ContentViewModel
-    @State private var selectedMinute = 0
-    @State private var selectedSecond = 0
-    @State private var cancellable: AnyCancellable?
+    
+    @State private var selectedMinute: Int = 0
+    @State private var selectedSecond: Int = 0
+    
     let soundViewModel = SoundPlayModel()
     
     init(viewModel: ContentViewModel) {
@@ -26,85 +26,85 @@ struct ContentView: View {
             pickersSection
             soundTestButtonsSection
         }
+        .onAppear {
+            viewModel.setInitialTime(minutes: selectedMinute, seconds: selectedSecond)
+        }
     }
 }
 
 private extension ContentView {
     var timeSection: some View {
-        Text("\(String(format: "%02d", selectedMinute)):\(String(format: "%02d", selectedSecond))")
+        Text(viewModel.remainingSeconds.formattedAsMMSS)
             .font(.system(size: 300))
             .minimumScaleFactor(0.1)
     }
-
-    // TODO: ボタンのサイズ大きくする
+    
     var timerButtonsSection: some View {
         HStack {
             Button(action: {
-                let count = selectedMinute * 60 + selectedSecond
-                self.viewModel.startTimer(second: count)
-
-                self.cancellable = self.viewModel.$count
-                    .sink { count in
-                        selectedMinute = count / 60
-                        selectedSecond = count % 60
-                    }
-            }){
+                viewModel.startTimer()
+            }) {
                 Text("Start")
                     .font(.largeTitle)
-                    .foregroundColor(Color.white)
+                    .foregroundColor(.white)
             }
             .disabled(viewModel.isTimerRunning)
             .padding(.all)
             .background(viewModel.isTimerRunning ? Color(UIColor.lightGray) : Color.orange)
-
+            
             Button(action: {
-                self.viewModel.stopTimer()
-            }){
+                viewModel.stopTimer()
+            }) {
                 Text("Pause")
                     .font(.largeTitle)
-                    .foregroundColor(Color.white)
+                    .foregroundColor(.white)
             }
             .disabled(!viewModel.isTimerRunning)
             .padding(.all)
             .background(viewModel.isTimerRunning ? Color.orange : Color(UIColor.lightGray))
-
+            
             Button(action: {
-                self.viewModel.resetCount()
-            }){
+                viewModel.resetCount()
+            }) {
                 Text("Reset")
                     .font(.largeTitle)
-                    .foregroundColor(Color.white)
+                    .foregroundColor(.white)
             }
             .padding(.all)
             .background(Color.orange)
         }
     }
-
+    
     var pickersSection: some View {
         HStack {
             picker(selection: $selectedMinute)
+                .onChange(of: selectedMinute) { _ in
+                    viewModel.setInitialTime(minutes: selectedMinute, seconds: selectedSecond)
+                }
+            
             picker(selection: $selectedSecond)
+                .onChange(of: selectedSecond) { _ in
+                    viewModel.setInitialTime(minutes: selectedMinute, seconds: selectedSecond)
+                }
         }
     }
-
-    func picker(selection: Binding<Int>) -> some View {
+    
+    private func picker(selection: Binding<Int>) -> some View {
         Picker(selection: selection, label: EmptyView()) {
             ForEach(0 ..< 60, id: \.self) {
                 Text("\($0)")
             }
-        }.pickerStyle(WheelPickerStyle())
-            .onReceive([selection].publisher.first()) { (value) in
-                print("\(value)")
-            }
-            .clipped()
-            .disabled(viewModel.isTimerRunning)
+        }
+        .pickerStyle(.wheel)
+        .clipped()
+        .disabled(viewModel.isTimerRunning)
     }
-
+    
     var soundTestButtonsSection: some View {
         VStack {
             Text("SoundTest")
                 .font(.largeTitle)
-                .foregroundColor(Color.brown)
+                .foregroundColor(.brown)
             HStack {
                 soundTestButton(type: .clappers1)
                 soundTestButton(type: .clappers2)
@@ -112,14 +112,14 @@ private extension ContentView {
             }
         }
     }
-
+    
     func soundTestButton(type: SoundPlayModel.SoundType) -> some View {
         Button(action: {
             soundViewModel.playSound(type: type)
-        }){
+        }) {
             Text(type.buttonTitle)
                 .font(.largeTitle)
-                .foregroundColor(Color.white)
+                .foregroundColor(.white)
         }
         .padding(.all)
         .background(Color.brown)
@@ -132,5 +132,13 @@ struct ContentView_Previews: PreviewProvider {
             ContentView(viewModel: ContentViewModel())
             ContentView(viewModel: ContentViewModel()).previewInterfaceOrientation(.landscapeLeft)
         }
+    }
+}
+
+private extension Int {
+    var formattedAsMMSS: String {
+        let m = self / 60
+        let s = self % 60
+        return String(format: "%02d:%02d", m, s)
     }
 }
