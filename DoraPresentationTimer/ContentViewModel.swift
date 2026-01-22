@@ -17,7 +17,12 @@ final class ContentViewModel: ObservableObject {
     /// タイマーの初期値
     private var initCount: Int = 0
     
+    private let sound: SoundPlaying
     private var cancellable: AnyCancellable?
+    
+    init(sound: SoundPlaying = SoundPlayer()) {
+        self.sound = sound
+    }
     
     func setInitialTime(minutes: Int, seconds: Int) {
         // 秒に変換
@@ -36,8 +41,6 @@ final class ContentViewModel: ObservableObject {
         isTimerRunning = true
         remainingSeconds = initCount
         
-        let soundViewModel = SoundPlayModel()
-        
         // 1秒ごとに更新する
         cancellable = Timer.publish(every: 1.0, on: .main, in: .common)
             .autoconnect()
@@ -50,14 +53,14 @@ final class ContentViewModel: ObservableObject {
                 switch self.remainingSeconds {
                 case 3 * 60:
                     if self.initCount > 3 * 60 {
-                        soundViewModel.playSound(type: .clappers1)
+                        sound.play(.clappers1)
                     }
                 case 1 * 60:
                     if self.initCount > 1 * 60 {
-                        soundViewModel.playSound(type: .clappers2)
+                        sound.play(.clappers2)
                     }
                 case 0:
-                    soundViewModel.playSound(type: .dora)
+                    sound.play(.dora)
                     self.resetCount()
                 default:
                     break

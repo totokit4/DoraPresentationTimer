@@ -13,7 +13,7 @@ struct ContentView: View {
     @State private var selectedMinute: Int = 0
     @State private var selectedSecond: Int = 0
     
-    let soundViewModel = SoundPlayModel()
+    private let soundPlayer = SoundPlayer()
     
     init(viewModel: ContentViewModel) {
         self.viewModel = viewModel
@@ -113,9 +113,9 @@ private extension ContentView {
         }
     }
     
-    func soundTestButton(type: SoundPlayModel.SoundType) -> some View {
+    private func soundTestButton(type: SoundType) -> some View {
         Button(action: {
-            soundViewModel.playSound(type: type)
+            soundPlayer.play(type)
         }) {
             Text(type.buttonTitle)
                 .font(.largeTitle)

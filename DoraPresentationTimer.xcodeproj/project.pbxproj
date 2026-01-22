@@ -3,11 +3,10 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		C5379557292F866C000ECABC /* SoundPlayModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5379556292F866C000ECABC /* SoundPlayModel.swift */; };
 		C54EC7932916B70700CC131C /* DoraPresentationTimerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54EC7922916B70700CC131C /* DoraPresentationTimerApp.swift */; };
 		C54EC7952916B70700CC131C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54EC7942916B70700CC131C /* ContentView.swift */; };
 		C54EC7972916B70800CC131C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C54EC7962916B70800CC131C /* Assets.xcassets */; };
@@ -16,7 +15,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		C5379556292F866C000ECABC /* SoundPlayModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundPlayModel.swift; sourceTree = "<group>"; };
 		C54EC78F2916B70600CC131C /* DoraPresentationTimer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DoraPresentationTimer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C54EC7922916B70700CC131C /* DoraPresentationTimerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoraPresentationTimerApp.swift; sourceTree = "<group>"; };
 		C54EC7942916B70700CC131C /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -24,6 +22,10 @@
 		C54EC7992916B70800CC131C /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		C58860A72918002600D3D4DA /* ContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		3E21DDE82F2129E800A52B0D /* Service */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Service; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		C54EC78C2916B70600CC131C /* Frameworks */ = {
@@ -55,10 +57,10 @@
 		C54EC7912916B70600CC131C /* DoraPresentationTimer */ = {
 			isa = PBXGroup;
 			children = (
+				3E21DDE82F2129E800A52B0D /* Service */,
 				C54EC7922916B70700CC131C /* DoraPresentationTimerApp.swift */,
 				C54EC7942916B70700CC131C /* ContentView.swift */,
 				C58860A72918002600D3D4DA /* ContentViewModel.swift */,
-				C5379556292F866C000ECABC /* SoundPlayModel.swift */,
 				C54EC7962916B70800CC131C /* Assets.xcassets */,
 				C54EC7982916B70800CC131C /* Preview Content */,
 			);
@@ -87,6 +89,9 @@
 			buildRules = (
 			);
 			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				3E21DDE82F2129E800A52B0D /* Service */,
 			);
 			name = DoraPresentationTimer;
 			productName = DoraPresentationTimer;
@@ -146,7 +151,6 @@
 				C54EC7952916B70700CC131C /* ContentView.swift in Sources */,
 				C54EC7932916B70700CC131C /* DoraPresentationTimerApp.swift in Sources */,
 				C58860A82918002600D3D4DA /* ContentViewModel.swift in Sources */,
-				C5379557292F866C000ECABC /* SoundPlayModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
