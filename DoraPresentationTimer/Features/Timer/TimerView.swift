@@ -1,5 +1,5 @@
 //
-//  ContentView.swift
+//  TimerView.swift
 //  DoraPresentationTimer
 //
 //  Created by totokit4_saki on 2022/11/06.
@@ -7,15 +7,15 @@
 
 import SwiftUI
 
-struct ContentView: View {
-    @ObservedObject private var viewModel: ContentViewModel
+struct TimerView: View {
+    @ObservedObject private var viewModel: TimerViewModel
     
     @State private var selectedMinute: Int = 0
     @State private var selectedSecond: Int = 0
     
     private let soundPlayer = SoundPlayer()
     
-    init(viewModel: ContentViewModel) {
+    init(viewModel: TimerViewModel) {
         self.viewModel = viewModel
     }
     
@@ -32,7 +32,7 @@ struct ContentView: View {
     }
 }
 
-private extension ContentView {
+private extension TimerView {
     var timeSection: some View {
         Text(viewModel.remainingSeconds.formattedAsMMSS)
             .font(.system(size: 300))
@@ -129,8 +129,8 @@ private extension ContentView {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            ContentView(viewModel: ContentViewModel())
-            ContentView(viewModel: ContentViewModel()).previewInterfaceOrientation(.landscapeLeft)
+            TimerView(viewModel: TimerViewModel())
+            TimerView(viewModel: TimerViewModel()).previewInterfaceOrientation(.landscapeLeft)
         }
     }
 }

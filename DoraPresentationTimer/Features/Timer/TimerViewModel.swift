@@ -1,5 +1,5 @@
 //
-//  ContentViewModel.swift
+//  TimerViewModel.swift
 //  DoraPresentationTimer
 //
 //  Created by totokit4_saki on 2022/11/06.
@@ -8,7 +8,7 @@
 import Foundation
 import Combine
 
-final class ContentViewModel: ObservableObject {
+final class TimerViewModel: ObservableObject {
     /// 残り秒
     @Published private(set) var remainingSeconds: Int = 0
     /// タイマーが稼働中か
