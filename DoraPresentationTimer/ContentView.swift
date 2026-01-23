@@ -78,12 +78,12 @@ private extension ContentView {
     var pickersSection: some View {
         HStack {
             picker(selection: $selectedMinute)
-                .onChange(of: selectedMinute) { _ in
+                .onChange(of: selectedMinute) {
                     viewModel.setInitialTime(minutes: selectedMinute, seconds: selectedSecond)
                 }
             
             picker(selection: $selectedSecond)
-                .onChange(of: selectedSecond) { _ in
+                .onChange(of: selectedSecond) {
                     viewModel.setInitialTime(minutes: selectedMinute, seconds: selectedSecond)
                 }
         }
