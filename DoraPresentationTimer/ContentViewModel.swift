@@ -14,13 +14,15 @@ final class ContentViewModel: ObservableObject {
     /// タイマーが稼働中か
     @Published private(set) var isTimerRunning: Bool = false
     
+    private let ticker: TimerTicking
+    private let sound: SoundPlaying
+    
+    private var cancellable: AnyCancellable?
     /// タイマーの初期値
     private var initCount: Int = 0
     
-    private let sound: SoundPlaying
-    private var cancellable: AnyCancellable?
-    
-    init(sound: SoundPlaying = SoundPlayer()) {
+    init(ticker: TimerTicking = TimerEngine(), sound: SoundPlaying = SoundPlayer()) {
+        self.ticker = ticker
         self.sound = sound
     }
     
@@ -37,34 +39,16 @@ final class ContentViewModel: ObservableObject {
     
     func startTimer() {
         guard initCount > 0 else { return }
+        guard !isTimerRunning else { return }
         
         isTimerRunning = true
         remainingSeconds = initCount
         
-        // 1秒ごとに更新する
-        cancellable = Timer.publish(every: 1.0, on: .main, in: .common)
-            .autoconnect()
-            .sink { [weak self] _ in
+        cancellable = ticker.tick
+            .sink { [weak self] in
                 guard let self else { return }
-                
-                // 残り秒数を1減らす
-                self.remainingSeconds -= 1
-                
-                switch self.remainingSeconds {
-                case 3 * 60:
-                    if self.initCount > 3 * 60 {
-                        sound.play(.clappers1)
-                    }
-                case 1 * 60:
-                    if self.initCount > 1 * 60 {
-                        sound.play(.clappers2)
-                    }
-                case 0:
-                    sound.play(.dora)
-                    self.resetCount()
-                default:
-                    break
-                }
+                // 残時間を更新
+                self.handleTick()
             }
     }
     
@@ -78,5 +62,27 @@ final class ContentViewModel: ObservableObject {
         stopTimer()
         // 初期値に戻す
         remainingSeconds = initCount
+    }
+    
+    private func handleTick() {
+        guard isTimerRunning else { return }
+        guard remainingSeconds > 0 else { return }
+        
+        // Viewへの反映
+        remainingSeconds -= 1
+        
+        // 音を鳴らすかチェック
+        switch remainingSeconds {
+        case 3 * 60:
+            if initCount > 3 * 60 { sound.play(.clappers1) }
+        case 1 * 60:
+            if initCount > 1 * 60 { sound.play(.clappers2) }
+        case 0:
+            sound.play(.dora)
+            // 初期値に戻す
+            resetCount()
+        default:
+            break
+        }
     }
 }
