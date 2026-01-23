@@ -72,17 +72,17 @@ final class ContentViewModel: ObservableObject {
         remainingSeconds -= 1
         
         // 音を鳴らすかチェック
-        switch remainingSeconds {
-        case 3 * 60:
-            if initCount > 3 * 60 { sound.play(.clappers1) }
-        case 1 * 60:
-            if initCount > 1 * 60 { sound.play(.clappers2) }
-        case 0:
-            sound.play(.dora)
-            // 初期値に戻す
-            resetCount()
-        default:
-            break
+        if let event = TimerRules.event(remainingSeconds: remainingSeconds,
+                                        durationSeconds: initCount) {
+            switch event {
+            case .playSound(let soundType):
+                sound.play(soundType)
+            case .finished:
+                sound.play(.dora)
+                stopTimer()
+                // 初期値に戻す
+                resetCount()
+            }
         }
     }
 }
