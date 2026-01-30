@@ -11,7 +11,7 @@ import SwiftUI
 struct DoraPresentationTimerApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView(viewModel: TimerViewModel())
+            TimerView(viewModel: TimerViewModel())
         }
     }
 }
