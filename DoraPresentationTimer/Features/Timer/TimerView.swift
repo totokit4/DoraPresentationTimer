@@ -40,39 +40,44 @@ private extension TimerView {
     }
     
     var timerButtonsSection: some View {
-        HStack {
-            Button(action: {
-                viewModel.startTimer()
-            }) {
-                Text("Start")
-                    .font(.largeTitle)
-                    .foregroundColor(.white)
-            }
-            .disabled(viewModel.isTimerRunning)
-            .padding(.all)
-            .background(viewModel.isTimerRunning ? Color(UIColor.lightGray) : Color.orange)
-            
-            Button(action: {
-                viewModel.stopTimer()
-            }) {
-                Text("Pause")
-                    .font(.largeTitle)
-                    .foregroundColor(.white)
-            }
-            .disabled(!viewModel.isTimerRunning)
-            .padding(.all)
-            .background(viewModel.isTimerRunning ? Color.orange : Color(UIColor.lightGray))
-            
-            Button(action: {
-                viewModel.resetCount()
-            }) {
-                Text("Reset")
-                    .font(.largeTitle)
-                    .foregroundColor(.white)
-            }
-            .padding(.all)
-            .background(Color.orange)
+        VStack(spacing: 12) {
+            primaryButton
+            resetButton
         }
+        .padding(.horizontal, 24)
+    }
+    
+    /// Start/Pauseボタン
+    var primaryButton: some View {
+        Button {
+            if viewModel.isTimerRunning {
+                viewModel.stopTimer()
+            } else {
+                viewModel.startTimer()
+            }
+        } label: {
+            Text(viewModel.isTimerRunning ? "Pause" : "Start")
+                .font(.largeTitle)
+                .foregroundColor(.white)
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 16)
+        }
+        .background(viewModel.isTimerRunning ? Color(UIColor.lightGray) : Color.orange)
+        .clipShape(RoundedRectangle(cornerRadius: 12))
+    }
+    
+    /// リセットボタン
+    var resetButton: some View {
+        Button {
+            viewModel.resetCount()
+        } label: {
+            Label("Reset", systemImage: "arrow.counterclockwise")
+                .font(.title3)
+        }
+        .buttonStyle(.plain)
+        .foregroundStyle(.secondary)
+        .opacity(viewModel.isTimerRunning ? 0.4 : 1.0) // 実行中は目立たなくする
+        .disabled(viewModel.isTimerRunning) // 実行中は無効にする
     }
     
     var pickersSection: some View {
@@ -100,7 +105,7 @@ private extension TimerView {
         .disabled(viewModel.isTimerRunning)
     }
     
-    var soundTestButtonsSection: some View {
+    private var soundTestButtonsSection: some View {
         VStack {
             Text("SoundTest")
                 .font(.largeTitle)

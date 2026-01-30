@@ -38,6 +38,7 @@ final class TimerViewModel: ObservableObject {
     }
     
     func startTimer() {
+        // 連打対策
         guard initCount > 0 else { return }
         guard !isTimerRunning else { return }
         
