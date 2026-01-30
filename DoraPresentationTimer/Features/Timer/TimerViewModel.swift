@@ -60,9 +60,20 @@ final class TimerViewModel: ObservableObject {
     }
     
     func resetCount() {
-        stopTimer()
-        // 初期値に戻す
-        remainingSeconds = initCount
+        stopTimer() // 念のため（実行中はdisabledでも安全側に倒す）
+
+        guard initCount > 0 else {
+            remainingSeconds = 0
+            return
+        }
+
+        if remainingSeconds == initCount {
+            // 2回目：クリア
+            remainingSeconds = 0
+        } else {
+            // 1回目：初期値へ
+            remainingSeconds = initCount
+        }
     }
     
     private func handleTick() {
