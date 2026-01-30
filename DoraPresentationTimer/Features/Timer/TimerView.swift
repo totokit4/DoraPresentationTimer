@@ -7,27 +7,36 @@
 
 import SwiftUI
 
+/// タイマー画面
 struct TimerView: View {
     @ObservedObject private var viewModel: TimerViewModel
     
     @State private var selectedMinute: Int = 0
     @State private var selectedSecond: Int = 0
     
-    private let soundPlayer = SoundPlayer()
-    
     init(viewModel: TimerViewModel) {
         self.viewModel = viewModel
     }
     
     var body: some View {
-        VStack {
-            timeSection
-            timerButtonsSection
-            pickersSection
-            soundTestButtonsSection
-        }
-        .onAppear {
-            viewModel.setInitialTime(minutes: selectedMinute, seconds: selectedSecond)
+        NavigationStack {
+            VStack {
+                timeSection
+                timerButtonsSection
+                pickersSection
+            }
+            .onAppear {
+                viewModel.setInitialTime(minutes: selectedMinute, seconds: selectedSecond)
+            }
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    NavigationLink {
+                        SoundTestView()
+                    } label: {
+                        Image(systemName: "speaker.wave.2")
+                    }
+                }
+            }
         }
     }
 }
@@ -103,31 +112,6 @@ private extension TimerView {
         .pickerStyle(.wheel)
         .clipped()
         .disabled(viewModel.isTimerRunning)
-    }
-    
-    private var soundTestButtonsSection: some View {
-        VStack {
-            Text("SoundTest")
-                .font(.largeTitle)
-                .foregroundColor(.brown)
-            HStack {
-                soundTestButton(type: .clappers1)
-                soundTestButton(type: .clappers2)
-                soundTestButton(type: .dora)
-            }
-        }
-    }
-    
-    private func soundTestButton(type: SoundType) -> some View {
-        Button(action: {
-            soundPlayer.play(type)
-        }) {
-            Text(type.buttonTitle)
-                .font(.largeTitle)
-                .foregroundColor(.white)
-        }
-        .padding(.all)
-        .background(Color.brown)
     }
 }
 
