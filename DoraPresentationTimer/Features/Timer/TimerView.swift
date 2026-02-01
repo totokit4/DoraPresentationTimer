@@ -24,6 +24,7 @@ struct TimerView: View {
         NavigationStack {
             VStack {
                 timeSection()
+                    .frame(maxHeight: .infinity) // なるべく大きくとる
                 timerButtonsSection
             }
             .sheet(isPresented: $isPickerPresented) {
@@ -32,7 +33,7 @@ struct TimerView: View {
                     selectedSecond: $selectedSecond,
                     isTimerRunning: viewModel.isTimerRunning
                 )
-                .presentationDetents([.fraction(0.35), .medium]) // ハーフっぽい
+                .presentationDetents([.fraction(0.35), .medium]) // ハーフモーダル
                 .presentationDragIndicator(.visible)
             }
             .onChange(of: selectedMinute) {
@@ -63,13 +64,21 @@ private extension TimerView {
             guard !viewModel.isTimerRunning else { return }
             isPickerPresented = true
         } label: {
-            Text(viewModel.remainingSeconds.formattedAsMMSS)
-                .font(.system(size: 300))
-                .minimumScaleFactor(0.1)
+            GeometryReader { geo in
+                let w = geo.size.width
+                let h = geo.size.height
+                let fontSize = min(w * 0.7, h * 0.9)
+                
+                Text(viewModel.remainingSeconds.formattedAsMMSS)
+                    .font(.system(size: fontSize, weight: .regular))
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.1)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+            }
         }
         .buttonStyle(.plain)
     }
-    
+
     var timerButtonsSection: some View {
         VStack(spacing: 12) {
             primaryButton

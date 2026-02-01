@@ -7,6 +7,7 @@
 
 import Foundation
 import Combine
+import UIKit
 
 final class TimerViewModel: ObservableObject {
     /// 残り秒
@@ -26,6 +27,10 @@ final class TimerViewModel: ObservableObject {
         self.sound = sound
     }
     
+    deinit {
+        UIApplication.shared.isIdleTimerDisabled = false
+    }
+    
     func setInitialTime(minutes: Int, seconds: Int) {
         // 秒に変換
         let total = max(0, minutes * 60 + seconds)
@@ -43,6 +48,9 @@ final class TimerViewModel: ObservableObject {
         guard !isTimerRunning else { return }
         
         isTimerRunning = true
+        // タイマー中はスリープさせない
+        UIApplication.shared.isIdleTimerDisabled = true
+        
         remainingSeconds = initCount
         
         cancellable = ticker.tick
@@ -55,6 +63,8 @@ final class TimerViewModel: ObservableObject {
     
     func stopTimer() {
         isTimerRunning = false
+        UIApplication.shared.isIdleTimerDisabled = false
+        
         cancellable?.cancel()
         cancellable = nil
     }
