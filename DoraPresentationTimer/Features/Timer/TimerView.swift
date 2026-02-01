@@ -14,6 +14,8 @@ struct TimerView: View {
     @State private var selectedMinute: Int = 0
     @State private var selectedSecond: Int = 0
     
+    @State private var isPickerPresented = false
+    
     init(viewModel: TimerViewModel) {
         self.viewModel = viewModel
     }
@@ -21,11 +23,22 @@ struct TimerView: View {
     var body: some View {
         NavigationStack {
             VStack {
-                timeSection
+                timeSection()
                 timerButtonsSection
-                pickersSection
             }
-            .onAppear {
+            .sheet(isPresented: $isPickerPresented) {
+                TimePickerSheet(
+                    selectedMinute: $selectedMinute,
+                    selectedSecond: $selectedSecond,
+                    isTimerRunning: viewModel.isTimerRunning
+                )
+                .presentationDetents([.fraction(0.35), .medium]) // ハーフっぽい
+                .presentationDragIndicator(.visible)
+            }
+            .onChange(of: selectedMinute) {
+                viewModel.setInitialTime(minutes: selectedMinute, seconds: selectedSecond)
+            }
+            .onChange(of: selectedSecond) {
                 viewModel.setInitialTime(minutes: selectedMinute, seconds: selectedSecond)
             }
             .toolbar {
@@ -38,14 +51,23 @@ struct TimerView: View {
                 }
             }
         }
+        .onAppear {
+            viewModel.setInitialTime(minutes: selectedMinute, seconds: selectedSecond)
+        }
     }
 }
 
 private extension TimerView {
-    var timeSection: some View {
-        Text(viewModel.remainingSeconds.formattedAsMMSS)
-            .font(.system(size: 300))
-            .minimumScaleFactor(0.1)
+    private func timeSection() -> some View {
+        Button {
+            guard !viewModel.isTimerRunning else { return }
+            isPickerPresented = true
+        } label: {
+            Text(viewModel.remainingSeconds.formattedAsMMSS)
+                .font(.system(size: 300))
+                .minimumScaleFactor(0.1)
+        }
+        .buttonStyle(.plain)
     }
     
     var timerButtonsSection: some View {
@@ -87,31 +109,6 @@ private extension TimerView {
         .foregroundStyle(.secondary)
         .opacity(viewModel.isTimerRunning ? 0.4 : 1.0) // 実行中は目立たなくする
         .disabled(viewModel.isTimerRunning) // 実行中は無効にする
-    }
-    
-    var pickersSection: some View {
-        HStack {
-            picker(selection: $selectedMinute)
-                .onChange(of: selectedMinute) {
-                    viewModel.setInitialTime(minutes: selectedMinute, seconds: selectedSecond)
-                }
-            
-            picker(selection: $selectedSecond)
-                .onChange(of: selectedSecond) {
-                    viewModel.setInitialTime(minutes: selectedMinute, seconds: selectedSecond)
-                }
-        }
-    }
-    
-    private func picker(selection: Binding<Int>) -> some View {
-        Picker(selection: selection, label: EmptyView()) {
-            ForEach(0 ..< 60, id: \.self) {
-                Text("\($0)")
-            }
-        }
-        .pickerStyle(.wheel)
-        .clipped()
-        .disabled(viewModel.isTimerRunning)
     }
 }
 
