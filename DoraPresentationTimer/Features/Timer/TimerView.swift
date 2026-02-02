@@ -7,24 +7,50 @@
 
 import SwiftUI
 
+/// タイマー画面
 struct TimerView: View {
     @ObservedObject private var viewModel: TimerViewModel
     
     @State private var selectedMinute: Int = 0
     @State private var selectedSecond: Int = 0
     
-    private let soundPlayer = SoundPlayer()
+    @State private var isPickerPresented = false
     
     init(viewModel: TimerViewModel) {
         self.viewModel = viewModel
     }
     
     var body: some View {
-        VStack {
-            timeSection
-            timerButtonsSection
-            pickersSection
-            soundTestButtonsSection
+        NavigationStack {
+            VStack {
+                timeSection()
+                    .frame(maxHeight: .infinity) // なるべく大きくとる
+                timerButtonsSection
+            }
+            .sheet(isPresented: $isPickerPresented) {
+                TimePickerSheet(
+                    selectedMinute: $selectedMinute,
+                    selectedSecond: $selectedSecond,
+                    isTimerRunning: viewModel.isTimerRunning
+                )
+                .presentationDetents([.fraction(0.35), .medium]) // ハーフモーダル
+                .presentationDragIndicator(.visible)
+            }
+            .onChange(of: selectedMinute) {
+                viewModel.setInitialTime(minutes: selectedMinute, seconds: selectedSecond)
+            }
+            .onChange(of: selectedSecond) {
+                viewModel.setInitialTime(minutes: selectedMinute, seconds: selectedSecond)
+            }
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    NavigationLink {
+                        SoundTestView()
+                    } label: {
+                        Image(systemName: "speaker.wave.2")
+                    }
+                }
+            }
         }
         .onAppear {
             viewModel.setInitialTime(minutes: selectedMinute, seconds: selectedSecond)
@@ -33,12 +59,26 @@ struct TimerView: View {
 }
 
 private extension TimerView {
-    var timeSection: some View {
-        Text(viewModel.remainingSeconds.formattedAsMMSS)
-            .font(.system(size: 300))
-            .minimumScaleFactor(0.1)
+    private func timeSection() -> some View {
+        Button {
+            guard !viewModel.isTimerRunning else { return }
+            isPickerPresented = true
+        } label: {
+            GeometryReader { geo in
+                let w = geo.size.width
+                let h = geo.size.height
+                let fontSize = min(w * 0.7, h * 0.9)
+                
+                Text(viewModel.remainingSeconds.formattedAsMMSS)
+                    .font(.system(size: fontSize, weight: .regular))
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.1)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+            }
+        }
+        .buttonStyle(.plain)
     }
-    
+
     var timerButtonsSection: some View {
         VStack(spacing: 12) {
             primaryButton
@@ -78,56 +118,6 @@ private extension TimerView {
         .foregroundStyle(.secondary)
         .opacity(viewModel.isTimerRunning ? 0.4 : 1.0) // 実行中は目立たなくする
         .disabled(viewModel.isTimerRunning) // 実行中は無効にする
-    }
-    
-    var pickersSection: some View {
-        HStack {
-            picker(selection: $selectedMinute)
-                .onChange(of: selectedMinute) {
-                    viewModel.setInitialTime(minutes: selectedMinute, seconds: selectedSecond)
-                }
-            
-            picker(selection: $selectedSecond)
-                .onChange(of: selectedSecond) {
-                    viewModel.setInitialTime(minutes: selectedMinute, seconds: selectedSecond)
-                }
-        }
-    }
-    
-    private func picker(selection: Binding<Int>) -> some View {
-        Picker(selection: selection, label: EmptyView()) {
-            ForEach(0 ..< 60, id: \.self) {
-                Text("\($0)")
-            }
-        }
-        .pickerStyle(.wheel)
-        .clipped()
-        .disabled(viewModel.isTimerRunning)
-    }
-    
-    private var soundTestButtonsSection: some View {
-        VStack {
-            Text("SoundTest")
-                .font(.largeTitle)
-                .foregroundColor(.brown)
-            HStack {
-                soundTestButton(type: .clappers1)
-                soundTestButton(type: .clappers2)
-                soundTestButton(type: .dora)
-            }
-        }
-    }
-    
-    private func soundTestButton(type: SoundType) -> some View {
-        Button(action: {
-            soundPlayer.play(type)
-        }) {
-            Text(type.buttonTitle)
-                .font(.largeTitle)
-                .foregroundColor(.white)
-        }
-        .padding(.all)
-        .background(Color.brown)
     }
 }
 
