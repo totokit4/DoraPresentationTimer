@@ -51,11 +51,6 @@ struct TimerView: View {
             .toolbar {
                 ToolbarItemGroup(placement: .topBarTrailing) {
                     NavigationLink {
-                        SoundTestView()
-                    } label: {
-                        Image(systemName: "speaker.wave.2")
-                    }
-                    NavigationLink {
                         SettingsView()
                     } label: {
                         Image(systemName: "gearshape")

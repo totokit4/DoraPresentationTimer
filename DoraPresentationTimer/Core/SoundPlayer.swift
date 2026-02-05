@@ -24,17 +24,6 @@ enum SoundType: String, Codable, CaseIterable {
         case .dora: return "Dora"
         }
     }
-    
-    var buttonTitle: String {
-        switch self {
-        case .clappers1:
-            return "3分前"
-        case .clappers2:
-            return "1分前"
-        case .dora:
-            return "終了"
-        }
-    }
 }
 
 final class SoundPlayer: SoundPlaying {
