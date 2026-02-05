@@ -36,12 +36,12 @@ struct TimerRules {
             return nil
         }
 
-        // 初期時間以下のリマインドは鳴らさない（例：初期60秒で「3分前」は無視）
+        // 初期時間以下のリマインドは鳴らさない
         if durationSeconds <= rule.secondsBeforeEnd {
             return nil
         }
 
-        // 終了
+        // 終了（リマインドが終了時間より後に設定されていても無視））
         if rule.secondsBeforeEnd == 0 {
             return .finished
         }

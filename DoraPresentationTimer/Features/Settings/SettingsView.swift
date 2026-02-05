@@ -41,13 +41,15 @@ struct SettingsView: View {
 
             Section("Reminders") {
                 ForEach(settingsStore.settings.reminders) { r in
+                    let middleText = (r.sound == .dora) ? "" : "終了\(r.secondsBeforeEnd)秒前"
+                    
                     oneLineRow(
                         left: r.label,
-                        middle: r.secondsBeforeEnd == 0 ? "終了" : "終了\(r.secondsBeforeEnd)秒前",
+                        middle: middleText,
                         showSpeaker: true,
                         onSpeaker: { soundPlayer.play(r.sound) },
                         onTap: {
-                            guard r.secondsBeforeEnd != 0 else { return } 
+                            guard r.sound != .dora else { return }
                             editTarget = .reminder(r.id)
                         }
                     )
