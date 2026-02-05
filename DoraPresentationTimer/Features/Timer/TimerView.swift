@@ -29,8 +29,14 @@ struct TimerView: View {
             }
             .sheet(isPresented: $isPickerPresented) {
                 TimePickerSheet(
-                    selectedMinute: $selectedMinute,
-                    selectedSecond: $selectedSecond,
+                    title: "Set Time",
+                    totalSeconds: Binding(
+                        get: { selectedMinute * 60 + selectedSecond },
+                        set: { total in
+                            selectedMinute = total / 60
+                            selectedSecond = total % 60
+                        }
+                    ),
                     isTimerRunning: viewModel.isTimerRunning
                 )
                 .presentationDetents([.fraction(0.35), .medium]) // ハーフモーダル
@@ -43,11 +49,16 @@ struct TimerView: View {
                 viewModel.setInitialTime(minutes: selectedMinute, seconds: selectedSecond)
             }
             .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
+                ToolbarItemGroup(placement: .topBarTrailing) {
                     NavigationLink {
                         SoundTestView()
                     } label: {
                         Image(systemName: "speaker.wave.2")
+                    }
+                    NavigationLink {
+                        SettingsView()
+                    } label: {
+                        Image(systemName: "gearshape")
                     }
                 }
             }
@@ -78,7 +89,7 @@ private extension TimerView {
         }
         .buttonStyle(.plain)
     }
-
+    
     var timerButtonsSection: some View {
         VStack(spacing: 12) {
             primaryButton
@@ -123,9 +134,15 @@ private extension TimerView {
 
 struct TimerView_Previews: PreviewProvider {
     static var previews: some View {
+        let settingsStore = SettingsStore()
+
         Group {
-            TimerView(viewModel: TimerViewModel())
-            TimerView(viewModel: TimerViewModel()).previewInterfaceOrientation(.landscapeLeft)
+            TimerView(viewModel: TimerViewModel(settingsStore: settingsStore))
+                .environmentObject(settingsStore)
+
+            TimerView(viewModel: TimerViewModel(settingsStore: settingsStore))
+                .environmentObject(settingsStore)
+                .previewInterfaceOrientation(.landscapeLeft)
         }
     }
 }

@@ -18,25 +18,35 @@ struct TimerRules {
     /// - Parameters:
     ///   - remainingSeconds: 残秒数
     ///   - durationSeconds: 初期設定秒
+    ///   - reminders: リマインドルール
     /// - Returns: イベント（なければnil）
-    static func event(remainingSeconds: Int, durationSeconds: Int) -> TimerEvent? {
+    static func event(remainingSeconds: Int,
+                      durationSeconds: Int,
+                      reminders: [ReminderRule]) -> TimerEvent? {
         guard remainingSeconds >= 0 else { return nil }
         guard durationSeconds >= 0 else { return nil }
+        
+        // 有効なルールのみ
+        let enabledReminders = reminders.filter { $0.isEnabled }
 
-        switch remainingSeconds {
-        case 3 * 60:
-            // 初期が3分以下なら「3分前」は鳴らさない
-            return durationSeconds > 3 * 60 ? .playSound(.clappers1) : nil
-
-        case 1 * 60:
-            // 初期が1分以下なら「1分前」は鳴らさない
-            return durationSeconds > 1 * 60 ? .playSound(.clappers2) : nil
-
-        case 0:
-            // 終了は常に鳴らす
-            return .finished
-        default:
+        // 「残り◯秒」で鳴るルールを探す
+        guard let rule = enabledReminders.first(where: {
+            $0.secondsBeforeEnd == remainingSeconds
+        }) else {
             return nil
         }
+
+        // 初期時間以下のリマインドは鳴らさない（例：初期60秒で「3分前」は無視）
+        if durationSeconds <= rule.secondsBeforeEnd {
+            return nil
+        }
+
+        // 終了
+        if rule.secondsBeforeEnd == 0 {
+            return .finished
+        }
+
+        // 通常リマインド
+        return .playSound(rule.sound)
     }
 }

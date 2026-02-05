@@ -12,7 +12,7 @@ protocol SoundPlaying {
     func play(_ type: SoundType)
 }
 
-enum SoundType {
+enum SoundType: String, Codable, CaseIterable {
     case clappers1
     case clappers2
     case dora

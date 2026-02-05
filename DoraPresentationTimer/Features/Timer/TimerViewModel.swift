@@ -16,15 +16,37 @@ final class TimerViewModel: ObservableObject {
     @Published private(set) var isTimerRunning: Bool = false
     
     private let ticker: TimerTicking
-    private let sound: SoundPlaying
+    private let soundPlayer: SoundPlaying
     
     private var cancellable: AnyCancellable?
+    private let settingsStore: SettingsStore
+    private var settingsCancellable: AnyCancellable?
+    
     /// タイマーの初期値
     private var initCount: Int = 0
     
-    init(ticker: TimerTicking = TimerEngine(), sound: SoundPlaying = SoundPlayer()) {
+    init(
+        settingsStore: SettingsStore,
+        ticker: TimerTicking = TimerEngine(),
+        soundPlayer: SoundPlaying = SoundPlayer()
+    ) {
+        self.settingsStore = settingsStore
         self.ticker = ticker
-        self.sound = sound
+        self.soundPlayer = soundPlayer
+        
+        let settings = settingsStore.settings
+        self.initCount = settings.durationSeconds
+        self.remainingSeconds = settings.durationSeconds
+        
+        // 設定変更を監視して、停止中なら反映
+        self.settingsCancellable = settingsStore.$settings
+            .sink { [weak self] settings in
+                guard let self else { return }
+                guard !self.isTimerRunning else { return }
+                
+                self.initCount = settings.durationSeconds
+                self.remainingSeconds = settings.durationSeconds
+            }
     }
     
     deinit {
@@ -71,12 +93,12 @@ final class TimerViewModel: ObservableObject {
     
     func resetCount() {
         stopTimer() // 念のため（実行中はdisabledでも安全側に倒す）
-
+        
         guard initCount > 0 else {
             remainingSeconds = 0
             return
         }
-
+        
         if remainingSeconds == initCount {
             // 2回目：クリア
             remainingSeconds = 0
@@ -95,12 +117,14 @@ final class TimerViewModel: ObservableObject {
         
         // 音を鳴らすかチェック
         if let event = TimerRules.event(remainingSeconds: remainingSeconds,
-                                        durationSeconds: initCount) {
+                                        durationSeconds: initCount,
+                                        reminders: settingsStore.settings.reminders) {
             switch event {
-            case .playSound(let soundType):
-                sound.play(soundType)
+            case .playSound(let sound):
+                soundPlayer.play(sound)
+                
             case .finished:
-                sound.play(.dora)
+                soundPlayer.play(.dora)
                 stopTimer()
                 // 初期値に戻す
                 resetCount()
