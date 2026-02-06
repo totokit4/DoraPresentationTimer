@@ -10,7 +10,7 @@ import SwiftUI
 private enum EditTarget: Identifiable {
     case duration
     case reminder(UUID)
-
+    
     var id: String {
         switch self {
         case .duration: return "duration"
@@ -24,9 +24,9 @@ import SwiftUI
 struct SettingsView: View {
     @EnvironmentObject var settingsStore: SettingsStore
     @State private var editTarget: EditTarget?
-
+    
     private let soundPlayer = SoundPlayer()
-
+    
     var body: some View {
         List {
             Section("Timer") {
@@ -38,7 +38,7 @@ struct SettingsView: View {
                     onTap: { editTarget = .duration }
                 )
             }
-
+            
             Section("Reminders") {
                 ForEach(settingsStore.settings.reminders) { r in
                     let middleText = (r.sound == .dora) ? "" : "終了\(r.secondsBeforeEnd)秒前"
@@ -64,7 +64,9 @@ struct SettingsView: View {
                     title: "Set Duration",
                     totalSeconds: Binding(
                         get: { settingsStore.settings.durationSeconds },
-                        set: { settingsStore.settings.durationSeconds = $0 }
+                        set: { newValue in
+                            settingsStore.update { $0.durationSeconds = newValue }
+                        }
                     ),
                     isTimerRunning: false
                 )
@@ -72,10 +74,20 @@ struct SettingsView: View {
                 .presentationDragIndicator(.visible)
 
             case .reminder(let id):
-                if let idx = settingsStore.settings.reminders.firstIndex(where: { $0.id == id }) {
+                if let rule = settingsStore.settings.reminders.first(where: { $0.id == id }) {
                     TimePickerSheet(
-                        title: settingsStore.settings.reminders[idx].label,
-                        totalSeconds: $settingsStore.settings.reminders[idx].secondsBeforeEnd,
+                        title: rule.label,
+                        totalSeconds: Binding(
+                            get: {
+                                settingsStore.settings.reminders.first(where: { $0.id == id })?.secondsBeforeEnd ?? 0
+                            },
+                            set: { newValue in
+                                settingsStore.update { settings in
+                                    guard let idx = settings.reminders.firstIndex(where: { $0.id == id }) else { return }
+                                    settings.reminders[idx].secondsBeforeEnd = newValue
+                                }
+                            }
+                        ),
                         isTimerRunning: false
                     )
                     .presentationDetents([.fraction(0.35), .medium])
@@ -84,7 +96,7 @@ struct SettingsView: View {
             }
         }
     }
-
+    
     private func oneLineRow(
         left: String,
         middle: String,
@@ -99,7 +111,6 @@ struct SettingsView: View {
                 .font(.footnote)
                 .foregroundStyle(.secondary)
                 .monospacedDigit()
-
             if showSpeaker {
                 Button(action: onSpeaker) {
                     Image(systemName: "speaker.wave.2.fill")
