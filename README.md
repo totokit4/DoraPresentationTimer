@@ -1,6 +1,100 @@
 # DoraPresentationTimer
 
-<img src="https://user-images.githubusercontent.com/30856683/236632662-d819cad1-f59d-426c-9fd4-e8885b212d24.png" width="400px">
-Presentation timer. 
-A gong will sound when the time is up. 
-Use it for conference presentations, conference presentations, and for practice presentations.
+プレゼンテーション中に、残り時間を「銅鑼の音」で知らせるための  シンプルなタイマーアプリです。
+
+---
+
+## 主な機能
+
+- カウントダウンタイマー
+- Start / Pause / Reset 操作
+- 終了◯秒前のリマインド音（2つ設定可能）
+- 終了時に銅鑼の音を再生
+- タイマー実行中は端末がスリープしない
+- 設定内容は端末内に保存され、次回起動時に復元されます
+
+---
+
+## 画面構成
+
+- **Timer画面**
+  - 残時間表示（タップで発表時間設定）
+  - Start / Pause ボタン
+  - Reset ボタン
+- **Settings画面**
+  - 発表時間の設定
+  - リマインド（終了◯秒前）の編集
+  - 各リマインド音の試聴
+
+---
+
+## 使い方
+
+### タイマーを使う
+
+1. 時間表示をタップして発表時間を設定します
+2. **Start** をタップするとカウントダウンが始まります
+3. 設定したタイミングでリマインド音が鳴ります
+4. **Pause** で一時停止できます
+
+### Reset の挙動
+
+- 1回目の Reset：  
+  設定した発表時間に戻ります
+- 2回目の Reset：  
+  **0:00 にクリア**され、次回起動時も 0:00 から始まります
+
+
+---
+
+## リマインド設定について
+
+- リマインドは「終了◯秒前」で設定します
+- 発表時間を超えるリマインドは設定できません
+- 終了（銅鑼）は固定で、編集できません
+- タイマー実行中に設定を変更しても、  
+  **その回のタイマー動作には影響しません**
+
+---
+
+## 技術情報
+
+- Swift 6
+- SwiftUI
+- Combine
+- iOS（対応バージョンは App Store を参照）
+
+### プロジェクト構成
+
+- `App/`  
+  アプリ起動処理のみ
+- `Core/`  
+  再利用可能なロジック  
+  - TimerEngine  
+  - SoundPlayer
+- `Features/Timer/`  
+  タイマー画面と状態管理
+- `Features/Settings/`  
+  設定画面と永続化処理
+- `Resources/`  
+  画像・音声ファイル
+
+---
+
+## データ保存とプライバシー
+
+- アカウント登録なし
+- ネットワーク通信なし
+- 広告・分析SDKなし
+- 設定は **端末内（UserDefaults）にのみ保存**されます
+
+---
+
+## 開発・ビルド
+
+1. Xcode でプロジェクトを開く
+2. シミュレータまたは実機を選択
+3. Run
+
+
+---

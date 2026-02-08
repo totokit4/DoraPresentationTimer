@@ -9,9 +9,11 @@ import SwiftUI
 
 @main
 struct DoraPresentationTimerApp: App {
+    @StateObject private var settingsStore = SettingsStore()
+
     var body: some Scene {
         WindowGroup {
-            TimerView(viewModel: TimerViewModel())
+            TimerView(viewModel: TimerViewModel(settingsStore: settingsStore)).environmentObject(settingsStore)
         }
     }
 }
