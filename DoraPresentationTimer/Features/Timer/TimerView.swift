@@ -93,9 +93,12 @@ private extension TimerView {
         .padding(.horizontal, 24)
     }
     
-    /// Start/Pauseボタン
+    /// Start / Pause ボタン
     var primaryButton: some View {
-        Button {
+        // 動作中もしくはタイマー設定が0だったら無効化する
+        let isStartDisabled = !viewModel.isTimerRunning && viewModel.remainingSeconds == 0
+        
+        return Button {
             if viewModel.isTimerRunning {
                 viewModel.stopTimer()
             } else {
@@ -108,9 +111,15 @@ private extension TimerView {
                 .frame(maxWidth: .infinity)
                 .padding(.vertical, 16)
         }
-        .background(viewModel.isTimerRunning ? Color(UIColor.lightGray) : Color.orange)
+        .disabled(isStartDisabled)
+        .background(
+            isStartDisabled
+            ? Color.gray
+            : (viewModel.isTimerRunning ? Color(UIColor.lightGray) : Color.orange)
+        )
         .clipShape(RoundedRectangle(cornerRadius: 12))
     }
+    
     
     /// リセットボタン
     var resetButton: some View {
@@ -130,11 +139,11 @@ private extension TimerView {
 struct TimerView_Previews: PreviewProvider {
     static var previews: some View {
         let settingsStore = SettingsStore()
-
+        
         Group {
             TimerView(viewModel: TimerViewModel(settingsStore: settingsStore))
                 .environmentObject(settingsStore)
-
+            
             TimerView(viewModel: TimerViewModel(settingsStore: settingsStore))
                 .environmentObject(settingsStore)
                 .previewInterfaceOrientation(.landscapeLeft)
