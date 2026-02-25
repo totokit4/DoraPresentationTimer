@@ -77,6 +77,7 @@ private extension TimerView {
                 
                 Text(viewModel.remainingSeconds.formattedAsMMSS)
                     .font(.system(size: fontSize, weight: .regular))
+                    .monospacedDigit() // 数字だけ等幅にする
                     .lineLimit(1)
                     .minimumScaleFactor(0.1)
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
