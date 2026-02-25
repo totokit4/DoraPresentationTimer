@@ -78,6 +78,12 @@ private extension TimerView {
                 Text(viewModel.remainingSeconds.formattedAsMMSS)
                     .font(.system(size: fontSize, weight: .regular))
                     .monospacedDigit() // 数字だけ等幅にする
+                    .foregroundStyle(
+                        // 残り10秒で赤くする
+                        viewModel.remainingSeconds <= 10 && viewModel.isTimerRunning
+                        ? Color.red.opacity(0.85)
+                        : Color.primary
+                    )
                     .lineLimit(1)
                     .minimumScaleFactor(0.1)
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
