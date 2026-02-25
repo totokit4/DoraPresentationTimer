@@ -60,11 +60,21 @@ final class TimerViewModel: ObservableObject {
     func startTimer() {
         guard !isTimerRunning else { return }
         
-        let duration = max(0, sessionDurationSeconds)
-        guard duration > 0 else { return }
-        
-        sessionDurationSeconds = duration
-        remainingSeconds = duration
+        // 0:00 からは開始できない
+        if remainingSeconds == 0 {
+            // 初回開始（or クリア状態）なら設定値から開始
+            let duration = max(0, sessionDurationSeconds)
+            guard duration > 0 else { return }
+            
+            sessionDurationSeconds = duration
+            remainingSeconds = duration
+        } else {
+            // 再開：remainingSeconds は触らない
+            // sessionDurationSeconds が未セットなら補完
+            if sessionDurationSeconds == 0 {
+                sessionDurationSeconds = max(0, settingsStore.settings.durationSeconds)
+            }
+        }
         
         // このセッションで使うremindersを固定
         sessionReminders = settingsStore.settings.reminders
