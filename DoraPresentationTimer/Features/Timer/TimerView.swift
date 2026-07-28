@@ -102,7 +102,7 @@ private extension TimerView {
     
     /// Start / Pause ボタン
     var primaryButton: some View {
-        // 動作中もしくはタイマー設定が0だったら無効化する
+        // 停止中かつ残り時間が0秒のときはStartボタンを無効化する
         let isStartDisabled = !viewModel.isTimerRunning && viewModel.remainingSeconds == 0
         
         return Button {
@@ -126,7 +126,6 @@ private extension TimerView {
         )
         .clipShape(RoundedRectangle(cornerRadius: 12))
     }
-    
     
     /// リセットボタン
     var resetButton: some View {
