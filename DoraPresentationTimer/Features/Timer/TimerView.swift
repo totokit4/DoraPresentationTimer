@@ -22,10 +22,25 @@ struct TimerView: View {
     
     var body: some View {
         NavigationStack {
-            VStack {
-                timeSection()
-                    .frame(maxHeight: .infinity) // なるべく大きくとる
-                timerButtonsSection
+            ZStack(alignment: .top) {
+                VStack {
+                    timeSection()
+                        .frame(maxHeight: .infinity) // なるべく大きくとる
+                    timerButtonsSection
+                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                
+                // TODO: iOSDCモードの時のみ有効にする
+                if let message = MarqueeWarningMessage.resolve(
+                    remainingSeconds: viewModel.remainingSeconds,
+                    isTimerRunning: viewModel.isTimerRunning
+                ) {
+                    MarqueeWarningText(text: message.text, duration: 5.0)
+                        .id(message)
+                        .frame(maxWidth: .infinity)
+                        .padding(.top, 16)
+                        .zIndex(1)
+                }
             }
             .sheet(isPresented: $isPickerPresented) {
                 TimePickerSheet(
