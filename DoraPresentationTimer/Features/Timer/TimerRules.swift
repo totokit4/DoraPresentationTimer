@@ -26,23 +26,23 @@ struct TimerRules {
         guard remainingSeconds >= 0 else { return nil }
         guard durationSeconds >= 0 else { return nil }
         
-        // 有効なルールのみ
-        let enabledReminders = reminders.filter { $0.isEnabled }
+        // 有効で時刻が設定されているルールのみ
+        let enabledReminders = reminders.filter { $0.isEnabled && $0.secondsBeforeEnd != nil }
 
         // 「残り◯秒」で鳴るルールを探す
         guard let rule = enabledReminders.first(where: {
             $0.secondsBeforeEnd == remainingSeconds
-        }) else {
+        }), let secondsBeforeEnd = rule.secondsBeforeEnd else {
             return nil
         }
 
         // 初期時間以下のリマインドは鳴らさない
-        if durationSeconds <= rule.secondsBeforeEnd {
+        if durationSeconds <= secondsBeforeEnd {
             return nil
         }
 
         // 終了（リマインドが終了時間より後に設定されていても無視））
-        if rule.secondsBeforeEnd == 0 {
+        if secondsBeforeEnd == 0 {
             return .finished
         }
 

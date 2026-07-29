@@ -36,7 +36,10 @@ final class SettingsStore: ObservableObject {
         s.reminders = s.reminders.map { r in
             var r = r
             if r.sound == .dora { r.secondsBeforeEnd = 0 }
-            r.secondsBeforeEnd = max(0, r.secondsBeforeEnd)
+            if let secondsBeforeEnd = r.secondsBeforeEnd {
+                let normalizedSeconds = max(0, secondsBeforeEnd)
+                r.secondsBeforeEnd = r.sound == .dora || normalizedSeconds > 0 ? normalizedSeconds : nil
+            }
             return r
         }
 
@@ -46,8 +49,8 @@ final class SettingsStore: ObservableObject {
         let maxSec = s.durationSeconds
         s.reminders = s.reminders.map { r in
             var r = r
-            if r.sound != .dora {
-                r.secondsBeforeEnd = min(r.secondsBeforeEnd, maxSec)
+            if r.sound != .dora, let secondsBeforeEnd = r.secondsBeforeEnd {
+                r.secondsBeforeEnd = min(secondsBeforeEnd, maxSec)
             }
             return r
         }
