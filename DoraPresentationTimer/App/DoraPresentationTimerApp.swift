@@ -13,7 +13,9 @@ struct DoraPresentationTimerApp: App {
 
     var body: some Scene {
         WindowGroup {
-            TimerView(viewModel: TimerViewModel(settingsStore: settingsStore)).environmentObject(settingsStore)
+            TimerView(viewModel: TimerViewModel(settingsStore: settingsStore))
+                .environmentObject(settingsStore)
+                .preferredColorScheme(settingsStore.settings.colorMode.colorScheme)
         }
     }
 }

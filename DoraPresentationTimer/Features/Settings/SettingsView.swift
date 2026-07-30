@@ -24,6 +24,14 @@ struct SettingsView: View {
     @State private var editTarget: EditTarget?
     
     private let soundPlayer = SoundPlayer()
+    private var colorModeBinding: Binding<AppColorMode> {
+        Binding(
+            get: { settingsStore.settings.colorMode },
+            set: { newValue in
+                settingsStore.update { $0.colorMode = newValue }
+            }
+        )
+    }
     
     var body: some View {
         List {
@@ -36,7 +44,7 @@ struct SettingsView: View {
                     onTap: { editTarget = .duration }
                 )
             }
-            
+
             Section("Reminders") {
                 ForEach(settingsStore.settings.reminders) { r in
                     let middleText = reminderText(for: r)
@@ -52,6 +60,15 @@ struct SettingsView: View {
                         }
                     )
                 }
+            }
+
+            Section("Appearance") {
+                Picker("カラーモード", selection: colorModeBinding) {
+                    ForEach(AppColorMode.allCases) { mode in
+                        Text(mode.displayName).tag(mode)
+                    }
+                }
+                .pickerStyle(.segmented)
             }
         }
         .navigationTitle("Settings")
