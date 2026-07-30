@@ -19,13 +19,19 @@ private enum EditTarget: Identifiable {
     }
 }
 
-import SwiftUI
-
 struct SettingsView: View {
     @EnvironmentObject var settingsStore: SettingsStore
     @State private var editTarget: EditTarget?
     
     private let soundPlayer = SoundPlayer()
+    private var colorModeBinding: Binding<AppColorMode> {
+        Binding(
+            get: { settingsStore.settings.colorMode },
+            set: { newValue in
+                settingsStore.update { $0.colorMode = newValue }
+            }
+        )
+    }
     
     var body: some View {
         List {
@@ -38,7 +44,7 @@ struct SettingsView: View {
                     onTap: { editTarget = .duration }
                 )
             }
-            
+
             Section("Reminders") {
                 ForEach(settingsStore.settings.reminders) { r in
                     let middleText = (r.sound == .dora) ? "" : "終了\(r.secondsBeforeEnd)秒前"
@@ -54,6 +60,15 @@ struct SettingsView: View {
                         }
                     )
                 }
+            }
+
+            Section("Appearance") {
+                Picker("カラーモード", selection: colorModeBinding) {
+                    ForEach(AppColorMode.allCases) { mode in
+                        Text(mode.displayName).tag(mode)
+                    }
+                }
+                .pickerStyle(.segmented)
             }
         }
         .navigationTitle("Settings")
