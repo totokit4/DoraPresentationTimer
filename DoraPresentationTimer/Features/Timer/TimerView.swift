@@ -125,17 +125,29 @@ private extension TimerView {
         } label: {
             Text(viewModel.isTimerRunning ? "Pause" : "Start")
                 .font(.largeTitle)
-                .foregroundColor(.white)
+                .foregroundStyle(primaryButtonForegroundColor(isStartDisabled: isStartDisabled))
                 .frame(maxWidth: .infinity)
                 .padding(.vertical, 16)
         }
         .disabled(isStartDisabled)
-        .background(
-            isStartDisabled
-            ? Color.gray
-            : (viewModel.isTimerRunning ? Color(UIColor.lightGray) : Color.orange)
-        )
+        .background(primaryButtonBackgroundColor(isStartDisabled: isStartDisabled))
         .clipShape(RoundedRectangle(cornerRadius: 12))
+    }
+
+    private func primaryButtonBackgroundColor(isStartDisabled: Bool) -> Color {
+        if isStartDisabled {
+            return Color(uiColor: .systemGray4)
+        }
+
+        return viewModel.isTimerRunning ? Color(uiColor: .systemGray5) : .orange
+    }
+
+    private func primaryButtonForegroundColor(isStartDisabled: Bool) -> Color {
+        if isStartDisabled || viewModel.isTimerRunning {
+            return .primary
+        }
+
+        return .white
     }
     
     
@@ -165,6 +177,10 @@ struct TimerView_Previews: PreviewProvider {
             TimerView(viewModel: TimerViewModel(settingsStore: settingsStore))
                 .environmentObject(settingsStore)
                 .previewInterfaceOrientation(.landscapeLeft)
+
+            TimerView(viewModel: TimerViewModel(settingsStore: settingsStore))
+                .environmentObject(settingsStore)
+                .preferredColorScheme(.dark)
         }
     }
 }
