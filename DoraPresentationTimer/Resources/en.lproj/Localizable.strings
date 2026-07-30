@@ -1,0 +1,26 @@
+"section.timer" = "Timer";
+"section.reminders" = "Reminders";
+"section.appearance" = "Appearance";
+
+"settings.title" = "Settings";
+"settings.duration" = "Presentation Time";
+"settings.colorMode" = "Color Mode";
+"settings.reminder.secondsBeforeEnd" = "%d seconds before end";
+
+"reminder.first" = "First Reminder";
+"reminder.second" = "Second Reminder";
+"reminder.finish" = "End Time";
+
+"colorMode.system" = "System";
+"colorMode.light" = "Light";
+"colorMode.dark" = "Dark";
+
+"sheet.setTime" = "Set Time";
+"sheet.setDuration" = "Set Duration";
+"time.minute" = "min";
+"time.second" = "sec";
+"button.close" = "Close";
+
+"timer.start" = "Start";
+"timer.pause" = "Pause";
+"timer.reset" = "Reset";

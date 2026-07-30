@@ -30,8 +30,8 @@ struct TimePickerSheet: View {
     var body: some View {
         NavigationStack {
             HStack(spacing: 24) {
-                labeledPicker(title: "分", value: $minute)
-                labeledPicker(title: "秒", value: $second)
+                labeledPicker(title: String(localized: "time.minute"), value: $minute)
+                labeledPicker(title: String(localized: "time.second"), value: $second)
             }
             .padding()
             .disabled(isTimerRunning)
@@ -39,7 +39,7 @@ struct TimePickerSheet: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button("Close") { dismiss() }
+                    Button("button.close") { dismiss() }
                 }
             }
         }

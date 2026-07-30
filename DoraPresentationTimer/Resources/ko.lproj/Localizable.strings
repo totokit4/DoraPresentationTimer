@@ -1,0 +1,26 @@
+"section.timer" = "타이머";
+"section.reminders" = "알림";
+"section.appearance" = "화면";
+
+"settings.title" = "설정";
+"settings.duration" = "발표 시간";
+"settings.colorMode" = "색상 모드";
+"settings.reminder.secondsBeforeEnd" = "종료 %d초 전";
+
+"reminder.first" = "첫 번째 알림";
+"reminder.second" = "두 번째 알림";
+"reminder.finish" = "종료 시간";
+
+"colorMode.system" = "시스템";
+"colorMode.light" = "라이트";
+"colorMode.dark" = "다크";
+
+"sheet.setTime" = "시간 설정";
+"sheet.setDuration" = "발표 시간 설정";
+"time.minute" = "분";
+"time.second" = "초";
+"button.close" = "닫기";
+
+"timer.start" = "시작";
+"timer.pause" = "일시 정지";
+"timer.reset" = "재설정";

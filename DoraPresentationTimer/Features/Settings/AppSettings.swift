@@ -44,4 +44,15 @@ struct ReminderRule: Codable, Equatable, Identifiable {
     var secondsBeforeEnd: Int?
     var sound: SoundType
     var isEnabled: Bool
+
+    var localizedLabel: String {
+        switch sound {
+        case .clappers1:
+            return String(localized: "reminder.first")
+        case .clappers2:
+            return String(localized: "reminder.second")
+        case .dora:
+            return String(localized: "reminder.finish")
+        }
+    }
 }

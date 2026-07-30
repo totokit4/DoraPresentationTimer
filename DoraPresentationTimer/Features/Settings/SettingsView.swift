@@ -35,9 +35,9 @@ struct SettingsView: View {
     
     var body: some View {
         List {
-            Section("Timer") {
+            Section("section.timer") {
                 oneLineRow(
-                    left: "発表時間",
+                    left: String(localized: "settings.duration"),
                     middle: settingsStore.settings.durationSeconds.formattedAsMMSS,
                     showSpeaker: false,
                     onSpeaker: {},
@@ -45,12 +45,15 @@ struct SettingsView: View {
                 )
             }
 
-            Section("Reminders") {
+            Section("section.reminders") {
                 ForEach(settingsStore.settings.reminders) { r in
-                    let middleText = reminderText(for: r)
+                    let middleText = r.sound == .dora ? "" : String(
+                        format: NSLocalizedString("settings.reminder.secondsBeforeEnd", comment: ""),
+                        r.secondsBeforeEnd ?? 0
+                    )
                     
                     oneLineRow(
-                        left: r.label,
+                        left: r.localizedLabel,
                         middle: middleText,
                         showSpeaker: true,
                         onSpeaker: { soundPlayer.play(r.sound) },
@@ -62,8 +65,8 @@ struct SettingsView: View {
                 }
             }
 
-            Section("Appearance") {
-                Picker("カラーモード", selection: colorModeBinding) {
+            Section("section.appearance") {
+                Picker("settings.colorMode", selection: colorModeBinding) {
                     ForEach(AppColorMode.allCases) { mode in
                         Text(mode.displayName).tag(mode)
                     }
@@ -71,12 +74,12 @@ struct SettingsView: View {
                 .pickerStyle(.segmented)
             }
         }
-        .navigationTitle("Settings")
+        .navigationTitle("settings.title")
         .sheet(item: $editTarget) { target in
             switch target {
             case .duration:
                 TimePickerSheet(
-                    title: "Set Duration",
+                    title: String(localized: "sheet.setDuration"),
                     totalSeconds: Binding(
                         get: { settingsStore.settings.durationSeconds },
                         set: { newValue in
@@ -91,7 +94,7 @@ struct SettingsView: View {
             case .reminder(let id):
                 if let rule = settingsStore.settings.reminders.first(where: { $0.id == id }) {
                     ReminderTimePickerSheet(
-                        title: rule.label,
+                        title: rule.localizedLabel,
                         totalSeconds: Binding(
                             get: {
                                 settingsStore.settings.reminders.first(where: { $0.id == id })?.secondsBeforeEnd

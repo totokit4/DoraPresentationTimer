@@ -29,7 +29,7 @@ struct TimerView: View {
             }
             .sheet(isPresented: $isPickerPresented) {
                 TimePickerSheet(
-                    title: "Set Time",
+                    title: String(localized: "sheet.setTime"),
                     totalSeconds: Binding(
                         get: { selectedMinute * 60 + selectedSecond },
                         set: { total in
@@ -123,7 +123,7 @@ private extension TimerView {
                 viewModel.startTimer()
             }
         } label: {
-            Text(viewModel.isTimerRunning ? "Pause" : "Start")
+            Text(LocalizedStringKey(viewModel.isTimerRunning ? "timer.pause" : "timer.start"))
                 .font(.largeTitle)
                 .foregroundStyle(primaryButtonForegroundColor(isStartDisabled: isStartDisabled))
                 .frame(maxWidth: .infinity)
@@ -156,7 +156,7 @@ private extension TimerView {
         Button {
             viewModel.resetCount()
         } label: {
-            Label("Reset", systemImage: "arrow.counterclockwise")
+            Label("timer.reset", systemImage: "arrow.counterclockwise")
                 .font(.title3)
         }
         .buttonStyle(.plain)

@@ -1,0 +1,26 @@
+"section.timer" = "Temporizador";
+"section.reminders" = "Recordatorios";
+"section.appearance" = "Apariencia";
+
+"settings.title" = "Configuración";
+"settings.duration" = "Tiempo de presentación";
+"settings.colorMode" = "Modo de color";
+"settings.reminder.secondsBeforeEnd" = "%d segundos antes del final";
+
+"reminder.first" = "Primer recordatorio";
+"reminder.second" = "Segundo recordatorio";
+"reminder.finish" = "Hora de finalización";
+
+"colorMode.system" = "Sistema";
+"colorMode.light" = "Claro";
+"colorMode.dark" = "Oscuro";
+
+"sheet.setTime" = "Establecer tiempo";
+"sheet.setDuration" = "Establecer duración";
+"time.minute" = "min";
+"time.second" = "s";
+"button.close" = "Cerrar";
+
+"timer.start" = "Iniciar";
+"timer.pause" = "Pausar";
+"timer.reset" = "Restablecer";

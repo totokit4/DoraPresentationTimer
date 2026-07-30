@@ -118,6 +118,9 @@
 				en,
 				Base,
 				ja,
+				"zh-Hans",
+				ko,
+				es,
 			);
 			mainGroup = C54EC7862916B70600CC131C;
 			productRefGroup = C54EC7902916B70600CC131C /* Products */;
