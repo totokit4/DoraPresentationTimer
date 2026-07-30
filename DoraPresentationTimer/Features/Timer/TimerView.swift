@@ -59,8 +59,17 @@ struct TimerView: View {
             }
         }
         .onAppear {
-            viewModel.setInitialTime(minutes: selectedMinute, seconds: selectedSecond)
+            syncSelectedTimeFromViewModel()
         }
+    }
+    
+    /// TimePickerSheet の初期表示を、現在の残り時間に合わせる
+    ///
+    /// viewModel の値は変更せず、Picker用の selectedMinute / selectedSecond のみ更新する。
+    private func syncSelectedTimeFromViewModel() {
+        let total = max(0, viewModel.remainingSeconds)
+        selectedMinute = total / 60
+        selectedSecond = total % 60
     }
 }
 
@@ -68,6 +77,8 @@ private extension TimerView {
     private func timeSection() -> some View {
         Button {
             guard !viewModel.isTimerRunning else { return }
+            
+            syncSelectedTimeFromViewModel()
             isPickerPresented = true
         } label: {
             GeometryReader { geo in

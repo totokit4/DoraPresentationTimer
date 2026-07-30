@@ -24,7 +24,7 @@ struct AppSettings: Codable, Equatable {
 struct ReminderRule: Codable, Equatable, Identifiable {
     let id: UUID
     var label: String
-    var secondsBeforeEnd: Int
+    var secondsBeforeEnd: Int?
     var sound: SoundType
     var isEnabled: Bool
 }

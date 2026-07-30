@@ -19,8 +19,6 @@ private enum EditTarget: Identifiable {
     }
 }
 
-import SwiftUI
-
 struct SettingsView: View {
     @EnvironmentObject var settingsStore: SettingsStore
     @State private var editTarget: EditTarget?
@@ -41,7 +39,7 @@ struct SettingsView: View {
             
             Section("Reminders") {
                 ForEach(settingsStore.settings.reminders) { r in
-                    let middleText = (r.sound == .dora) ? "" : "終了\(r.secondsBeforeEnd)秒前"
+                    let middleText = reminderText(for: r)
                     
                     oneLineRow(
                         left: r.label,
@@ -75,11 +73,11 @@ struct SettingsView: View {
 
             case .reminder(let id):
                 if let rule = settingsStore.settings.reminders.first(where: { $0.id == id }) {
-                    TimePickerSheet(
+                    ReminderTimePickerSheet(
                         title: rule.label,
                         totalSeconds: Binding(
                             get: {
-                                settingsStore.settings.reminders.first(where: { $0.id == id })?.secondsBeforeEnd ?? 0
+                                settingsStore.settings.reminders.first(where: { $0.id == id })?.secondsBeforeEnd
                             },
                             set: { newValue in
                                 settingsStore.update { settings in
@@ -88,13 +86,19 @@ struct SettingsView: View {
                                 }
                             }
                         ),
-                        isTimerRunning: false
+                        maxSeconds: settingsStore.settings.durationSeconds
                     )
                     .presentationDetents([.fraction(0.35), .medium])
                     .presentationDragIndicator(.visible)
                 }
             }
         }
+    }
+
+    private func reminderText(for rule: ReminderRule) -> String {
+        guard rule.sound != .dora else { return "" }
+        guard let secondsBeforeEnd = rule.secondsBeforeEnd else { return "未設定" }
+        return "終了\(secondsBeforeEnd)秒前"
     }
     
     private func oneLineRow(
