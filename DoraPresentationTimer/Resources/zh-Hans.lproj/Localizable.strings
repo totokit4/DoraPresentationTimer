@@ -1,11 +1,14 @@
 "section.timer" = "计时器";
 "section.reminders" = "提醒";
 "section.appearance" = "外观";
+"section.language" = "语言";
 
 "settings.title" = "设置";
 "settings.duration" = "演示时长";
 "settings.colorMode" = "颜色模式";
+"settings.language" = "语言";
 "settings.reminder.secondsBeforeEnd" = "结束前%d秒";
+"settings.reminder.unset" = "未设置";
 
 "reminder.first" = "第一次提醒";
 "reminder.second" = "第二次提醒";

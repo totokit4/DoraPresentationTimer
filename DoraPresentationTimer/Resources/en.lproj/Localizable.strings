@@ -1,11 +1,14 @@
 "section.timer" = "Timer";
 "section.reminders" = "Reminders";
 "section.appearance" = "Appearance";
+"section.language" = "Language";
 
 "settings.title" = "Settings";
 "settings.duration" = "Presentation Time";
 "settings.colorMode" = "Color Mode";
+"settings.language" = "Language";
 "settings.reminder.secondsBeforeEnd" = "%d seconds before end";
+"settings.reminder.unset" = "Not Set";
 
 "reminder.first" = "First Reminder";
 "reminder.second" = "Second Reminder";

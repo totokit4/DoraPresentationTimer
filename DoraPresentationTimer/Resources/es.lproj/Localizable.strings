@@ -1,11 +1,14 @@
 "section.timer" = "Temporizador";
 "section.reminders" = "Recordatorios";
 "section.appearance" = "Apariencia";
+"section.language" = "Idioma";
 
 "settings.title" = "Configuración";
 "settings.duration" = "Tiempo de presentación";
 "settings.colorMode" = "Modo de color";
+"settings.language" = "Idioma";
 "settings.reminder.secondsBeforeEnd" = "%d segundos antes del final";
+"settings.reminder.unset" = "Sin configurar";
 
 "reminder.first" = "Primer recordatorio";
 "reminder.second" = "Segundo recordatorio";

@@ -18,7 +18,7 @@ enum AppColorMode: String, Codable, Equatable, CaseIterable, Identifiable {
         NSLocalizedString(localizationKey, comment: "")
     }
 
-    private var localizationKey: String {
+    var localizationKey: String {
         switch self {
         case .system: return "colorMode.system"
         case .light: return "colorMode.light"

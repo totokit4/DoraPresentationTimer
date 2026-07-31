@@ -10,7 +10,7 @@ import SwiftUI
 struct TimePickerSheet: View {
     @Environment(\.dismiss) private var dismiss
 
-    let title: String
+    let title: LocalizedStringKey
     @Binding var totalSeconds: Int
     let isTimerRunning: Bool
 
@@ -18,7 +18,7 @@ struct TimePickerSheet: View {
     @State private var second: Int = 0
 
     init(
-        title: String,
+        title: LocalizedStringKey,
         totalSeconds: Binding<Int>,
         isTimerRunning: Bool
     ) {
@@ -30,12 +30,12 @@ struct TimePickerSheet: View {
     var body: some View {
         NavigationStack {
             HStack(spacing: 24) {
-                labeledPicker(title: String(localized: "time.minute"), value: $minute)
-                labeledPicker(title: String(localized: "time.second"), value: $second)
+                labeledPicker(title: "time.minute", value: $minute)
+                labeledPicker(title: "time.second", value: $second)
             }
             .padding()
             .disabled(isTimerRunning)
-            .navigationTitle(title)
+            .navigationTitle(Text(title))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
@@ -55,7 +55,7 @@ struct TimePickerSheet: View {
         totalSeconds = max(0, minute * 60 + second)
     }
 
-    private func labeledPicker(title: String, value: Binding<Int>) -> some View {
+    private func labeledPicker(title: LocalizedStringKey, value: Binding<Int>) -> some View {
         VStack(spacing: 8) {
             Text(title).foregroundStyle(.secondary)
             Picker(selection: value, label: EmptyView()) {
@@ -70,7 +70,7 @@ struct TimePickerSheet: View {
 struct ReminderTimePickerSheet: View {
     @Environment(\.dismiss) private var dismiss
 
-    let title: String
+    let title: LocalizedStringKey
     @Binding var totalSeconds: Int?
     let maxSeconds: Int
 
@@ -106,15 +106,15 @@ struct ReminderTimePickerSheet: View {
     var body: some View {
         NavigationStack {
             HStack(spacing: 24) {
-                labeledPicker(title: "分", value: $minute, values: minuteValues)
-                labeledPicker(title: "秒", value: $second, values: secondValues)
+                labeledPicker(title: "time.minute", value: $minute, values: minuteValues)
+                labeledPicker(title: "time.second", value: $second, values: secondValues)
             }
             .padding()
-            .navigationTitle(title)
+            .navigationTitle(Text(title))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button("Close") { dismiss() }
+                    Button("button.close") { dismiss() }
                 }
             }
         }
@@ -165,7 +165,7 @@ struct ReminderTimePickerSheet: View {
         totalSeconds = total == 0 ? nil : total
     }
 
-    private func labeledPicker(title: String, value: Binding<Int?>, values: [Int]) -> some View {
+    private func labeledPicker(title: LocalizedStringKey, value: Binding<Int?>, values: [Int]) -> some View {
         VStack(spacing: 8) {
             Text(title).foregroundStyle(.secondary)
             Picker(selection: value, label: EmptyView()) {

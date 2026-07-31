@@ -1,11 +1,14 @@
 "section.timer" = "タイマー";
 "section.reminders" = "リマインダー";
 "section.appearance" = "外観";
+"section.language" = "言語";
 
 "settings.title" = "設定";
 "settings.duration" = "発表時間";
 "settings.colorMode" = "カラーモード";
+"settings.language" = "言語";
 "settings.reminder.secondsBeforeEnd" = "終了%d秒前";
+"settings.reminder.unset" = "未設定";
 
 "reminder.first" = "リマインド1回目";
 "reminder.second" = "リマインド2回目";

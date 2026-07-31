@@ -29,7 +29,7 @@ struct TimerView: View {
             }
             .sheet(isPresented: $isPickerPresented) {
                 TimePickerSheet(
-                    title: String(localized: "sheet.setTime"),
+                    title: "sheet.setTime",
                     totalSeconds: Binding(
                         get: { selectedMinute * 60 + selectedSecond },
                         set: { total in
