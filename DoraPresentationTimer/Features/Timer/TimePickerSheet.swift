@@ -58,7 +58,7 @@ struct TimePickerSheet: View {
     private func labeledPicker(title: LocalizedStringKey, value: Binding<Int>) -> some View {
         VStack(spacing: 8) {
             Text(title).foregroundStyle(.secondary)
-            Picker(selection: value, label: EmptyView()) {
+            Picker(title, selection: value) {
                 ForEach(0..<60, id: \.self) { Text("\($0)") }
             }
             .pickerStyle(.wheel)
@@ -168,8 +168,8 @@ struct ReminderTimePickerSheet: View {
     private func labeledPicker(title: LocalizedStringKey, value: Binding<Int?>, values: [Int]) -> some View {
         VStack(spacing: 8) {
             Text(title).foregroundStyle(.secondary)
-            Picker(selection: value, label: EmptyView()) {
-                Text(" ").tag(Int?.none)
+            Picker(title, selection: value) {
+                Text(" ").tag(Int?.none).accessibilityLabel("settings.reminder.unset")
                 ForEach(values, id: \.self) { Text("\($0)").tag(Optional($0)) }
             }
             .pickerStyle(.wheel)

@@ -27,3 +27,15 @@
 "timer.start" = "Iniciar";
 "timer.pause" = "Pausar";
 "timer.reset" = "Restablecer";
+
+"accessibility.time.minutesSeconds" = "%d minutos, %d segundos";
+"accessibility.timer.remainingTime" = "Tiempo restante";
+"accessibility.timer.setTimeHint" = "Toca dos veces para establecer el tiempo.";
+"accessibility.timer.runningHint" = "El temporizador está en marcha.";
+"accessibility.timer.startHint" = "Inicia el temporizador.";
+"accessibility.timer.pauseHint" = "Pausa el temporizador.";
+"accessibility.timer.resetHint" = "Restablece el temporizador al tiempo de presentación.";
+"accessibility.timer.finished" = "Temporizador finalizado.";
+"accessibility.settings.editHint" = "Toca dos veces para editar.";
+"accessibility.settings.previewSound" = "Previsualizar sonido para %@";
+"accessibility.settings.previewSoundHint" = "Reproduce este sonido de recordatorio.";

@@ -144,13 +144,24 @@ final class TimerViewModel: ObservableObject {
             switch event {
             case .playSound(let sound):
                 soundPlayer.play(sound)
+                announceReminder(for: sound)
                 
             case .finished:
                 soundPlayer.play(.dora)
+                announce(settingsStore.settings.language.localizedString(forKey: "accessibility.timer.finished"))
                 stopTimer()
                 // 初期値に戻す
                 resetCount()
             }
         }
+    }
+
+    private func announceReminder(for sound: SoundType) {
+        guard let rule = sessionReminders.first(where: { $0.sound == sound }) else { return }
+        announce(settingsStore.settings.language.localizedString(forKey: rule.localizationKey))
+    }
+
+    private func announce(_ message: String) {
+        UIAccessibility.post(notification: .announcement, argument: message)
     }
 }

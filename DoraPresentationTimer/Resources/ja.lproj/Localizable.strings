@@ -27,3 +27,15 @@
 "timer.start" = "開始";
 "timer.pause" = "一時停止";
 "timer.reset" = "リセット";
+
+"accessibility.time.minutesSeconds" = "%d分%d秒";
+"accessibility.timer.remainingTime" = "残り時間";
+"accessibility.timer.setTimeHint" = "ダブルタップで時間を設定します。";
+"accessibility.timer.runningHint" = "タイマーは実行中です。";
+"accessibility.timer.startHint" = "タイマーを開始します。";
+"accessibility.timer.pauseHint" = "タイマーを一時停止します。";
+"accessibility.timer.resetHint" = "タイマーを発表時間に戻します。";
+"accessibility.timer.finished" = "タイマーが終了しました。";
+"accessibility.settings.editHint" = "ダブルタップで編集します。";
+"accessibility.settings.previewSound" = "%@の音を試聴";
+"accessibility.settings.previewSoundHint" = "このリマインダー音を再生します。";

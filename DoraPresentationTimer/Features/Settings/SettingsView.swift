@@ -49,7 +49,10 @@ struct SettingsView: View {
                 oneLineRow(
                     left: "settings.duration",
                     middle: settingsStore.settings.durationSeconds.formattedAsMMSS,
+                    accessibilityValue: settingsStore.settings.durationSeconds.formattedForAccessibility(language: settingsStore.settings.language),
                     showSpeaker: false,
+                    isEditable: true,
+                    speakerAccessibilityLabel: "",
                     onSpeaker: {},
                     onTap: { editTarget = .duration }
                 )
@@ -60,7 +63,10 @@ struct SettingsView: View {
                     oneLineRow(
                         left: LocalizedStringKey(r.localizationKey),
                         middle: reminderText(for: r),
+                        accessibilityValue: reminderText(for: r),
                         showSpeaker: true,
+                        isEditable: r.sound != .dora,
+                        speakerAccessibilityLabel: soundPreviewAccessibilityLabel(for: r),
                         onSpeaker: { soundPlayer.play(r.sound) },
                         onTap: {
                             guard r.sound != .dora else { return }
@@ -141,29 +147,52 @@ struct SettingsView: View {
             secondsBeforeEnd
         )
     }
+
+    private func soundPreviewAccessibilityLabel(for rule: ReminderRule) -> String {
+        let format = settingsStore.settings.language.localizedString(forKey: "accessibility.settings.previewSound")
+        let reminderName = settingsStore.settings.language.localizedString(forKey: rule.localizationKey)
+        return String(
+            format: format,
+            locale: Locale(identifier: settingsStore.settings.language.localeIdentifier),
+            reminderName
+        )
+    }
     
     private func oneLineRow(
         left: LocalizedStringKey,
         middle: String,
+        accessibilityValue: String,
         showSpeaker: Bool,
+        isEditable: Bool,
+        speakerAccessibilityLabel: String,
         onSpeaker: @escaping () -> Void,
         onTap: @escaping () -> Void
     ) -> some View {
         HStack(spacing: 12) {
-            Text(left)
-            Spacer()
-            Text(middle)
-                .font(.footnote)
-                .foregroundStyle(.secondary)
-                .monospacedDigit()
+            Button(action: onTap) {
+                HStack(spacing: 12) {
+                    Text(left)
+                    Spacer()
+                    Text(middle)
+                        .font(.footnote)
+                        .foregroundStyle(.secondary)
+                        .monospacedDigit()
+                }
+            }
+            .buttonStyle(.plain)
+            .disabled(!isEditable)
+            .accessibilityLabel(left)
+            .accessibilityValue(Text(accessibilityValue))
+            .accessibilityHint(isEditable ? "accessibility.settings.editHint" : "")
+
             if showSpeaker {
                 Button(action: onSpeaker) {
                     Image(systemName: "speaker.wave.2.fill")
                 }
                 .buttonStyle(.plain)
+                .accessibilityLabel(Text(speakerAccessibilityLabel))
+                .accessibilityHint("accessibility.settings.previewSoundHint")
             }
         }
-        .contentShape(Rectangle())
-        .onTapGesture(perform: onTap)
     }
 }
