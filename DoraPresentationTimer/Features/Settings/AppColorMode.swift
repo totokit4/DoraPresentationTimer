@@ -15,10 +15,14 @@ enum AppColorMode: String, Codable, Equatable, CaseIterable, Identifiable {
     var id: String { rawValue }
 
     var displayName: String {
+        NSLocalizedString(localizationKey, comment: "")
+    }
+
+    var localizationKey: String {
         switch self {
-        case .system: return "システム"
-        case .light: return "ライト"
-        case .dark: return "ダーク"
+        case .system: return "colorMode.system"
+        case .light: return "colorMode.light"
+        case .dark: return "colorMode.dark"
         }
     }
 

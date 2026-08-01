@@ -24,6 +24,7 @@ struct SettingsView: View {
     @State private var editTarget: EditTarget?
     
     private let soundPlayer = SoundPlayer()
+
     private var colorModeBinding: Binding<AppColorMode> {
         Binding(
             get: { settingsStore.settings.colorMode },
@@ -32,12 +33,21 @@ struct SettingsView: View {
             }
         )
     }
+
+    private var languageBinding: Binding<AppLanguage> {
+        Binding(
+            get: { settingsStore.settings.language },
+            set: { newValue in
+                settingsStore.update { $0.language = newValue }
+            }
+        )
+    }
     
     var body: some View {
         List {
-            Section("Timer") {
+            Section("section.timer") {
                 oneLineRow(
-                    left: "発表時間",
+                    left: "settings.duration",
                     middle: settingsStore.settings.durationSeconds.formattedAsMMSS,
                     showSpeaker: false,
                     onSpeaker: {},
@@ -45,13 +55,11 @@ struct SettingsView: View {
                 )
             }
 
-            Section("Reminders") {
+            Section("section.reminders") {
                 ForEach(settingsStore.settings.reminders) { r in
-                    let middleText = reminderText(for: r)
-                    
                     oneLineRow(
-                        left: r.label,
-                        middle: middleText,
+                        left: LocalizedStringKey(r.localizationKey),
+                        middle: reminderText(for: r),
                         showSpeaker: true,
                         onSpeaker: { soundPlayer.play(r.sound) },
                         onTap: {
@@ -62,21 +70,29 @@ struct SettingsView: View {
                 }
             }
 
-            Section("Appearance") {
-                Picker("カラーモード", selection: colorModeBinding) {
+            Section("section.appearance") {
+                Picker("settings.colorMode", selection: colorModeBinding) {
                     ForEach(AppColorMode.allCases) { mode in
-                        Text(mode.displayName).tag(mode)
+                        Text(LocalizedStringKey(mode.localizationKey)).tag(mode)
                     }
                 }
                 .pickerStyle(.segmented)
             }
+
+            Section("section.language") {
+                Picker("settings.language", selection: languageBinding) {
+                    ForEach(AppLanguage.allCases) { language in
+                        Text(language.displayName).tag(language)
+                    }
+                }
+            }
         }
-        .navigationTitle("Settings")
+        .navigationTitle("settings.title")
         .sheet(item: $editTarget) { target in
             switch target {
             case .duration:
                 TimePickerSheet(
-                    title: "Set Duration",
+                    title: "sheet.setDuration",
                     totalSeconds: Binding(
                         get: { settingsStore.settings.durationSeconds },
                         set: { newValue in
@@ -91,7 +107,7 @@ struct SettingsView: View {
             case .reminder(let id):
                 if let rule = settingsStore.settings.reminders.first(where: { $0.id == id }) {
                     ReminderTimePickerSheet(
-                        title: rule.label,
+                        title: LocalizedStringKey(rule.localizationKey),
                         totalSeconds: Binding(
                             get: {
                                 settingsStore.settings.reminders.first(where: { $0.id == id })?.secondsBeforeEnd
@@ -114,12 +130,20 @@ struct SettingsView: View {
 
     private func reminderText(for rule: ReminderRule) -> String {
         guard rule.sound != .dora else { return "" }
-        guard let secondsBeforeEnd = rule.secondsBeforeEnd else { return "未設定" }
-        return "終了\(secondsBeforeEnd)秒前"
+        guard let secondsBeforeEnd = rule.secondsBeforeEnd else {
+            return settingsStore.settings.language.localizedString(forKey: "settings.reminder.unset")
+        }
+
+        let format = settingsStore.settings.language.localizedString(forKey: "settings.reminder.secondsBeforeEnd")
+        return String(
+            format: format,
+            locale: Locale(identifier: settingsStore.settings.language.localeIdentifier),
+            secondsBeforeEnd
+        )
     }
     
     private func oneLineRow(
-        left: String,
+        left: LocalizedStringKey,
         middle: String,
         showSpeaker: Bool,
         onSpeaker: @escaping () -> Void,

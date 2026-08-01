@@ -15,6 +15,7 @@ struct DoraPresentationTimerApp: App {
         WindowGroup {
             TimerView(viewModel: TimerViewModel(settingsStore: settingsStore))
                 .environmentObject(settingsStore)
+                .environment(\.locale, Locale(identifier: settingsStore.settings.language.localeIdentifier))
                 .preferredColorScheme(settingsStore.settings.colorMode.colorScheme)
         }
     }

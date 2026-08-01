@@ -1,0 +1,29 @@
+"section.timer" = "タイマー";
+"section.reminders" = "リマインダー";
+"section.appearance" = "外観";
+"section.language" = "言語";
+
+"settings.title" = "設定";
+"settings.duration" = "発表時間";
+"settings.colorMode" = "カラーモード";
+"settings.language" = "言語";
+"settings.reminder.secondsBeforeEnd" = "終了%d秒前";
+"settings.reminder.unset" = "未設定";
+
+"reminder.first" = "リマインド1回目";
+"reminder.second" = "リマインド2回目";
+"reminder.finish" = "終了時間";
+
+"colorMode.system" = "システム";
+"colorMode.light" = "ライト";
+"colorMode.dark" = "ダーク";
+
+"sheet.setTime" = "時間を設定";
+"sheet.setDuration" = "発表時間を設定";
+"time.minute" = "分";
+"time.second" = "秒";
+"button.close" = "閉じる";
+
+"timer.start" = "開始";
+"timer.pause" = "一時停止";
+"timer.reset" = "リセット";
