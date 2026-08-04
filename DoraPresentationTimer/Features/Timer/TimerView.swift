@@ -9,6 +9,7 @@ import SwiftUI
 
 /// タイマー画面
 struct TimerView: View {
+    @EnvironmentObject private var settingsStore: SettingsStore
     @ObservedObject private var viewModel: TimerViewModel
     
     @State private var selectedMinute: Int = 0
@@ -55,6 +56,7 @@ struct TimerView: View {
                     } label: {
                         Image(systemName: "gearshape")
                     }
+                    .accessibilityLabel("settings.title")
                 }
             }
         }
@@ -101,6 +103,10 @@ private extension TimerView {
             }
         }
         .buttonStyle(.plain)
+        .disabled(viewModel.isTimerRunning)
+        .accessibilityLabel("accessibility.timer.remainingTime")
+        .accessibilityValue(Text(viewModel.remainingSeconds.formattedForAccessibility(language: settingsStore.settings.language)))
+        .accessibilityHint(viewModel.isTimerRunning ? "accessibility.timer.runningHint" : "accessibility.timer.setTimeHint")
     }
     
     var timerButtonsSection: some View {
@@ -132,6 +138,7 @@ private extension TimerView {
         .disabled(isStartDisabled)
         .background(primaryButtonBackgroundColor(isStartDisabled: isStartDisabled))
         .clipShape(RoundedRectangle(cornerRadius: 12))
+        .accessibilityHint(viewModel.isTimerRunning ? "accessibility.timer.pauseHint" : "accessibility.timer.startHint")
     }
 
     private func primaryButtonBackgroundColor(isStartDisabled: Bool) -> Color {
@@ -163,6 +170,7 @@ private extension TimerView {
         .foregroundStyle(.secondary)
         .opacity(viewModel.isTimerRunning ? 0.4 : 1.0) // 実行中は目立たなくする
         .disabled(viewModel.isTimerRunning) // 実行中は無効にする
+        .accessibilityHint("accessibility.timer.resetHint")
     }
 }
 
