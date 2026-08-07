@@ -13,6 +13,7 @@ struct AppSettings: Codable, Equatable {
     var colorMode: AppColorMode
     var language: AppLanguage
     var isIOSDCModeEnabled: Bool
+    var penlightColor: PenlightColor
 
     static let `default` = AppSettings(
         durationSeconds: 10 * 60,
@@ -23,7 +24,8 @@ struct AppSettings: Codable, Equatable {
         ],
         colorMode: .system,
         language: .japanese,
-        isIOSDCModeEnabled: false
+        isIOSDCModeEnabled: false,
+        penlightColor: .red
     )
 }
 
@@ -34,6 +36,7 @@ extension AppSettings {
         case colorMode
         case language
         case isIOSDCModeEnabled
+        case penlightColor
     }
     
     init(from decoder: Decoder) throws {
@@ -43,6 +46,7 @@ extension AppSettings {
         colorMode = try container.decodeIfPresent(AppColorMode.self, forKey: .colorMode) ?? .system
         language = try container.decodeIfPresent(AppLanguage.self, forKey: .language) ?? .japanese
         isIOSDCModeEnabled = try container.decodeIfPresent(Bool.self, forKey: .isIOSDCModeEnabled) ?? false
+        penlightColor = try container.decodeIfPresent(PenlightColor.self, forKey: .penlightColor) ?? .red
     }
 }
 

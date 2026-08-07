@@ -40,6 +40,8 @@ enum MarqueeWarningMessage: Equatable, Identifiable {
 
 /// 右から左へ流れる警告テキスト
 struct MarqueeWarningText: View {
+    @EnvironmentObject private var settingsStore: SettingsStore
+
     let text: String
     let duration: Double
 
@@ -50,9 +52,7 @@ struct MarqueeWarningText: View {
         GeometryReader { geo in
             Text(text)
                 .font(.system(size: 30, weight: .heavy))
-                .foregroundStyle(.red)
-                .shadow(color: .white, radius: 1)
-                .shadow(color: .white, radius: 1)
+                .foregroundStyle(settingsStore.settings.penlightColor.color)
                 .shadow(color: .black.opacity(0.3), radius: 2, x: 1, y: 1)
                 .lineLimit(1)
                 .fixedSize()
@@ -97,3 +97,50 @@ struct MarqueeWarningText: View {
         }
     }
 }
+
+/// 流れる文字の色
+enum PenlightColor: String, Codable, CaseIterable, Equatable, Identifiable {
+    case blue
+    case cyan
+    case green
+    case indigo
+    case mint
+    case orange
+    case pink
+    case purple
+    case red
+    case yellow
+
+    var id: Self { self }
+
+    var displayName: String {
+        switch self {
+        case .blue: return "Blue"
+        case .cyan: return "Cyan"
+        case .green: return "Green"
+        case .indigo: return "Indigo"
+        case .mint: return "Mint"
+        case .orange: return "Orange"
+        case .pink: return "Pink"
+        case .purple: return "Purple"
+        case .red: return "Red"
+        case .yellow: return "Yellow"
+        }
+    }
+
+    var color: Color {
+        switch self {
+        case .blue: return .blue
+        case .cyan: return .cyan
+        case .green: return .green
+        case .indigo: return .indigo
+        case .mint: return .mint
+        case .orange: return .orange
+        case .pink: return .pink
+        case .purple: return .purple
+        case .red: return .red
+        case .yellow: return .yellow
+        }
+    }
+}
+

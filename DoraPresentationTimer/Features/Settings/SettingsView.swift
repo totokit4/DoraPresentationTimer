@@ -56,6 +56,15 @@ struct SettingsView: View {
             }
         )
     }
+
+    private var penlightColorBinding: Binding<PenlightColor> {
+        Binding(
+            get: { settingsStore.settings.penlightColor },
+            set: { newValue in
+                settingsStore.update { $0.penlightColor = newValue }
+            }
+        )
+    }
     
     var body: some View {
         List {
@@ -197,6 +206,11 @@ struct SettingsView: View {
         Section {
             if isIOSDCModeUnlocked {
                 Toggle("settings.iosdcMode", isOn: iOSDCModeBinding)
+                Picker("Penlight color", selection: penlightColorBinding) {
+                    ForEach(PenlightColor.allCases) { color in
+                        Text(color.displayName).tag(color)
+                    }
+                }
             } else {
                 Color.clear
                     .frame(height: 72)
