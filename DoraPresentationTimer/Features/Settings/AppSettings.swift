@@ -12,6 +12,7 @@ struct AppSettings: Codable, Equatable {
     var reminders: [ReminderRule]
     var colorMode: AppColorMode
     var language: AppLanguage
+    var isIOSDCModeEnabled: Bool
 
     static let `default` = AppSettings(
         durationSeconds: 10 * 60,
@@ -21,7 +22,8 @@ struct AppSettings: Codable, Equatable {
             .init(id: UUID(), label: "終了時間", secondsBeforeEnd: 0, sound: .dora, isEnabled: true)
         ],
         colorMode: .system,
-        language: .japanese
+        language: .japanese,
+        isIOSDCModeEnabled: false
     )
 }
 
@@ -31,6 +33,7 @@ extension AppSettings {
         case reminders
         case colorMode
         case language
+        case isIOSDCModeEnabled
     }
     
     init(from decoder: Decoder) throws {
@@ -39,6 +42,7 @@ extension AppSettings {
         reminders = try container.decode([ReminderRule].self, forKey: .reminders)
         colorMode = try container.decodeIfPresent(AppColorMode.self, forKey: .colorMode) ?? .system
         language = try container.decodeIfPresent(AppLanguage.self, forKey: .language) ?? .japanese
+        isIOSDCModeEnabled = try container.decodeIfPresent(Bool.self, forKey: .isIOSDCModeEnabled) ?? false
     }
 }
 

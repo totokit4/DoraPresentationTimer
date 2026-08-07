@@ -7,6 +7,7 @@
 "settings.duration" = "演示时长";
 "settings.colorMode" = "颜色模式";
 "settings.language" = "语言";
+"settings.iosdcMode" = "iOSDC 模式";
 "settings.reminder.secondsBeforeEnd" = "结束前%d秒";
 "settings.reminder.unset" = "未设置";
 
@@ -23,6 +24,11 @@
 "time.minute" = "分";
 "time.second" = "秒";
 "button.close" = "关闭";
+"button.cancel" = "取消";
+"button.ok" = "OK";
+
+"secret.passphrase.title" = "暗号";
+"secret.passphrase.placeholder" = "暗号";
 
 "timer.start" = "开始";
 "timer.pause" = "暂停";
