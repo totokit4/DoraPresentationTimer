@@ -11,6 +11,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3E7D87583026338500F2862C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		C54EC78F2916B70600CC131C /* DoraPresentationTimer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DoraPresentationTimer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C54EC7992916B70800CC131C /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -52,6 +53,7 @@
 		C54EC7912916B70600CC131C /* DoraPresentationTimer */ = {
 			isa = PBXGroup;
 			children = (
+				3E7D87583026338500F2862C /* Info.plist */,
 				3E9D4C422F23BB870069DC33 /* App */,
 				3E21DDE82F2129E800A52B0D /* Core */,
 				3E9D4C432F23BB9D0069DC33 /* Features */,
@@ -287,6 +289,7 @@
 				DEVELOPMENT_TEAM = QCTJFD9NGS;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = DoraPresentationTimer/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "銅鑼タイマー";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -319,6 +322,7 @@
 				DEVELOPMENT_TEAM = QCTJFD9NGS;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = DoraPresentationTimer/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "銅鑼タイマー";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;

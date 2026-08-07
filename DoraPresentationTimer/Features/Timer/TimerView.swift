@@ -23,10 +23,25 @@ struct TimerView: View {
     
     var body: some View {
         NavigationStack {
-            VStack {
-                timeSection()
-                    .frame(maxHeight: .infinity) // なるべく大きくとる
-                timerButtonsSection
+            ZStack(alignment: .top) {
+                VStack {
+                    timeSection()
+                        .frame(maxHeight: .infinity) // なるべく大きくとる
+                    timerButtonsSection
+                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                
+                if settingsStore.settings.isIOSDCModeEnabled,
+                   let message = MarqueeWarningMessage.resolve(
+                    remainingSeconds: viewModel.remainingSeconds,
+                    isTimerRunning: viewModel.isTimerRunning
+                ) {
+                    MarqueeWarningText(text: message.text, duration: 5.0)
+                        .id(message)
+                        .frame(maxWidth: .infinity)
+                        .padding(.top, 16)
+                        .zIndex(1)
+                }
             }
             .sheet(isPresented: $isPickerPresented) {
                 TimePickerSheet(
@@ -91,6 +106,8 @@ private extension TimerView {
                 Text(viewModel.remainingSeconds.formattedAsMMSS)
                     .font(.system(size: fontSize, weight: .regular))
                     .monospacedDigit() // 数字だけ等幅にする
+                    // iOSDCモードがONの時は残り時間はほぼ表示しない
+                    .opacity(settingsStore.settings.isIOSDCModeEnabled ? 0.01 : 1.0)
                     .foregroundStyle(
                         // 残り10秒で赤くする
                         viewModel.remainingSeconds <= 10 && viewModel.isTimerRunning
@@ -119,7 +136,7 @@ private extension TimerView {
     
     /// Start / Pause ボタン
     var primaryButton: some View {
-        // 動作中もしくはタイマー設定が0だったら無効化する
+        // 停止中かつ残り時間が0秒のときはStartボタンを無効化する
         let isStartDisabled = !viewModel.isTimerRunning && viewModel.remainingSeconds == 0
         
         return Button {
@@ -156,7 +173,6 @@ private extension TimerView {
 
         return .white
     }
-    
     
     /// リセットボタン
     var resetButton: some View {

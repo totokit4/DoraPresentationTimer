@@ -7,6 +7,7 @@
 "settings.duration" = "Presentation Time";
 "settings.colorMode" = "Color Mode";
 "settings.language" = "Language";
+"settings.iosdcMode" = "iOSDC Mode";
 "settings.reminder.secondsBeforeEnd" = "%d seconds before end";
 "settings.reminder.unset" = "Not Set";
 
@@ -23,6 +24,11 @@
 "time.minute" = "min";
 "time.second" = "sec";
 "button.close" = "Close";
+"button.cancel" = "Cancel";
+"button.ok" = "OK";
+
+"secret.passphrase.title" = "Passphrase";
+"secret.passphrase.placeholder" = "Passphrase";
 
 "timer.start" = "Start";
 "timer.pause" = "Pause";

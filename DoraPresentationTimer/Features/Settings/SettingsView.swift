@@ -21,9 +21,14 @@ private enum EditTarget: Identifiable {
 
 struct SettingsView: View {
     @EnvironmentObject var settingsStore: SettingsStore
+    @AppStorage("is_iosdc_mode_unlocked") private var isIOSDCModeUnlocked = false
     @State private var editTarget: EditTarget?
+    @State private var secretTapCount = 0
+    @State private var isPassphraseDialogPresented = false
+    @State private var passphrase = ""
     
     private let soundPlayer = SoundPlayer()
+    private let iOSDCModePassphrase = "iwillfeedback"
 
     private var colorModeBinding: Binding<AppColorMode> {
         Binding(
@@ -39,6 +44,24 @@ struct SettingsView: View {
             get: { settingsStore.settings.language },
             set: { newValue in
                 settingsStore.update { $0.language = newValue }
+            }
+        )
+    }
+
+    private var iOSDCModeBinding: Binding<Bool> {
+        Binding(
+            get: { settingsStore.settings.isIOSDCModeEnabled },
+            set: { newValue in
+                settingsStore.update { $0.isIOSDCModeEnabled = newValue }
+            }
+        )
+    }
+
+    private var penlightColorBinding: Binding<PenlightColor> {
+        Binding(
+            get: { settingsStore.settings.penlightColor },
+            set: { newValue in
+                settingsStore.update { $0.penlightColor = newValue }
             }
         )
     }
@@ -59,7 +82,7 @@ struct SettingsView: View {
             }
 
             Section("section.reminders") {
-                ForEach(settingsStore.settings.reminders) { r in
+                ForEach(visibleReminders) { r in
                     oneLineRow(
                         left: LocalizedStringKey(r.localizationKey),
                         middle: reminderText(for: r),
@@ -92,8 +115,20 @@ struct SettingsView: View {
                     }
                 }
             }
+
+            secretTapArea
         }
         .navigationTitle("settings.title")
+        .alert("secret.passphrase.title", isPresented: $isPassphraseDialogPresented) {
+            TextField("secret.passphrase.placeholder", text: $passphrase)
+            Button("button.cancel", role: .cancel) {
+                passphrase = ""
+            }
+            Button("button.ok") {
+                unlockIOSDCModeIfNeeded()
+                passphrase = ""
+            }
+        }
         .sheet(item: $editTarget) { target in
             switch target {
             case .duration:
@@ -134,6 +169,15 @@ struct SettingsView: View {
         }
     }
 
+    private var visibleReminders: [ReminderRule] {
+        // iOSDCモードがONの時はリマインダーを設定できないようにする
+        if settingsStore.settings.isIOSDCModeEnabled {
+            return settingsStore.settings.reminders.filter { $0.sound == .dora }
+        }
+
+        return settingsStore.settings.reminders
+    }
+
     private func reminderText(for rule: ReminderRule) -> String {
         guard rule.sound != .dora else { return "" }
         guard let secondsBeforeEnd = rule.secondsBeforeEnd else {
@@ -156,6 +200,48 @@ struct SettingsView: View {
             locale: Locale(identifier: settingsStore.settings.language.localeIdentifier),
             reminderName
         )
+    }
+
+    private var secretTapArea: some View {
+        Section {
+            if isIOSDCModeUnlocked {
+                Toggle("settings.iosdcMode", isOn: iOSDCModeBinding)
+                Picker("Penlight color", selection: penlightColorBinding) {
+                    ForEach(PenlightColor.allCases) { color in
+                        Text(color.displayName).tag(color)
+                    }
+                }
+            } else {
+                Color.clear
+                    .frame(height: 72)
+                    .contentShape(Rectangle())
+                    .onTapGesture {
+                        handleSecretTap()
+                    }
+                    .accessibilityHidden(true)
+                    .listRowInsets(EdgeInsets())
+                    .listRowBackground(Color.clear)
+                    .listRowSeparator(.hidden)
+            }
+        }
+    }
+
+    private func handleSecretTap() {
+        secretTapCount += 1
+
+        if secretTapCount >= 5 {
+            secretTapCount = 0
+            passphrase = ""
+            isPassphraseDialogPresented = true
+        }
+    }
+
+    private func unlockIOSDCModeIfNeeded() {
+        let normalizedPassphrase = passphrase.trimmingCharacters(in: .whitespacesAndNewlines)
+
+        if normalizedPassphrase.localizedCaseInsensitiveCompare(iOSDCModePassphrase) == .orderedSame {
+            isIOSDCModeUnlocked = true
+        }
     }
     
     private func oneLineRow(
