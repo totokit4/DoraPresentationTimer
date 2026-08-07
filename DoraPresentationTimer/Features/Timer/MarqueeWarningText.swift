@@ -51,7 +51,7 @@ struct MarqueeWarningText: View {
     var body: some View {
         GeometryReader { geo in
             Text(text)
-                .font(.system(size: 30, weight: .heavy))
+                .font(.custom("DotGothic16-Regular", size: 30))
                 .foregroundStyle(settingsStore.settings.penlightColor.color)
                 .shadow(color: .black.opacity(0.3), radius: 2, x: 1, y: 1)
                 .lineLimit(1)
@@ -143,4 +143,3 @@ enum PenlightColor: String, Codable, CaseIterable, Equatable, Identifiable {
         }
     }
 }
-
