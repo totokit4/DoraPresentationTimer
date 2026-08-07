@@ -31,8 +31,8 @@ struct TimerView: View {
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 
-                // TODO: iOSDCモードの時のみ有効にする
-                if let message = MarqueeWarningMessage.resolve(
+                if settingsStore.settings.isIOSDCModeEnabled,
+                   let message = MarqueeWarningMessage.resolve(
                     remainingSeconds: viewModel.remainingSeconds,
                     isTimerRunning: viewModel.isTimerRunning
                 ) {
