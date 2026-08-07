@@ -1,0 +1,41 @@
+"section.timer" = "타이머";
+"section.reminders" = "알림";
+"section.appearance" = "화면";
+"section.language" = "언어";
+
+"settings.title" = "설정";
+"settings.duration" = "발표 시간";
+"settings.colorMode" = "색상 모드";
+"settings.language" = "언어";
+"settings.reminder.secondsBeforeEnd" = "종료 %d초 전";
+"settings.reminder.unset" = "설정 안 됨";
+
+"reminder.first" = "첫 번째 알림";
+"reminder.second" = "두 번째 알림";
+"reminder.finish" = "종료 시간";
+
+"colorMode.system" = "시스템";
+"colorMode.light" = "라이트";
+"colorMode.dark" = "다크";
+
+"sheet.setTime" = "시간 설정";
+"sheet.setDuration" = "발표 시간 설정";
+"time.minute" = "분";
+"time.second" = "초";
+"button.close" = "닫기";
+
+"timer.start" = "시작";
+"timer.pause" = "일시 정지";
+"timer.reset" = "재설정";
+
+"accessibility.time.minutesSeconds" = "%d분 %d초";
+"accessibility.timer.remainingTime" = "남은 시간";
+"accessibility.timer.setTimeHint" = "이중 탭하여 시간을 설정합니다.";
+"accessibility.timer.runningHint" = "타이머가 실행 중입니다.";
+"accessibility.timer.startHint" = "타이머를 시작합니다.";
+"accessibility.timer.pauseHint" = "타이머를 일시 정지합니다.";
+"accessibility.timer.resetHint" = "타이머를 발표 시간으로 되돌립니다.";
+"accessibility.timer.finished" = "타이머가 종료되었습니다.";
+"accessibility.settings.editHint" = "이중 탭하여 편집합니다.";
+"accessibility.settings.previewSound" = "%@ 소리 미리 듣기";
+"accessibility.settings.previewSoundHint" = "이 알림 소리를 재생합니다.";

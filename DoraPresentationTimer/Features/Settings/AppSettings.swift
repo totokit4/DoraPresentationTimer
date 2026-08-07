@@ -10,6 +10,8 @@ import Foundation
 struct AppSettings: Codable, Equatable {
     var durationSeconds: Int
     var reminders: [ReminderRule]
+    var colorMode: AppColorMode
+    var language: AppLanguage
 
     static let `default` = AppSettings(
         durationSeconds: 10 * 60,
@@ -17,14 +19,44 @@ struct AppSettings: Codable, Equatable {
             .init(id: UUID(), label: "リマインド1回目", secondsBeforeEnd: 3 * 60, sound: .clappers1, isEnabled: true),
             .init(id: UUID(), label: "リマインド2回目", secondsBeforeEnd: 1 * 60, sound: .clappers2, isEnabled: true),
             .init(id: UUID(), label: "終了時間", secondsBeforeEnd: 0, sound: .dora, isEnabled: true)
-        ]
+        ],
+        colorMode: .system,
+        language: .japanese
     )
+}
+
+extension AppSettings {
+    private enum CodingKeys: String, CodingKey {
+        case durationSeconds
+        case reminders
+        case colorMode
+        case language
+    }
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        durationSeconds = try container.decode(Int.self, forKey: .durationSeconds)
+        reminders = try container.decode([ReminderRule].self, forKey: .reminders)
+        colorMode = try container.decodeIfPresent(AppColorMode.self, forKey: .colorMode) ?? .system
+        language = try container.decodeIfPresent(AppLanguage.self, forKey: .language) ?? .japanese
+    }
 }
 
 struct ReminderRule: Codable, Equatable, Identifiable {
     let id: UUID
     var label: String
-    var secondsBeforeEnd: Int
+    var secondsBeforeEnd: Int?
     var sound: SoundType
     var isEnabled: Bool
+
+    var localizationKey: String {
+        switch sound {
+        case .clappers1:
+            return "reminder.first"
+        case .clappers2:
+            return "reminder.second"
+        case .dora:
+            return "reminder.finish"
+        }
+    }
 }

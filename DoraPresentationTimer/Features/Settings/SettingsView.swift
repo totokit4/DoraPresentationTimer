@@ -19,34 +19,54 @@ private enum EditTarget: Identifiable {
     }
 }
 
-import SwiftUI
-
 struct SettingsView: View {
     @EnvironmentObject var settingsStore: SettingsStore
     @State private var editTarget: EditTarget?
     
     private let soundPlayer = SoundPlayer()
+
+    private var colorModeBinding: Binding<AppColorMode> {
+        Binding(
+            get: { settingsStore.settings.colorMode },
+            set: { newValue in
+                settingsStore.update { $0.colorMode = newValue }
+            }
+        )
+    }
+
+    private var languageBinding: Binding<AppLanguage> {
+        Binding(
+            get: { settingsStore.settings.language },
+            set: { newValue in
+                settingsStore.update { $0.language = newValue }
+            }
+        )
+    }
     
     var body: some View {
         List {
-            Section("Timer") {
+            Section("section.timer") {
                 oneLineRow(
-                    left: "発表時間",
+                    left: "settings.duration",
                     middle: settingsStore.settings.durationSeconds.formattedAsMMSS,
+                    accessibilityValue: settingsStore.settings.durationSeconds.formattedForAccessibility(language: settingsStore.settings.language),
                     showSpeaker: false,
+                    isEditable: true,
+                    speakerAccessibilityLabel: "",
                     onSpeaker: {},
                     onTap: { editTarget = .duration }
                 )
             }
-            
-            Section("Reminders") {
+
+            Section("section.reminders") {
                 ForEach(settingsStore.settings.reminders) { r in
-                    let middleText = (r.sound == .dora) ? "" : "終了\(r.secondsBeforeEnd)秒前"
-                    
                     oneLineRow(
-                        left: r.label,
-                        middle: middleText,
+                        left: LocalizedStringKey(r.localizationKey),
+                        middle: reminderText(for: r),
+                        accessibilityValue: reminderText(for: r),
                         showSpeaker: true,
+                        isEditable: r.sound != .dora,
+                        speakerAccessibilityLabel: soundPreviewAccessibilityLabel(for: r),
                         onSpeaker: { soundPlayer.play(r.sound) },
                         onTap: {
                             guard r.sound != .dora else { return }
@@ -55,13 +75,30 @@ struct SettingsView: View {
                     )
                 }
             }
+
+            Section("section.appearance") {
+                Picker("settings.colorMode", selection: colorModeBinding) {
+                    ForEach(AppColorMode.allCases) { mode in
+                        Text(LocalizedStringKey(mode.localizationKey)).tag(mode)
+                    }
+                }
+                .pickerStyle(.segmented)
+            }
+
+            Section("section.language") {
+                Picker("settings.language", selection: languageBinding) {
+                    ForEach(AppLanguage.allCases) { language in
+                        Text(language.displayName).tag(language)
+                    }
+                }
+            }
         }
-        .navigationTitle("Settings")
+        .navigationTitle("settings.title")
         .sheet(item: $editTarget) { target in
             switch target {
             case .duration:
                 TimePickerSheet(
-                    title: "Set Duration",
+                    title: "sheet.setDuration",
                     totalSeconds: Binding(
                         get: { settingsStore.settings.durationSeconds },
                         set: { newValue in
@@ -75,11 +112,11 @@ struct SettingsView: View {
 
             case .reminder(let id):
                 if let rule = settingsStore.settings.reminders.first(where: { $0.id == id }) {
-                    TimePickerSheet(
-                        title: rule.label,
+                    ReminderTimePickerSheet(
+                        title: LocalizedStringKey(rule.localizationKey),
                         totalSeconds: Binding(
                             get: {
-                                settingsStore.settings.reminders.first(where: { $0.id == id })?.secondsBeforeEnd ?? 0
+                                settingsStore.settings.reminders.first(where: { $0.id == id })?.secondsBeforeEnd
                             },
                             set: { newValue in
                                 settingsStore.update { settings in
@@ -88,7 +125,7 @@ struct SettingsView: View {
                                 }
                             }
                         ),
-                        isTimerRunning: false
+                        maxSeconds: settingsStore.settings.durationSeconds
                     )
                     .presentationDetents([.fraction(0.35), .medium])
                     .presentationDragIndicator(.visible)
@@ -96,29 +133,66 @@ struct SettingsView: View {
             }
         }
     }
+
+    private func reminderText(for rule: ReminderRule) -> String {
+        guard rule.sound != .dora else { return "" }
+        guard let secondsBeforeEnd = rule.secondsBeforeEnd else {
+            return settingsStore.settings.language.localizedString(forKey: "settings.reminder.unset")
+        }
+
+        let format = settingsStore.settings.language.localizedString(forKey: "settings.reminder.secondsBeforeEnd")
+        return String(
+            format: format,
+            locale: Locale(identifier: settingsStore.settings.language.localeIdentifier),
+            secondsBeforeEnd
+        )
+    }
+
+    private func soundPreviewAccessibilityLabel(for rule: ReminderRule) -> String {
+        let format = settingsStore.settings.language.localizedString(forKey: "accessibility.settings.previewSound")
+        let reminderName = settingsStore.settings.language.localizedString(forKey: rule.localizationKey)
+        return String(
+            format: format,
+            locale: Locale(identifier: settingsStore.settings.language.localeIdentifier),
+            reminderName
+        )
+    }
     
     private func oneLineRow(
-        left: String,
+        left: LocalizedStringKey,
         middle: String,
+        accessibilityValue: String,
         showSpeaker: Bool,
+        isEditable: Bool,
+        speakerAccessibilityLabel: String,
         onSpeaker: @escaping () -> Void,
         onTap: @escaping () -> Void
     ) -> some View {
         HStack(spacing: 12) {
-            Text(left)
-            Spacer()
-            Text(middle)
-                .font(.footnote)
-                .foregroundStyle(.secondary)
-                .monospacedDigit()
+            Button(action: onTap) {
+                HStack(spacing: 12) {
+                    Text(left)
+                    Spacer()
+                    Text(middle)
+                        .font(.footnote)
+                        .foregroundStyle(.secondary)
+                        .monospacedDigit()
+                }
+            }
+            .buttonStyle(.plain)
+            .disabled(!isEditable)
+            .accessibilityLabel(left)
+            .accessibilityValue(Text(accessibilityValue))
+            .accessibilityHint(isEditable ? "accessibility.settings.editHint" : "")
+
             if showSpeaker {
                 Button(action: onSpeaker) {
                     Image(systemName: "speaker.wave.2.fill")
                 }
                 .buttonStyle(.plain)
+                .accessibilityLabel(Text(speakerAccessibilityLabel))
+                .accessibilityHint("accessibility.settings.previewSoundHint")
             }
         }
-        .contentShape(Rectangle())
-        .onTapGesture(perform: onTap)
     }
 }

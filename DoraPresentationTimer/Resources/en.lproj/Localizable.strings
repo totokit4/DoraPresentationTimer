@@ -1,0 +1,41 @@
+"section.timer" = "Timer";
+"section.reminders" = "Reminders";
+"section.appearance" = "Appearance";
+"section.language" = "Language";
+
+"settings.title" = "Settings";
+"settings.duration" = "Presentation Time";
+"settings.colorMode" = "Color Mode";
+"settings.language" = "Language";
+"settings.reminder.secondsBeforeEnd" = "%d seconds before end";
+"settings.reminder.unset" = "Not Set";
+
+"reminder.first" = "First Reminder";
+"reminder.second" = "Second Reminder";
+"reminder.finish" = "End Time";
+
+"colorMode.system" = "System";
+"colorMode.light" = "Light";
+"colorMode.dark" = "Dark";
+
+"sheet.setTime" = "Set Time";
+"sheet.setDuration" = "Set Duration";
+"time.minute" = "min";
+"time.second" = "sec";
+"button.close" = "Close";
+
+"timer.start" = "Start";
+"timer.pause" = "Pause";
+"timer.reset" = "Reset";
+
+"accessibility.time.minutesSeconds" = "%d minutes, %d seconds";
+"accessibility.timer.remainingTime" = "Remaining time";
+"accessibility.timer.setTimeHint" = "Double tap to set the time.";
+"accessibility.timer.runningHint" = "The timer is running.";
+"accessibility.timer.startHint" = "Starts the timer.";
+"accessibility.timer.pauseHint" = "Pauses the timer.";
+"accessibility.timer.resetHint" = "Resets the timer to the presentation time.";
+"accessibility.timer.finished" = "Timer finished.";
+"accessibility.settings.editHint" = "Double tap to edit.";
+"accessibility.settings.previewSound" = "Preview sound for %@";
+"accessibility.settings.previewSoundHint" = "Plays this reminder sound.";

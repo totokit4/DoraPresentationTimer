@@ -9,6 +9,7 @@ import SwiftUI
 
 /// タイマー画面
 struct TimerView: View {
+    @EnvironmentObject private var settingsStore: SettingsStore
     @ObservedObject private var viewModel: TimerViewModel
     
     @State private var selectedMinute: Int = 0
@@ -44,7 +45,7 @@ struct TimerView: View {
             }
             .sheet(isPresented: $isPickerPresented) {
                 TimePickerSheet(
-                    title: "Set Time",
+                    title: "sheet.setTime",
                     totalSeconds: Binding(
                         get: { selectedMinute * 60 + selectedSecond },
                         set: { total in
@@ -70,12 +71,22 @@ struct TimerView: View {
                     } label: {
                         Image(systemName: "gearshape")
                     }
+                    .accessibilityLabel("settings.title")
                 }
             }
         }
         .onAppear {
-            viewModel.setInitialTime(minutes: selectedMinute, seconds: selectedSecond)
+            syncSelectedTimeFromViewModel()
         }
+    }
+    
+    /// TimePickerSheet の初期表示を、現在の残り時間に合わせる
+    ///
+    /// viewModel の値は変更せず、Picker用の selectedMinute / selectedSecond のみ更新する。
+    private func syncSelectedTimeFromViewModel() {
+        let total = max(0, viewModel.remainingSeconds)
+        selectedMinute = total / 60
+        selectedSecond = total % 60
     }
 }
 
@@ -83,6 +94,8 @@ private extension TimerView {
     private func timeSection() -> some View {
         Button {
             guard !viewModel.isTimerRunning else { return }
+            
+            syncSelectedTimeFromViewModel()
             isPickerPresented = true
         } label: {
             GeometryReader { geo in
@@ -105,6 +118,10 @@ private extension TimerView {
             }
         }
         .buttonStyle(.plain)
+        .disabled(viewModel.isTimerRunning)
+        .accessibilityLabel("accessibility.timer.remainingTime")
+        .accessibilityValue(Text(viewModel.remainingSeconds.formattedForAccessibility(language: settingsStore.settings.language)))
+        .accessibilityHint(viewModel.isTimerRunning ? "accessibility.timer.runningHint" : "accessibility.timer.setTimeHint")
     }
     
     var timerButtonsSection: some View {
@@ -127,19 +144,32 @@ private extension TimerView {
                 viewModel.startTimer()
             }
         } label: {
-            Text(viewModel.isTimerRunning ? "Pause" : "Start")
+            Text(LocalizedStringKey(viewModel.isTimerRunning ? "timer.pause" : "timer.start"))
                 .font(.largeTitle)
-                .foregroundColor(.white)
+                .foregroundStyle(primaryButtonForegroundColor(isStartDisabled: isStartDisabled))
                 .frame(maxWidth: .infinity)
                 .padding(.vertical, 16)
         }
         .disabled(isStartDisabled)
-        .background(
-            isStartDisabled
-            ? Color.gray
-            : (viewModel.isTimerRunning ? Color(UIColor.lightGray) : Color.orange)
-        )
+        .background(primaryButtonBackgroundColor(isStartDisabled: isStartDisabled))
         .clipShape(RoundedRectangle(cornerRadius: 12))
+        .accessibilityHint(viewModel.isTimerRunning ? "accessibility.timer.pauseHint" : "accessibility.timer.startHint")
+    }
+
+    private func primaryButtonBackgroundColor(isStartDisabled: Bool) -> Color {
+        if isStartDisabled {
+            return Color(uiColor: .systemGray4)
+        }
+
+        return viewModel.isTimerRunning ? Color(uiColor: .systemGray5) : .orange
+    }
+
+    private func primaryButtonForegroundColor(isStartDisabled: Bool) -> Color {
+        if isStartDisabled || viewModel.isTimerRunning {
+            return .primary
+        }
+
+        return .white
     }
     
     /// リセットボタン
@@ -147,13 +177,14 @@ private extension TimerView {
         Button {
             viewModel.resetCount()
         } label: {
-            Label("Reset", systemImage: "arrow.counterclockwise")
+            Label("timer.reset", systemImage: "arrow.counterclockwise")
                 .font(.title3)
         }
         .buttonStyle(.plain)
         .foregroundStyle(.secondary)
         .opacity(viewModel.isTimerRunning ? 0.4 : 1.0) // 実行中は目立たなくする
         .disabled(viewModel.isTimerRunning) // 実行中は無効にする
+        .accessibilityHint("accessibility.timer.resetHint")
     }
 }
 
@@ -168,6 +199,10 @@ struct TimerView_Previews: PreviewProvider {
             TimerView(viewModel: TimerViewModel(settingsStore: settingsStore))
                 .environmentObject(settingsStore)
                 .previewInterfaceOrientation(.landscapeLeft)
+
+            TimerView(viewModel: TimerViewModel(settingsStore: settingsStore))
+                .environmentObject(settingsStore)
+                .preferredColorScheme(.dark)
         }
     }
 }

@@ -13,7 +13,10 @@ struct DoraPresentationTimerApp: App {
 
     var body: some Scene {
         WindowGroup {
-            TimerView(viewModel: TimerViewModel(settingsStore: settingsStore)).environmentObject(settingsStore)
+            TimerView(viewModel: TimerViewModel(settingsStore: settingsStore))
+                .environmentObject(settingsStore)
+                .environment(\.locale, Locale(identifier: settingsStore.settings.language.localeIdentifier))
+                .preferredColorScheme(settingsStore.settings.colorMode.colorScheme)
         }
     }
 }
