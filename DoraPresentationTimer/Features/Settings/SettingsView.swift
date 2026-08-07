@@ -73,7 +73,7 @@ struct SettingsView: View {
             }
 
             Section("section.reminders") {
-                ForEach(settingsStore.settings.reminders) { r in
+                ForEach(visibleReminders) { r in
                     oneLineRow(
                         left: LocalizedStringKey(r.localizationKey),
                         middle: reminderText(for: r),
@@ -158,6 +158,15 @@ struct SettingsView: View {
                 }
             }
         }
+    }
+
+    private var visibleReminders: [ReminderRule] {
+        // iOSDCモードがONの時はリマインダーを設定できないようにする
+        if settingsStore.settings.isIOSDCModeEnabled {
+            return settingsStore.settings.reminders.filter { $0.sound == .dora }
+        }
+
+        return settingsStore.settings.reminders
     }
 
     private func reminderText(for rule: ReminderRule) -> String {

@@ -143,6 +143,8 @@ final class TimerViewModel: ObservableObject {
         ) {
             switch event {
             case .playSound(let sound):
+                // iOSDCモードがONであればリマインダーの音は鳴らさない
+                guard !settingsStore.settings.isIOSDCModeEnabled else { return }
                 soundPlayer.play(sound)
                 announceReminder(for: sound)
                 
