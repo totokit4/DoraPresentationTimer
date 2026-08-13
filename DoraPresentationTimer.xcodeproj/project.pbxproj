@@ -7,23 +7,81 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		C54EC79A2916B70800CC131C /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C54EC7992916B70800CC131C /* Preview Assets.xcassets */; };
+		3E0583E7302E140A00FA2454 /* DoraPresentationTimerWatch Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 3E0583C7302E140900FA2454 /* DoraPresentationTimerWatch Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		3E0583E5302E140A00FA2454 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C54EC7872916B70600CC131C /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3E0583C6302E140900FA2454;
+			remoteInfo = "DoraPresentationTimerWatch Watch App";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		3E0583E8302E140A00FA2454 /* Embed Watch Content */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
+			dstSubfolderSpec = 16;
+			files = (
+				3E0583E7302E140A00FA2454 /* DoraPresentationTimerWatch Watch App.app in Embed Watch Content */,
+			);
+			name = "Embed Watch Content";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
-		3E7D87583026338500F2862C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		3E0583C7302E140900FA2454 /* DoraPresentationTimerWatch Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "DoraPresentationTimerWatch Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C54EC78F2916B70600CC131C /* DoraPresentationTimer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DoraPresentationTimer.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		C54EC7992916B70800CC131C /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		3E0583FB302E145900FA2454 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				"Core/Extensions/Int+TimeFormat.swift",
+				Core/SoundPlayer.swift,
+				Core/TimerEngine.swift,
+				Features/Settings/AppColorMode.swift,
+				Features/Settings/AppLanguage.swift,
+				Features/Settings/AppSettings.swift,
+				Features/Settings/SettingsStore.swift,
+				Features/Settings/SettingsView.swift,
+				Features/Timer/MarqueeWarningText.swift,
+				Features/Timer/TimePickerSheet.swift,
+				Features/Timer/TimerRules.swift,
+				Features/Timer/TimerView.swift,
+				Features/Timer/TimerViewModel.swift,
+			);
+			target = C54EC78E2916B70600CC131C /* DoraPresentationTimer */;
+		};
+		3E058431302E163200FA2454 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = C54EC78E2916B70600CC131C /* DoraPresentationTimer */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		3E21DDE82F2129E800A52B0D /* Core */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Core; sourceTree = "<group>"; };
-		3E9D4C422F23BB870069DC33 /* App */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = App; sourceTree = "<group>"; };
-		3E9D4C432F23BB9D0069DC33 /* Features */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Features; sourceTree = "<group>"; };
-		3E9D4C452F23BBED0069DC33 /* Resources */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Resources; sourceTree = "<group>"; };
+		3E0583C8302E140900FA2454 /* Watch App */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = "Watch App"; sourceTree = "<group>"; };
+		3E0583F2302E144900FA2454 /* Shared */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (3E0583FB302E145900FA2454 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = Shared; sourceTree = "<group>"; };
+		3E058414302E148E00FA2454 /* iOS App */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (3E058431302E163200FA2454 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = "iOS App"; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		3E0583C4302E140900FA2454 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C54EC78C2916B70600CC131C /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -37,7 +95,9 @@
 		C54EC7862916B70600CC131C = {
 			isa = PBXGroup;
 			children = (
-				C54EC7912916B70600CC131C /* DoraPresentationTimer */,
+				3E0583F2302E144900FA2454 /* Shared */,
+				3E058414302E148E00FA2454 /* iOS App */,
+				3E0583C8302E140900FA2454 /* Watch App */,
 				C54EC7902916B70600CC131C /* Products */,
 			);
 			sourceTree = "<group>";
@@ -46,34 +106,37 @@
 			isa = PBXGroup;
 			children = (
 				C54EC78F2916B70600CC131C /* DoraPresentationTimer.app */,
+				3E0583C7302E140900FA2454 /* DoraPresentationTimerWatch Watch App.app */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		C54EC7912916B70600CC131C /* DoraPresentationTimer */ = {
-			isa = PBXGroup;
-			children = (
-				3E7D87583026338500F2862C /* Info.plist */,
-				3E9D4C422F23BB870069DC33 /* App */,
-				3E21DDE82F2129E800A52B0D /* Core */,
-				3E9D4C432F23BB9D0069DC33 /* Features */,
-				C54EC7982916B70800CC131C /* Preview Content */,
-				3E9D4C452F23BBED0069DC33 /* Resources */,
-			);
-			path = DoraPresentationTimer;
-			sourceTree = "<group>";
-		};
-		C54EC7982916B70800CC131C /* Preview Content */ = {
-			isa = PBXGroup;
-			children = (
-				C54EC7992916B70800CC131C /* Preview Assets.xcassets */,
-			);
-			path = "Preview Content";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		3E0583C6302E140900FA2454 /* DoraPresentationTimerWatch Watch App */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3E0583EF302E140A00FA2454 /* Build configuration list for PBXNativeTarget "DoraPresentationTimerWatch Watch App" */;
+			buildPhases = (
+				3E0583C3302E140900FA2454 /* Sources */,
+				3E0583C4302E140900FA2454 /* Frameworks */,
+				3E0583C5302E140900FA2454 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				3E0583C8302E140900FA2454 /* Watch App */,
+				3E0583F2302E144900FA2454 /* Shared */,
+			);
+			name = "DoraPresentationTimerWatch Watch App";
+			packageProductDependencies = (
+			);
+			productName = "DoraPresentationTimerWatch Watch App";
+			productReference = 3E0583C7302E140900FA2454 /* DoraPresentationTimerWatch Watch App.app */;
+			productType = "com.apple.product-type.application";
+		};
 		C54EC78E2916B70600CC131C /* DoraPresentationTimer */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = C54EC79D2916B70800CC131C /* Build configuration list for PBXNativeTarget "DoraPresentationTimer" */;
@@ -81,16 +144,15 @@
 				C54EC78B2916B70600CC131C /* Sources */,
 				C54EC78C2916B70600CC131C /* Frameworks */,
 				C54EC78D2916B70600CC131C /* Resources */,
+				3E0583E8302E140A00FA2454 /* Embed Watch Content */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				3E0583E6302E140A00FA2454 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
-				3E21DDE82F2129E800A52B0D /* Core */,
-				3E9D4C422F23BB870069DC33 /* App */,
-				3E9D4C432F23BB9D0069DC33 /* Features */,
-				3E9D4C452F23BBED0069DC33 /* Resources */,
+				3E058414302E148E00FA2454 /* iOS App */,
 			);
 			name = DoraPresentationTimer;
 			productName = DoraPresentationTimer;
@@ -104,9 +166,12 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1410;
+				LastSwiftUpdateCheck = 2660;
 				LastUpgradeCheck = 2660;
 				TargetAttributes = {
+					3E0583C6302E140900FA2454 = {
+						CreatedOnToolsVersion = 26.6;
+					};
 					C54EC78E2916B70600CC131C = {
 						CreatedOnToolsVersion = 14.1;
 					};
@@ -130,22 +195,36 @@
 			projectRoot = "";
 			targets = (
 				C54EC78E2916B70600CC131C /* DoraPresentationTimer */,
+				3E0583C6302E140900FA2454 /* DoraPresentationTimerWatch Watch App */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		3E0583C5302E140900FA2454 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C54EC78D2916B70600CC131C /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C54EC79A2916B70800CC131C /* Preview Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		3E0583C3302E140900FA2454 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C54EC78B2916B70600CC131C /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -155,7 +234,88 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		3E0583E6302E140A00FA2454 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 3E0583C6302E140900FA2454 /* DoraPresentationTimerWatch Watch App */;
+			targetProxy = 3E0583E5302E140A00FA2454 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		3E0583E9302E140A00FA2454 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = QCTJFD9NGS;
+				ENABLE_PREVIEWS = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = DoraPresentationTimerWatch;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = totokit4.DoraPresentationTimer;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = totokit4.DoraPresentationTimer.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 26.5;
+			};
+			name = Debug;
+		};
+		3E0583EA302E140A00FA2454 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = QCTJFD9NGS;
+				ENABLE_PREVIEWS = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = DoraPresentationTimerWatch;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = totokit4.DoraPresentationTimer;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = totokit4.DoraPresentationTimer.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 26.5;
+			};
+			name = Release;
+		};
 		C54EC79B2916B70800CC131C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -285,11 +445,11 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 7;
-				DEVELOPMENT_ASSET_PATHS = "\"DoraPresentationTimer/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"iOS App/Preview Content\"";
 				DEVELOPMENT_TEAM = QCTJFD9NGS;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = DoraPresentationTimer/Info.plist;
+				INFOPLIST_FILE = "iOS App/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "銅鑼タイマー";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -318,11 +478,11 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 7;
-				DEVELOPMENT_ASSET_PATHS = "\"DoraPresentationTimer/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"iOS App/Preview Content\"";
 				DEVELOPMENT_TEAM = QCTJFD9NGS;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = DoraPresentationTimer/Info.plist;
+				INFOPLIST_FILE = "iOS App/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "銅鑼タイマー";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -347,6 +507,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		3E0583EF302E140A00FA2454 /* Build configuration list for PBXNativeTarget "DoraPresentationTimerWatch Watch App" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3E0583E9302E140A00FA2454 /* Debug */,
+				3E0583EA302E140A00FA2454 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		C54EC78A2916B70600CC131C /* Build configuration list for PBXProject "DoraPresentationTimer" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
