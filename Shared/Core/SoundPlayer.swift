@@ -6,7 +6,9 @@
 //
 
 import AVFoundation
-import UIKit
+#if os(watchOS)
+import WatchKit
+#endif
 
 protocol SoundPlaying {
     func play(_ type: SoundType)
@@ -30,13 +32,22 @@ final class SoundPlayer: SoundPlaying {
     private var player: AVAudioPlayer?
     
     func play(_ type: SoundType) {
-        guard let asset = NSDataAsset(name: type.fileName) else { return }
+        guard let url = Bundle.main.url(forResource: type.fileName, withExtension: "mp3") else {
+            #if os(watchOS)
+            WKInterfaceDevice.current().play(.notification)
+            #endif
+            return
+        }
+
         do {
-            player = try AVAudioPlayer(data: asset.data, fileTypeHint: "mp3")
+            player = try AVAudioPlayer(contentsOf: url)
             player?.play()
         } catch {
+            #if os(watchOS)
+            WKInterfaceDevice.current().play(.notification)
+            #else
             print("error")
+            #endif
         }
     }
 }
-
