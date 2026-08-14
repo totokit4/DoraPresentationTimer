@@ -69,11 +69,19 @@
 			);
 			target = C54EC78E2916B70600CC131C /* DoraPresentationTimer */;
 		};
+		3EE6ABF2302F7B6700684A78 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Features/Settings/SettingsView.swift,
+				Features/Timer/TimerView.swift,
+			);
+			target = 3E0583C6302E140900FA2454 /* DoraPresentationTimerWatch Watch App */;
+		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		3E0583C8302E140900FA2454 /* Watch App */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = "Watch App"; sourceTree = "<group>"; };
-		3E0583F2302E144900FA2454 /* Shared */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (3E0583FB302E145900FA2454 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = Shared; sourceTree = "<group>"; };
+		3E0583F2302E144900FA2454 /* Shared */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (3E0583FB302E145900FA2454 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, 3EE6ABF2302F7B6700684A78 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = Shared; sourceTree = "<group>"; };
 		3E058414302E148E00FA2454 /* iOS App */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (3E058431302E163200FA2454 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = "iOS App"; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 

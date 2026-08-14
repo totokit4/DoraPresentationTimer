@@ -7,7 +7,9 @@
 
 import Foundation
 import Combine
+#if os(iOS)
 import UIKit
+#endif
 
 final class TimerViewModel: ObservableObject {
     /// 残り秒
@@ -45,7 +47,7 @@ final class TimerViewModel: ObservableObject {
     }
     
     deinit {
-        UIApplication.shared.isIdleTimerDisabled = false
+        setIdleTimerDisabled(false)
     }
     
     func setInitialTime(minutes: Int, seconds: Int) {
@@ -81,7 +83,7 @@ final class TimerViewModel: ObservableObject {
         
         isTimerRunning = true
         // タイマー中はスリープさせない
-        UIApplication.shared.isIdleTimerDisabled = true
+        setIdleTimerDisabled(true)
         
         tickCancellable = ticker.tick
             .sink { [weak self] in
@@ -93,7 +95,7 @@ final class TimerViewModel: ObservableObject {
     
     func stopTimer() {
         isTimerRunning = false
-        UIApplication.shared.isIdleTimerDisabled = false
+        setIdleTimerDisabled(false)
         
         tickCancellable?.cancel()
         tickCancellable = nil
@@ -164,6 +166,14 @@ final class TimerViewModel: ObservableObject {
     }
 
     private func announce(_ message: String) {
+        #if os(iOS)
         UIAccessibility.post(notification: .announcement, argument: message)
+        #endif
+    }
+
+    private func setIdleTimerDisabled(_ isDisabled: Bool) {
+        #if os(iOS)
+        UIApplication.shared.isIdleTimerDisabled = isDisabled
+        #endif
     }
 }

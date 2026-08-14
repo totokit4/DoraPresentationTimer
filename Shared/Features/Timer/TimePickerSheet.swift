@@ -36,12 +36,8 @@ struct TimePickerSheet: View {
             .padding()
             .disabled(isTimerRunning)
             .navigationTitle(Text(title))
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button("button.close") { dismiss() }
-                }
-            }
+            .timerPickerTitleDisplayMode()
+            .timerPickerCloseToolbar { dismiss() }
         }
         .onAppear {
             minute = max(0, totalSeconds / 60)
@@ -111,12 +107,8 @@ struct ReminderTimePickerSheet: View {
             }
             .padding()
             .navigationTitle(Text(title))
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button("button.close") { dismiss() }
-                }
-            }
+            .timerPickerTitleDisplayMode()
+            .timerPickerCloseToolbar { dismiss() }
         }
         .onAppear {
             applyInitialValue()
@@ -176,4 +168,29 @@ struct ReminderTimePickerSheet: View {
             .clipped()
         }
     }
+}
+
+extension View {
+    @ViewBuilder
+    func timerPickerTitleDisplayMode() -> some View {
+        #if os(watchOS)
+        self
+        #else
+        self.navigationBarTitleDisplayMode(.inline)
+        #endif
+    }
+
+    @ViewBuilder
+    func timerPickerCloseToolbar(_ action: @escaping () -> Void) -> some View {
+        #if os(watchOS)
+        self
+        #else
+        self.toolbar {
+            ToolbarItem(placement: .confirmationAction) {
+                Button("button.close", action: action)
+            }
+        }
+        #endif
+    }
+
 }
