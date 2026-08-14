@@ -9,10 +9,11 @@
 "settings.language" = "Idioma";
 "settings.iosdcMode" = "Modo iOSDC";
 "settings.reminder.secondsBeforeEnd" = "%d segundos antes del final";
+"settings.reminder.shortSecondsBeforeEnd" = "%ds";
 "settings.reminder.unset" = "Sin configurar";
 
-"reminder.first" = "Primer recordatorio";
-"reminder.second" = "Segundo recordatorio";
+"reminder.first" = "Primero";
+"reminder.second" = "Segundo";
 "reminder.finish" = "Hora de finalización";
 
 "colorMode.system" = "Sistema";

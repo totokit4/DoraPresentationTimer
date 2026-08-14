@@ -118,6 +118,8 @@ struct WatchSettingsView: View {
                 .foregroundStyle(.secondary)
                 .monospacedDigit()
                 .lineLimit(1)
+                .minimumScaleFactor(0.7)
+                .allowsTightening(true)
         }
     }
 
@@ -140,7 +142,7 @@ struct WatchSettingsView: View {
             return settingsStore.settings.language.localizedString(forKey: "settings.reminder.unset")
         }
 
-        let format = settingsStore.settings.language.localizedString(forKey: "settings.reminder.secondsBeforeEnd")
+        let format = settingsStore.settings.language.localizedString(forKey: "settings.reminder.shortSecondsBeforeEnd")
         return String(
             format: format,
             locale: Locale(identifier: settingsStore.settings.language.localeIdentifier),

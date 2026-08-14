@@ -18,8 +18,8 @@ struct AppSettings: Codable, Equatable {
     static let `default` = AppSettings(
         durationSeconds: 10 * 60,
         reminders: [
-            .init(id: UUID(), label: "リマインド1回目", secondsBeforeEnd: 3 * 60, sound: .clappers1, isEnabled: true),
-            .init(id: UUID(), label: "リマインド2回目", secondsBeforeEnd: 1 * 60, sound: .clappers2, isEnabled: true),
+            .init(id: UUID(), label: "1回目", secondsBeforeEnd: 3 * 60, sound: .clappers1, isEnabled: true),
+            .init(id: UUID(), label: "2回目", secondsBeforeEnd: 1 * 60, sound: .clappers2, isEnabled: true),
             .init(id: UUID(), label: "終了時間", secondsBeforeEnd: 0, sound: .dora, isEnabled: true)
         ],
         colorMode: .system,
