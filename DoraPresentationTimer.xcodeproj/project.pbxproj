@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 70;
+	objectVersion = 76;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -43,6 +43,7 @@
 		3E0583FB302E145900FA2454 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				/Localized/Resources/Localizable.strings,
 				"Core/Extensions/Int+TimeFormat.swift",
 				Core/SoundPlayer.swift,
 				Core/TimerEngine.swift,
@@ -56,6 +57,8 @@
 				Features/Timer/TimerRules.swift,
 				Features/Timer/TimerView.swift,
 				Features/Timer/TimerViewModel.swift,
+				Resources/Assets.xcassets,
+				"Resources/DotGothic16-Regular.ttf",
 			);
 			target = C54EC78E2916B70600CC131C /* DoraPresentationTimer */;
 		};
@@ -178,7 +181,6 @@
 				};
 			};
 			buildConfigurationList = C54EC78A2916B70600CC131C /* Build configuration list for PBXProject "DoraPresentationTimer" */;
-			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -190,6 +192,7 @@
 				es,
 			);
 			mainGroup = C54EC7862916B70600CC131C;
+			preferredProjectObjectVersion = 56;
 			productRefGroup = C54EC7902916B70600CC131C /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -445,7 +448,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 7;
-				DEVELOPMENT_ASSET_PATHS = "\"iOS App/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = QCTJFD9NGS;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -478,7 +481,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 7;
-				DEVELOPMENT_ASSET_PATHS = "\"iOS App/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = QCTJFD9NGS;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
