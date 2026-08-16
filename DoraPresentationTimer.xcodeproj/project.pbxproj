@@ -59,6 +59,9 @@
 				Features/Timer/TimerViewModel.swift,
 				Resources/Assets.xcassets,
 				"Resources/DotGothic16-Regular.ttf",
+				Resources/Sounds/Clappers1.mp3,
+				Resources/Sounds/Clappers2.mp3,
+				Resources/Sounds/Dora.mp3,
 			);
 			target = C54EC78E2916B70600CC131C /* DoraPresentationTimer */;
 		};
