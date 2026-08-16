@@ -1,0 +1,48 @@
+"section.timer" = "Temporizador";
+"section.reminders" = "Recordatorios";
+"section.appearance" = "Apariencia";
+"section.language" = "Idioma";
+
+"settings.title" = "Configuración";
+"settings.duration" = "Tiempo de presentación";
+"settings.colorMode" = "Modo de color";
+"settings.language" = "Idioma";
+"settings.iosdcMode" = "Modo iOSDC";
+"settings.reminder.secondsBeforeEnd" = "%d segundos antes del final";
+"settings.reminder.shortSecondsBeforeEnd" = "%ds";
+"settings.reminder.unset" = "Sin configurar";
+
+"reminder.first" = "Primero";
+"reminder.second" = "Segundo";
+"reminder.finish" = "Hora de finalización";
+
+"colorMode.system" = "Sistema";
+"colorMode.light" = "Claro";
+"colorMode.dark" = "Oscuro";
+
+"sheet.setTime" = "Establecer tiempo";
+"sheet.setDuration" = "Establecer duración";
+"time.minute" = "min";
+"time.second" = "s";
+"button.close" = "Cerrar";
+"button.cancel" = "Cancelar";
+"button.ok" = "OK";
+
+"secret.passphrase.title" = "Contraseña";
+"secret.passphrase.placeholder" = "Contraseña";
+
+"timer.start" = "Iniciar";
+"timer.pause" = "Pausar";
+"timer.reset" = "Restablecer";
+
+"accessibility.time.minutesSeconds" = "%d minutos, %d segundos";
+"accessibility.timer.remainingTime" = "Tiempo restante";
+"accessibility.timer.setTimeHint" = "Toca dos veces para establecer el tiempo.";
+"accessibility.timer.runningHint" = "El temporizador está en marcha.";
+"accessibility.timer.startHint" = "Inicia el temporizador.";
+"accessibility.timer.pauseHint" = "Pausa el temporizador.";
+"accessibility.timer.resetHint" = "Restablece el temporizador al tiempo de presentación.";
+"accessibility.timer.finished" = "Temporizador finalizado.";
+"accessibility.settings.editHint" = "Toca dos veces para editar.";
+"accessibility.settings.previewSound" = "Previsualizar sonido para %@";
+"accessibility.settings.previewSoundHint" = "Reproduce este sonido de recordatorio.";

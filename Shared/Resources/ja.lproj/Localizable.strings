@@ -1,0 +1,48 @@
+"section.timer" = "タイマー";
+"section.reminders" = "リマインダー";
+"section.appearance" = "外観";
+"section.language" = "言語";
+
+"settings.title" = "設定";
+"settings.duration" = "発表時間";
+"settings.colorMode" = "カラーモード";
+"settings.language" = "言語";
+"settings.iosdcMode" = "iOSDCモード";
+"settings.reminder.secondsBeforeEnd" = "終了%d秒前";
+"settings.reminder.shortSecondsBeforeEnd" = "%d秒前";
+"settings.reminder.unset" = "未設定";
+
+"reminder.first" = "1回目";
+"reminder.second" = "2回目";
+"reminder.finish" = "終了時間";
+
+"colorMode.system" = "システム";
+"colorMode.light" = "ライト";
+"colorMode.dark" = "ダーク";
+
+"sheet.setTime" = "時間を設定";
+"sheet.setDuration" = "発表時間を設定";
+"time.minute" = "分";
+"time.second" = "秒";
+"button.close" = "閉じる";
+"button.cancel" = "キャンセル";
+"button.ok" = "OK";
+
+"secret.passphrase.title" = "合言葉";
+"secret.passphrase.placeholder" = "合言葉";
+
+"timer.start" = "開始";
+"timer.pause" = "一時停止";
+"timer.reset" = "リセット";
+
+"accessibility.time.minutesSeconds" = "%d分%d秒";
+"accessibility.timer.remainingTime" = "残り時間";
+"accessibility.timer.setTimeHint" = "ダブルタップで時間を設定します。";
+"accessibility.timer.runningHint" = "タイマーは実行中です。";
+"accessibility.timer.startHint" = "タイマーを開始します。";
+"accessibility.timer.pauseHint" = "タイマーを一時停止します。";
+"accessibility.timer.resetHint" = "タイマーを発表時間に戻します。";
+"accessibility.timer.finished" = "タイマーが終了しました。";
+"accessibility.settings.editHint" = "ダブルタップで編集します。";
+"accessibility.settings.previewSound" = "%@の音を試聴";
+"accessibility.settings.previewSoundHint" = "このリマインダー音を再生します。";

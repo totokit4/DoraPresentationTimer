@@ -1,0 +1,48 @@
+"section.timer" = "计时器";
+"section.reminders" = "提醒";
+"section.appearance" = "外观";
+"section.language" = "语言";
+
+"settings.title" = "设置";
+"settings.duration" = "演示时长";
+"settings.colorMode" = "颜色模式";
+"settings.language" = "语言";
+"settings.iosdcMode" = "iOSDC 模式";
+"settings.reminder.secondsBeforeEnd" = "结束前%d秒";
+"settings.reminder.shortSecondsBeforeEnd" = "%d秒前";
+"settings.reminder.unset" = "未设置";
+
+"reminder.first" = "第一次";
+"reminder.second" = "第二次";
+"reminder.finish" = "结束时间";
+
+"colorMode.system" = "跟随系统";
+"colorMode.light" = "浅色";
+"colorMode.dark" = "深色";
+
+"sheet.setTime" = "设置时间";
+"sheet.setDuration" = "设置演示时长";
+"time.minute" = "分";
+"time.second" = "秒";
+"button.close" = "关闭";
+"button.cancel" = "取消";
+"button.ok" = "OK";
+
+"secret.passphrase.title" = "暗号";
+"secret.passphrase.placeholder" = "暗号";
+
+"timer.start" = "开始";
+"timer.pause" = "暂停";
+"timer.reset" = "重置";
+
+"accessibility.time.minutesSeconds" = "%d分%d秒";
+"accessibility.timer.remainingTime" = "剩余时间";
+"accessibility.timer.setTimeHint" = "轻点两下以设置时间。";
+"accessibility.timer.runningHint" = "计时器正在运行。";
+"accessibility.timer.startHint" = "开始计时器。";
+"accessibility.timer.pauseHint" = "暂停计时器。";
+"accessibility.timer.resetHint" = "将计时器重置为演示时长。";
+"accessibility.timer.finished" = "计时器已结束。";
+"accessibility.settings.editHint" = "轻点两下以编辑。";
+"accessibility.settings.previewSound" = "试听%@的声音";
+"accessibility.settings.previewSoundHint" = "播放此提醒声音。";
