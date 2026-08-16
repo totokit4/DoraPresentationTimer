@@ -45,14 +45,36 @@ struct MarqueeWarningText: View {
     let text: String
     let duration: Double
 
-    @State private var isAnimating = false
+    var body: some View {
+        GeometryReader { geo in
+            MarqueeWarningTextLine(
+                text: text,
+                duration: duration,
+                color: settingsStore.settings.penlightColor.color,
+                containerWidth: geo.size.width
+            )
+        }
+        .frame(maxWidth: .infinity)
+        .frame(height: 44)
+        .clipped()
+        .allowsHitTesting(false)
+    }
+}
+
+private struct MarqueeWarningTextLine: View {
+    let text: String
+    let duration: Double
+    let color: Color
+    let containerWidth: CGFloat
+
+    @State private var startDate = Date()
     @State private var textWidth: CGFloat = 0
 
     var body: some View {
-        GeometryReader { geo in
+        TimelineView(.animation) { timeline in
             Text(text)
                 .font(.custom("DotGothic16-Regular", size: 30))
-                .foregroundStyle(settingsStore.settings.penlightColor.color)
+                .foregroundStyle(color)
                 .shadow(color: .black.opacity(0.3), radius: 2, x: 1, y: 1)
                 .lineLimit(1)
                 .fixedSize()
@@ -60,41 +82,33 @@ struct MarqueeWarningText: View {
                     GeometryReader { textGeo in
                         Color.clear
                             .onAppear {
-                                textWidth = textGeo.size.width
+                                updateTextWidth(textGeo.size.width)
                             }
-                    }
+                            .onChange(of: textGeo.size.width) {
+                                updateTextWidth(textGeo.size.width)
+                            }
+                        }
                 }
-                .offset(x: isAnimating ? -textWidth : geo.size.width)
-                .onAppear {
-                    restartAnimation()
-                }
-                .onChange(of: geo.size.width) {
-                    restartAnimation()
-                }
-                .onChange(of: textWidth) {
-                    restartAnimation()
-                }
-                .onDisappear {
-                    isAnimating = false
-                }
+                .offset(x: offset(at: timeline.date))
         }
-        .frame(maxWidth: .infinity)
-        .frame(height: 44)
-        .clipped()
-        .allowsHitTesting(false)
     }
 
-    private func restartAnimation() {
-        isAnimating = false
+    private func updateTextWidth(_ width: CGFloat) {
+        guard textWidth != width else { return }
 
-        DispatchQueue.main.async {
-            withAnimation(
-                .linear(duration: duration)
-                    .repeatForever(autoreverses: false)
-            ) {
-                isAnimating = true
-            }
+        textWidth = width
+    }
+
+    private func offset(at date: Date) -> CGFloat {
+        guard containerWidth > 0, textWidth > 0, duration > 0 else {
+            return containerWidth
         }
+
+        let elapsed = date.timeIntervalSince(startDate)
+        let progress = elapsed.truncatingRemainder(dividingBy: duration) / duration
+        let travelDistance = containerWidth + textWidth
+
+        return containerWidth - travelDistance * progress
     }
 }
 
