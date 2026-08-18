@@ -26,26 +26,40 @@ enum SoundType: String, Codable, CaseIterable {
         case .dora: return "Dora"
         }
     }
+
+    #if os(watchOS)
+    var hapticType: WKHapticType {
+        switch self {
+        case .clappers1, .clappers2:
+            return .notification
+        case .dora:
+            return .stop
+        }
+    }
+    #endif
 }
 
 final class SoundPlayer: SoundPlaying {
     private var player: AVAudioPlayer?
     
     func play(_ type: SoundType) {
+        #if os(watchOS)
+        WKInterfaceDevice.current().play(type.hapticType)
+        #endif
+
         guard let url = Bundle.main.url(forResource: type.fileName, withExtension: "mp3") else {
-            #if os(watchOS)
-            WKInterfaceDevice.current().play(.notification)
-            #endif
             return
         }
 
         do {
             player = try AVAudioPlayer(contentsOf: url)
-            player?.play()
+            player?.prepareToPlay()
+
+            guard player?.play() == true else {
+                return
+            }
         } catch {
-            #if os(watchOS)
-            WKInterfaceDevice.current().play(.notification)
-            #else
+            #if !os(watchOS)
             print("error")
             #endif
         }
