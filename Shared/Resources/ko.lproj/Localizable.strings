@@ -3,11 +3,14 @@
 "section.appearance" = "화면";
 "section.language" = "언어";
 
+"app.name" = "징 타이머";
+
 "settings.title" = "설정";
 "settings.duration" = "발표 시간";
 "settings.colorMode" = "색상 모드";
 "settings.language" = "언어";
 "settings.iosdcMode" = "iOSDC 모드";
+"settings.penlightColor" = "펜라이트 색상";
 "settings.reminder.secondsBeforeEnd" = "종료 %d초 전";
 "settings.reminder.shortSecondsBeforeEnd" = "%d초 전";
 "settings.reminder.unset" = "설정 안 됨";

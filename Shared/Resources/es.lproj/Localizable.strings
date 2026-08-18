@@ -3,11 +3,14 @@
 "section.appearance" = "Apariencia";
 "section.language" = "Idioma";
 
+"app.name" = "Temporizador gong";
+
 "settings.title" = "Configuración";
 "settings.duration" = "Tiempo de presentación";
 "settings.colorMode" = "Modo de color";
 "settings.language" = "Idioma";
 "settings.iosdcMode" = "Modo iOSDC";
+"settings.penlightColor" = "Color del penlight";
 "settings.reminder.secondsBeforeEnd" = "%d segundos antes del final";
 "settings.reminder.shortSecondsBeforeEnd" = "%ds";
 "settings.reminder.unset" = "Sin configurar";

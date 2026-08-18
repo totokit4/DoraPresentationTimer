@@ -3,11 +3,14 @@
 "section.appearance" = "Appearance";
 "section.language" = "Language";
 
+"app.name" = "Gong Timer";
+
 "settings.title" = "Settings";
 "settings.duration" = "Presentation Time";
 "settings.colorMode" = "Color Mode";
 "settings.language" = "Language";
 "settings.iosdcMode" = "iOSDC Mode";
+"settings.penlightColor" = "Penlight Color";
 "settings.reminder.secondsBeforeEnd" = "%d seconds before end";
 "settings.reminder.shortSecondsBeforeEnd" = "%ds";
 "settings.reminder.unset" = "Not Set";

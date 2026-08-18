@@ -62,7 +62,8 @@ final class NotificationScheduler {
             guard fireAfterSeconds > 0 else { continue }
 
             let content = UNMutableNotificationContent()
-            content.title = Bundle.main.object(forInfoDictionaryKey: "CFBundleDisplayName") as? String ?? "Dora Presentation Timer"
+            content.title = Bundle.main.object(forInfoDictionaryKey: "CFBundleDisplayName") as? String
+                ?? settings.language.localizedString(forKey: "app.name")
             content.body = settings.language.localizedString(forKey: rule.localizationKey)
             #if os(watchOS)
             content.sound = .default
