@@ -45,6 +45,7 @@
 			membershipExceptions = (
 				/Localized/Resources/Localizable.strings,
 				"Core/Extensions/Int+TimeFormat.swift",
+				Core/NotificationScheduler.swift,
 				Core/SoundPlayer.swift,
 				Core/TimerEngine.swift,
 				Features/Settings/AppColorMode.swift,
