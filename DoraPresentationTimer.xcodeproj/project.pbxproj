@@ -43,6 +43,7 @@
 		3E0583FB302E145900FA2454 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				/Localized/Resources/InfoPlist.strings,
 				/Localized/Resources/Localizable.strings,
 				"Core/Extensions/Int+TimeFormat.swift",
 				Core/NotificationScheduler.swift,
