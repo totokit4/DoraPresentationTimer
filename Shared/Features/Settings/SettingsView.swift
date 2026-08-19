@@ -206,7 +206,7 @@ struct SettingsView: View {
         Section {
             if isIOSDCModeUnlocked {
                 Toggle("settings.iosdcMode", isOn: iOSDCModeBinding)
-                Picker("Penlight color", selection: penlightColorBinding) {
+                Picker("settings.penlightColor", selection: penlightColorBinding) {
                     ForEach(PenlightColor.allCases) { color in
                         Text(color.displayName).tag(color)
                     }

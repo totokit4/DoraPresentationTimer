@@ -3,11 +3,14 @@
 "section.appearance" = "外観";
 "section.language" = "言語";
 
+"app.name" = "銅鑼タイマー";
+
 "settings.title" = "設定";
 "settings.duration" = "発表時間";
 "settings.colorMode" = "カラーモード";
 "settings.language" = "言語";
 "settings.iosdcMode" = "iOSDCモード";
+"settings.penlightColor" = "ペンライトカラー";
 "settings.reminder.secondsBeforeEnd" = "終了%d秒前";
 "settings.reminder.shortSecondsBeforeEnd" = "%d秒前";
 "settings.reminder.unset" = "未設定";

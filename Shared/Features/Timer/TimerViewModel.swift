@@ -20,21 +20,25 @@ final class TimerViewModel: ObservableObject {
     private let ticker: TimerTicking
     private let soundPlayer: SoundPlaying
     private let settingsStore: SettingsStore
+    private let notificationScheduler: NotificationScheduler
     
     private var cancellables = Set<AnyCancellable>()   // 常時購読（設定など）
     private var tickCancellable: AnyCancellable?       // タイマー稼働中のみ
     
     private var sessionDurationSeconds: Int = 0
     private var sessionReminders: [ReminderRule] = []
+    private var timerEndDate: Date?
     
     init(
         settingsStore: SettingsStore,
         ticker: TimerTicking = TimerEngine(),
-        soundPlayer: SoundPlaying = SoundPlayer()
+        soundPlayer: SoundPlaying = SoundPlayer(),
+        notificationScheduler: NotificationScheduler = NotificationScheduler()
     ) {
         self.settingsStore = settingsStore
         self.ticker = ticker
         self.soundPlayer = soundPlayer
+        self.notificationScheduler = notificationScheduler
         
         applyDurationFromSettings(settingsStore.settings)
         
@@ -80,10 +84,18 @@ final class TimerViewModel: ObservableObject {
         
         // このセッションで使うremindersを固定
         sessionReminders = settingsStore.settings.reminders
-        
+        timerEndDate = Date().addingTimeInterval(TimeInterval(remainingSeconds))
+
         isTimerRunning = true
         // タイマー中はスリープさせない
         setIdleTimerDisabled(true)
+        notificationScheduler.schedule(
+            reminders: sessionReminders,
+            remainingSeconds: remainingSeconds,
+            durationSeconds: sessionDurationSeconds,
+            settings: settingsStore.settings,
+            shouldSchedule: { [weak self] in self?.isTimerRunning == true }
+        )
         
         tickCancellable = ticker.tick
             .sink { [weak self] in
@@ -100,7 +112,9 @@ final class TimerViewModel: ObservableObject {
         tickCancellable?.cancel()
         tickCancellable = nil
         
+        timerEndDate = nil
         sessionReminders = [] 
+        notificationScheduler.cancel()
     }
     
     func resetCount() {
@@ -132,10 +146,13 @@ final class TimerViewModel: ObservableObject {
     
     private func handleTick() {
         guard isTimerRunning else { return }
-        guard remainingSeconds > 0 else { return }
-        
-        // Viewへの反映
-        remainingSeconds -= 1
+        guard let timerEndDate else { return }
+
+        let updatedRemainingSeconds = max(0, Int(ceil(timerEndDate.timeIntervalSinceNow)))
+        guard updatedRemainingSeconds != remainingSeconds else { return }
+
+        // Viewへの反映。終了予定時刻から逆算することで、watchOSで画面が消えても再開時に正しい残り時間へ戻す。
+        remainingSeconds = updatedRemainingSeconds
         
         // 音を鳴らすかチェック
         if let event = TimerRules.event(
@@ -157,6 +174,11 @@ final class TimerViewModel: ObservableObject {
                 // 初期値に戻す
                 resetCount()
             }
+        }
+
+        if remainingSeconds == 0 {
+            stopTimer()
+            resetCount()
         }
     }
 

@@ -3,11 +3,14 @@
 "section.appearance" = "外观";
 "section.language" = "语言";
 
+"app.name" = "铜锣计时器";
+
 "settings.title" = "设置";
 "settings.duration" = "演示时长";
 "settings.colorMode" = "颜色模式";
 "settings.language" = "语言";
 "settings.iosdcMode" = "iOSDC 模式";
+"settings.penlightColor" = "荧光棒颜色";
 "settings.reminder.secondsBeforeEnd" = "结束前%d秒";
 "settings.reminder.shortSecondsBeforeEnd" = "%d秒前";
 "settings.reminder.unset" = "未设置";
