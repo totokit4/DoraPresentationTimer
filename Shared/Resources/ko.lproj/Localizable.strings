@@ -11,6 +11,12 @@
 "settings.language" = "언어";
 "settings.iosdcMode" = "iOSDC 모드";
 "settings.penlightColor" = "펜라이트 색상";
+"timer.externalDisplayConnected" = "외부 디스플레이 연결됨";
+"externalDisplay.title" = "외부 디스플레이";
+"externalDisplay.backgroundColor" = "배경색";
+"externalDisplay.showTimer" = "카운트다운 표시";
+"externalDisplay.footer" = "외부 디스플레이에 반영됩니다.";
+"accessibility.timer.externalDisplaySettingsHint" = "외부 디스플레이 설정을 엽니다";
 "settings.reminder.secondsBeforeEnd" = "종료 %d초 전";
 "settings.reminder.shortSecondsBeforeEnd" = "%d초 전";
 "settings.reminder.unset" = "설정 안 됨";

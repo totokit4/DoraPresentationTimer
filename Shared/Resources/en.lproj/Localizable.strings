@@ -11,6 +11,12 @@
 "settings.language" = "Language";
 "settings.iosdcMode" = "iOSDC Mode";
 "settings.penlightColor" = "Penlight Color";
+"timer.externalDisplayConnected" = "External Display Connected";
+"externalDisplay.title" = "External Display";
+"externalDisplay.backgroundColor" = "Background Color";
+"externalDisplay.showTimer" = "Show Countdown";
+"externalDisplay.footer" = "Applies to the external display.";
+"accessibility.timer.externalDisplaySettingsHint" = "Opens external display settings";
 "settings.reminder.secondsBeforeEnd" = "%d seconds before end";
 "settings.reminder.shortSecondsBeforeEnd" = "%ds";
 "settings.reminder.unset" = "Not Set";

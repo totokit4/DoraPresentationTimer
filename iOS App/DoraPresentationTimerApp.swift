@@ -9,21 +9,25 @@ import SwiftUI
 
 @main
 struct DoraPresentationTimerApp: App {
-    @State private var settingsStore: SettingsStore
-    @State private var timerViewModel: TimerViewModel
+    @UIApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
 
-    init() {
-        let settingsStore = SettingsStore()
-        _settingsStore = State(initialValue: settingsStore)
-        _timerViewModel = State(initialValue: TimerViewModel(settingsStore: settingsStore))
-    }
+    let model = AppModel.shared
 
     var body: some Scene {
         WindowGroup {
-            TimerView(viewModel: timerViewModel)
-                .environment(settingsStore)
-                .environment(\.locale, Locale(identifier: settingsStore.settings.language.localeIdentifier))
-                .preferredColorScheme(settingsStore.settings.colorMode.colorScheme)
+            TimerView(viewModel: model.timerViewModel)
+                .environment(model.settingsStore)
+                .environment(
+                    \.locale,
+                    Locale(
+                        identifier: model.settingsStore.settings.language
+                            .localeIdentifier
+                    )
+                )
+                .preferredColorScheme(
+                    model.settingsStore.settings.colorMode.colorScheme
+                )
+                .modifier(ExternalDisplayAccessory())
         }
     }
 }

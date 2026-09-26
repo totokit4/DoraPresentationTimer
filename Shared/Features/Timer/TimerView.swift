@@ -16,6 +16,7 @@ struct TimerView: View {
     @State private var selectedSecond: Int = 0
     
     @State private var isPickerPresented = false
+    @State private var isExternalDisplaySettingsPresented = false
     
     init(viewModel: TimerViewModel) {
         self.viewModel = viewModel
@@ -36,7 +37,7 @@ struct TimerView: View {
                     remainingSeconds: viewModel.remainingSeconds,
                     isTimerRunning: viewModel.isTimerRunning
                 ) {
-                    MarqueeWarningText(text: message.text, duration: 5.0)
+                    MarqueeWarningText(text: message.text)
                         .frame(maxWidth: .infinity)
                         .padding(.top, 16)
                         .zIndex(1)
@@ -64,6 +65,18 @@ struct TimerView: View {
                 viewModel.setInitialTime(minutes: selectedMinute, seconds: selectedSecond)
             }
             .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    if AppModel.shared.isExternalDisplayConnected {
+                        Button {
+                            isExternalDisplaySettingsPresented = true
+                        } label: {
+                            Label("timer.externalDisplayConnected", systemImage: "display")
+                                .font(.caption)
+                        }
+                        .accessibilityHint("accessibility.timer.externalDisplaySettingsHint")
+                    }
+                }
+
                 ToolbarItemGroup(placement: .topBarTrailing) {
                     NavigationLink {
                         SettingsView()
@@ -73,6 +86,11 @@ struct TimerView: View {
                     .accessibilityLabel("settings.title")
                 }
             }
+        }
+        .sheet(isPresented: $isExternalDisplaySettingsPresented) {
+            ExternalDisplaySettingsView()
+                .presentationDetents([.fraction(0.35), .medium])
+                .presentationDragIndicator(.visible)
         }
         .onAppear {
             syncSelectedTimeFromViewModel()

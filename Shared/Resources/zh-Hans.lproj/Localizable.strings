@@ -11,6 +11,12 @@
 "settings.language" = "语言";
 "settings.iosdcMode" = "iOSDC 模式";
 "settings.penlightColor" = "荧光棒颜色";
+"timer.externalDisplayConnected" = "已连接外接显示器";
+"externalDisplay.title" = "外接显示器";
+"externalDisplay.backgroundColor" = "背景色";
+"externalDisplay.showTimer" = "显示倒计时";
+"externalDisplay.footer" = "将应用于外接显示器。";
+"accessibility.timer.externalDisplaySettingsHint" = "打开外接显示器设置";
 "settings.reminder.secondsBeforeEnd" = "结束前%d秒";
 "settings.reminder.shortSecondsBeforeEnd" = "%d秒前";
 "settings.reminder.unset" = "未设置";
