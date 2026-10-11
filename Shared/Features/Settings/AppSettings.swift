@@ -14,6 +14,10 @@ struct AppSettings: Codable, Equatable {
     var language: AppLanguage
     var isIOSDCModeEnabled: Bool
     var penlightColor: PenlightColor
+    /// 外部ディスプレイの背景色（"RRGGBB"）
+    var externalDisplayBackgroundColorHex: String
+    /// 外部ディスプレイに残り時間を表示するか
+    var isExternalDisplayTimerVisible: Bool
 
     static let `default` = AppSettings(
         durationSeconds: 10 * 60,
@@ -25,8 +29,12 @@ struct AppSettings: Codable, Equatable {
         colorMode: .system,
         language: .japanese,
         isIOSDCModeEnabled: false,
-        penlightColor: .red
+        penlightColor: .red,
+        externalDisplayBackgroundColorHex: AppSettings.defaultExternalDisplayBackgroundColorHex,
+        isExternalDisplayTimerVisible: false
     )
+
+    static let defaultExternalDisplayBackgroundColorHex = "000000"
 }
 
 extension AppSettings {
@@ -37,6 +45,8 @@ extension AppSettings {
         case language
         case isIOSDCModeEnabled
         case penlightColor
+        case externalDisplayBackgroundColorHex
+        case isExternalDisplayTimerVisible
     }
     
     init(from decoder: Decoder) throws {
@@ -47,6 +57,9 @@ extension AppSettings {
         language = try container.decodeIfPresent(AppLanguage.self, forKey: .language) ?? .japanese
         isIOSDCModeEnabled = try container.decodeIfPresent(Bool.self, forKey: .isIOSDCModeEnabled) ?? false
         penlightColor = try container.decodeIfPresent(PenlightColor.self, forKey: .penlightColor) ?? .red
+        externalDisplayBackgroundColorHex = try container.decodeIfPresent(String.self, forKey: .externalDisplayBackgroundColorHex)
+            ?? Self.defaultExternalDisplayBackgroundColorHex
+        isExternalDisplayTimerVisible = try container.decodeIfPresent(Bool.self, forKey: .isExternalDisplayTimerVisible) ?? false
     }
 }
 

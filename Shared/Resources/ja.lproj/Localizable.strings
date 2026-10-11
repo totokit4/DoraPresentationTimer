@@ -11,6 +11,12 @@
 "settings.language" = "言語";
 "settings.iosdcMode" = "iOSDCモード";
 "settings.penlightColor" = "ペンライトカラー";
+"timer.externalDisplayConnected" = "外部ディスプレイ 接続中";
+"externalDisplay.title" = "外部ディスプレイ";
+"externalDisplay.backgroundColor" = "背景色";
+"externalDisplay.showTimer" = "カウントダウンを表示";
+"externalDisplay.footer" = "外部ディスプレイの表示に反映されます。";
+"accessibility.timer.externalDisplaySettingsHint" = "外部ディスプレイの表示設定を開きます";
 "settings.reminder.secondsBeforeEnd" = "終了%d秒前";
 "settings.reminder.shortSecondsBeforeEnd" = "%d秒前";
 "settings.reminder.unset" = "未設定";
