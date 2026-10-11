@@ -12,10 +12,12 @@ import UIKit
 import WatchKit
 #endif
 
+@MainActor
 protocol SoundPlaying {
     func play(_ type: SoundType)
 }
 
+@MainActor
 protocol FeedbackPerforming {
     func performButtonFeedback()
 }
