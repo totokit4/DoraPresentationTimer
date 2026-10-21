@@ -1,3 +1,8 @@
+"section.soundType" = "声音类型";
+"settings.sound" = "声音";
+"sound.dora" = "铜锣";
+"sound.bell" = "铃声";
+
 "section.timer" = "计时器";
 "section.reminders" = "提醒";
 "section.appearance" = "外观";

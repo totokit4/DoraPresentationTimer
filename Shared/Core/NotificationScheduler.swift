@@ -69,7 +69,7 @@ final class NotificationScheduler {
             #if os(watchOS)
             content.sound = .default
             #else
-            content.sound = UNNotificationSound(named: UNNotificationSoundName("\(rule.sound.fileName).mp3"))
+            content.sound = UNNotificationSound(named: UNNotificationSoundName("\(settings.soundStyle.sound(for: rule.sound).fileName).mp3"))
             #endif
 
             let trigger = UNTimeIntervalNotificationTrigger(timeInterval: TimeInterval(fireAfterSeconds), repeats: false)

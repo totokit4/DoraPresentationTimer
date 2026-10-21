@@ -33,6 +33,8 @@ struct WatchSettingsView: View {
     }
 
     var body: some View {
+        @Bindable var settingsStore = settingsStore
+
         List {
             Section("section.timer") {
                 Button {
@@ -55,6 +57,13 @@ struct WatchSettingsView: View {
                             value: reminderText(for: reminder)
                         )
                     }
+                }
+            }
+
+            Section("settings.sound") {
+                Picker("section.soundType", selection: $settingsStore.soundStyle) {
+                    Text("sound.dora").tag(TimerSoundStyle.dora)
+                    Text("sound.bell").tag(TimerSoundStyle.bell)
                 }
             }
 

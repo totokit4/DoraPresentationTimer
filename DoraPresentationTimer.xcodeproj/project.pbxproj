@@ -61,6 +61,9 @@
 				Features/Timer/TimerViewModel.swift,
 				Resources/Assets.xcassets,
 				"Resources/DotGothic16-Regular.ttf",
+				Resources/Sounds/CallBell1.mp3,
+				Resources/Sounds/CallBell2.mp3,
+				Resources/Sounds/CallBell3.mp3,
 				Resources/Sounds/Clappers1.mp3,
 				Resources/Sounds/Clappers2.mp3,
 				Resources/Sounds/Dora.mp3,
@@ -183,7 +186,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 2660;
-				LastUpgradeCheck = 2700;
+				LastUpgradeCheck = 2710;
 				TargetAttributes = {
 					3E0583C6302E140900FA2454 = {
 						CreatedOnToolsVersion = 26.6;
@@ -338,6 +341,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -402,6 +406,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;

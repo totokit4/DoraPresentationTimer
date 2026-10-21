@@ -1,3 +1,8 @@
+"section.soundType" = "소리 유형";
+"settings.sound" = "소리";
+"sound.dora" = "징";
+"sound.bell" = "벨";
+
 "section.timer" = "타이머";
 "section.reminders" = "알림";
 "section.appearance" = "화면";
