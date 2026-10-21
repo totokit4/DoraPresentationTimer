@@ -11,6 +11,7 @@ import Observation
 import UIKit
 #endif
 
+@MainActor
 @Observable
 final class TimerViewModel {
     /// 残り秒
@@ -53,7 +54,11 @@ final class TimerViewModel {
     
     deinit {
         tickTask?.cancel()
-        setIdleTimerDisabled(false)
+        #if os(iOS)
+        Task { @MainActor in
+            UIApplication.shared.isIdleTimerDisabled = false
+        }
+        #endif
     }
     
     func setInitialTime(minutes: Int, seconds: Int) {

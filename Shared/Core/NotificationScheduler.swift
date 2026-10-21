@@ -8,6 +8,7 @@
 import Foundation
 import UserNotifications
 
+@MainActor
 final class NotificationScheduler {
     private let center: UNUserNotificationCenter
     private let identifierPrefix = "DoraPresentationTimer.timer."
@@ -21,21 +22,21 @@ final class NotificationScheduler {
         remainingSeconds: Int,
         durationSeconds: Int,
         settings: AppSettings,
-        shouldSchedule: @escaping () -> Bool
+        shouldSchedule: @escaping @MainActor () -> Bool
     ) {
         cancel()
 
-        center.requestAuthorization(options: [.alert, .sound]) { [weak self] granted, _ in
-            guard granted else { return }
-            DispatchQueue.main.async {
-                guard shouldSchedule() else { return }
-                self?.addNotificationRequests(
-                    reminders: reminders,
-                    remainingSeconds: remainingSeconds,
-                    durationSeconds: durationSeconds,
-                    settings: settings
-                )
-            }
+        Task { [weak self] in
+            guard let self else { return }
+            guard (try? await center.requestAuthorization(options: [.alert, .sound])) == true else { return }
+            guard shouldSchedule() else { return }
+
+            addNotificationRequests(
+                reminders: reminders,
+                remainingSeconds: remainingSeconds,
+                durationSeconds: durationSeconds,
+                settings: settings
+            )
         }
     }
 
