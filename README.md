@@ -104,3 +104,7 @@ DoraPresentationTimer/
 3. 対応するシミュレータまたは実機を選び、Run します。
 
 音声ファイルとフォントはリポジトリ内の `Shared/Resources` に含まれています。
+
+## 音源クレジット
+
+本アプリで使用している音源の一部は、[OtoLogic](https://otologic.jp/) から入手しています。
