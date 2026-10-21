@@ -67,6 +67,8 @@ struct SettingsView: View {
     }
     
     var body: some View {
+        @Bindable var settingsStore = settingsStore
+
         List {
             Section("section.timer") {
                 oneLineRow(
@@ -90,12 +92,19 @@ struct SettingsView: View {
                         showSpeaker: true,
                         isEditable: r.sound != .dora,
                         speakerAccessibilityLabel: soundPreviewAccessibilityLabel(for: r),
-                        onSpeaker: { soundPlayer.play(r.sound) },
+                        onSpeaker: { soundPlayer.play(settingsStore.settings.soundStyle.sound(for: r.sound)) },
                         onTap: {
                             guard r.sound != .dora else { return }
                             editTarget = .reminder(r.id)
                         }
                     )
+                }
+            }
+
+            Section("settings.sound") {
+                Picker("section.soundType", selection: $settingsStore.soundStyle) {
+                    Text("sound.dora").tag(TimerSoundStyle.dora)
+                    Text("sound.bell").tag(TimerSoundStyle.bell)
                 }
             }
 

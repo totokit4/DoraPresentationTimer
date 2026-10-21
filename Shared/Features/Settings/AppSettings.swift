@@ -7,10 +7,28 @@
 
 import Foundation
 
+enum TimerSoundStyle: String, Codable {
+    case dora
+    case bell
+
+    // リマインダーの役割を保持し、再生する音源だけを切り替える。
+    func sound(for sound: SoundType) -> SoundType {
+        switch sound {
+        case .clappers1, .callBell1:
+            return self == .bell ? .callBell1 : .clappers1
+        case .clappers2, .callBell2:
+            return self == .bell ? .callBell2 : .clappers2
+        case .dora, .callBell3:
+            return self == .bell ? .callBell3 : .dora
+        }
+    }
+}
+
 struct AppSettings: Codable, Equatable {
     var durationSeconds: Int
     var reminders: [ReminderRule]
     var colorMode: AppColorMode
+    var soundStyle: TimerSoundStyle = .dora
     var language: AppLanguage
     var isIOSDCModeEnabled: Bool
     var penlightColor: PenlightColor
@@ -42,6 +60,7 @@ extension AppSettings {
         case durationSeconds
         case reminders
         case colorMode
+        case soundStyle
         case language
         case isIOSDCModeEnabled
         case penlightColor
@@ -54,6 +73,7 @@ extension AppSettings {
         durationSeconds = try container.decode(Int.self, forKey: .durationSeconds)
         reminders = try container.decode([ReminderRule].self, forKey: .reminders)
         colorMode = try container.decodeIfPresent(AppColorMode.self, forKey: .colorMode) ?? .system
+        soundStyle = try container.decodeIfPresent(TimerSoundStyle.self, forKey: .soundStyle) ?? .dora
         language = try container.decodeIfPresent(AppLanguage.self, forKey: .language) ?? .japanese
         isIOSDCModeEnabled = try container.decodeIfPresent(Bool.self, forKey: .isIOSDCModeEnabled) ?? false
         penlightColor = try container.decodeIfPresent(PenlightColor.self, forKey: .penlightColor) ?? .red
@@ -72,11 +92,11 @@ struct ReminderRule: Codable, Equatable, Identifiable {
 
     var localizationKey: String {
         switch sound {
-        case .clappers1:
+        case .clappers1, .callBell1:
             return "reminder.first"
-        case .clappers2:
+        case .clappers2, .callBell2:
             return "reminder.second"
-        case .dora:
+        case .dora, .callBell3:
             return "reminder.finish"
         }
     }

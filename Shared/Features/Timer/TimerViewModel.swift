@@ -27,6 +27,7 @@ final class TimerViewModel {
     @ObservationIgnored private var tickTask: Task<Void, Never>?   // タイマー稼働中のみ
     
     @ObservationIgnored private var sessionDurationSeconds: Int = 0
+    @ObservationIgnored private var sessionSoundStyle: TimerSoundStyle = .dora
     @ObservationIgnored private var sessionReminders: [ReminderRule] = []
     @ObservationIgnored private var timerEndDate: Date?
     
@@ -85,6 +86,7 @@ final class TimerViewModel {
         }
         
         // このセッションで使うremindersを固定
+        sessionSoundStyle = settingsStore.settings.soundStyle
         sessionReminders = settingsStore.settings.reminders
         timerEndDate = Date().addingTimeInterval(TimeInterval(remainingSeconds))
 
@@ -176,11 +178,11 @@ final class TimerViewModel {
             case .playSound(let sound):
                 // iOSDCモードがONであればリマインダーの音は鳴らさない
                 guard !settingsStore.settings.isIOSDCModeEnabled else { return }
-                soundPlayer.play(sound)
+                soundPlayer.play(sessionSoundStyle.sound(for: sound))
                 announceReminder(for: sound)
                 
             case .finished:
-                soundPlayer.play(.dora)
+                soundPlayer.play(sessionSoundStyle.sound(for: .dora))
                 announce(settingsStore.settings.language.localizedString(forKey: "accessibility.timer.finished"))
                 stopTimer()
                 // 初期値に戻す

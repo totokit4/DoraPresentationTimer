@@ -24,21 +24,27 @@ enum SoundType: String, Codable, CaseIterable {
     case clappers1
     case clappers2
     case dora
+    case callBell1
+    case callBell2
+    case callBell3
     
     var fileName: String {
         switch self {
         case .clappers1: return "Clappers1"
         case .clappers2: return "Clappers2"
         case .dora: return "Dora"
+        case .callBell1: return "CallBell1"
+        case .callBell2: return "CallBell2"
+        case .callBell3: return "CallBell3"
         }
     }
 
     #if os(watchOS)
     var hapticType: WKHapticType {
         switch self {
-        case .clappers1, .clappers2:
+        case .clappers1, .clappers2, .callBell1, .callBell2:
             return .notification
-        case .dora:
+        case .dora, .callBell3:
             return .stop
         }
     }
@@ -46,7 +52,7 @@ enum SoundType: String, Codable, CaseIterable {
 }
 
 final class SoundPlayer: SoundPlaying {
-    private var player: AVAudioPlayer?
+    private let playback = AudioPlayback()
     
     func play(_ type: SoundType) {
         #if os(watchOS)
@@ -57,6 +63,17 @@ final class SoundPlayer: SoundPlaying {
             return
         }
 
+        Task {
+            await playback.play(url)
+        }
+    }
+}
+
+// Keep player access and implicit audio session activation off the main actor.
+private actor AudioPlayback {
+    private var player: AVAudioPlayer?
+
+    func play(_ url: URL) {
         do {
             player = try AVAudioPlayer(contentsOf: url)
             player?.prepareToPlay()

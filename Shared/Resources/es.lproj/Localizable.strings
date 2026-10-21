@@ -1,3 +1,8 @@
+"section.soundType" = "Tipo de sonido";
+"settings.sound" = "Sonido";
+"sound.dora" = "Gong";
+"sound.bell" = "Campana";
+
 "section.timer" = "Temporizador";
 "section.reminders" = "Recordatorios";
 "section.appearance" = "Apariencia";

@@ -12,6 +12,11 @@ import Observation
 final class SettingsStore {
     private(set) var settings: AppSettings
 
+    var soundStyle: TimerSoundStyle {
+        get { settings.soundStyle }
+        set { update { $0.soundStyle = newValue } }
+    }
+
     /// 設定変更をモデル層へ伝えるフック。Viewは Observation で自動追従するので使わない。
     @ObservationIgnored var onChange: ((AppSettings) -> Void)?
 
