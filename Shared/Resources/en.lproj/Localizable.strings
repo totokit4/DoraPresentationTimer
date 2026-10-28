@@ -14,7 +14,8 @@
 "settings.duration" = "Presentation Time";
 "settings.colorMode" = "Color Mode";
 "settings.language" = "Language";
-"settings.iosdcMode" = "iOSDC Mode";
+"section.advanced" = "Advanced Settings";
+"settings.iosdcMode" = "iOSDC LT Mode";
 "settings.penlightColor" = "Penlight Color";
 "timer.externalDisplayConnected" = "External Display Connected";
 "externalDisplay.title" = "External Display";

@@ -14,7 +14,8 @@
 "settings.duration" = "Tiempo de presentación";
 "settings.colorMode" = "Modo de color";
 "settings.language" = "Idioma";
-"settings.iosdcMode" = "Modo iOSDC";
+"section.advanced" = "Ajustes avanzados";
+"settings.iosdcMode" = "Modo iOSDC LT";
 "settings.penlightColor" = "Color del penlight";
 "timer.externalDisplayConnected" = "Pantalla externa conectada";
 "externalDisplay.title" = "Pantalla externa";

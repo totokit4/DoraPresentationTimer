@@ -21,14 +21,10 @@ private enum EditTarget: Identifiable {
 
 struct SettingsView: View {
     @Environment(SettingsStore.self) var settingsStore
-    @AppStorage("is_iosdc_mode_unlocked") private var isIOSDCModeUnlocked = false
     @State private var editTarget: EditTarget?
-    @State private var secretTapCount = 0
-    @State private var isPassphraseDialogPresented = false
-    @State private var passphrase = ""
+    @State private var isAdvancedSettingsExpanded = false
     
     private let soundPlayer = SoundPlayer()
-    private let iOSDCModePassphrase = "iwillfeedback"
 
     private var colorModeBinding: Binding<AppColorMode> {
         Binding(
@@ -125,19 +121,18 @@ struct SettingsView: View {
                 }
             }
 
-            secretTapArea
+            Section {
+                DisclosureGroup("section.advanced", isExpanded: $isAdvancedSettingsExpanded) {
+                    Toggle("settings.iosdcMode", isOn: iOSDCModeBinding)
+                    Picker("settings.penlightColor", selection: penlightColorBinding) {
+                        ForEach(PenlightColor.allCases) { color in
+                            Text(color.displayName).tag(color)
+                        }
+                    }
+                }
+            }
         }
         .navigationTitle("settings.title")
-        .alert("secret.passphrase.title", isPresented: $isPassphraseDialogPresented) {
-            TextField("secret.passphrase.placeholder", text: $passphrase)
-            Button("button.cancel", role: .cancel) {
-                passphrase = ""
-            }
-            Button("button.ok") {
-                unlockIOSDCModeIfNeeded()
-                passphrase = ""
-            }
-        }
         .sheet(item: $editTarget) { target in
             switch target {
             case .duration:
@@ -211,48 +206,6 @@ struct SettingsView: View {
         )
     }
 
-    private var secretTapArea: some View {
-        Section {
-            if isIOSDCModeUnlocked {
-                Toggle("settings.iosdcMode", isOn: iOSDCModeBinding)
-                Picker("settings.penlightColor", selection: penlightColorBinding) {
-                    ForEach(PenlightColor.allCases) { color in
-                        Text(color.displayName).tag(color)
-                    }
-                }
-            } else {
-                Color.clear
-                    .frame(height: 72)
-                    .contentShape(Rectangle())
-                    .onTapGesture {
-                        handleSecretTap()
-                    }
-                    .accessibilityHidden(true)
-                    .listRowInsets(EdgeInsets())
-                    .listRowBackground(Color.clear)
-                    .listRowSeparator(.hidden)
-            }
-        }
-    }
-
-    private func handleSecretTap() {
-        secretTapCount += 1
-
-        if secretTapCount >= 5 {
-            secretTapCount = 0
-            passphrase = ""
-            isPassphraseDialogPresented = true
-        }
-    }
-
-    private func unlockIOSDCModeIfNeeded() {
-        let normalizedPassphrase = passphrase.trimmingCharacters(in: .whitespacesAndNewlines)
-
-        if normalizedPassphrase.localizedCaseInsensitiveCompare(iOSDCModePassphrase) == .orderedSame {
-            isIOSDCModeUnlocked = true
-        }
-    }
-    
     private func oneLineRow(
         left: LocalizedStringKey,
         middle: String,

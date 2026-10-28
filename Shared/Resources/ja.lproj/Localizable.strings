@@ -14,7 +14,8 @@
 "settings.duration" = "発表時間";
 "settings.colorMode" = "カラーモード";
 "settings.language" = "言語";
-"settings.iosdcMode" = "iOSDCモード";
+"section.advanced" = "高度な設定";
+"settings.iosdcMode" = "iOSDC LTモード";
 "settings.penlightColor" = "ペンライトカラー";
 "timer.externalDisplayConnected" = "外部ディスプレイ 接続中";
 "externalDisplay.title" = "外部ディスプレイ";
