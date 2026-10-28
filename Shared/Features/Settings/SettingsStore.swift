@@ -26,6 +26,9 @@ final class SettingsStore {
     init(defaults: UserDefaults = .standard) {
         self.defaults = defaults
         self.settings = Self.load(from: defaults, key: key) ?? .default
+        if settings.isIOSDCModeEnabled {
+            settings.soundStyle = .dora
+        }
     }
     
     func update(_ transform: (inout AppSettings) -> Void) {
@@ -41,6 +44,10 @@ final class SettingsStore {
     /// - durationSeconds と reminders の関係を整合させる
     private func normalized(_ s: AppSettings) -> AppSettings {
         var s = s
+
+        if s.isIOSDCModeEnabled {
+            s.soundStyle = .dora
+        }
 
         // 終了(dora)は常に0固定
         s.reminders = s.reminders.map { r in

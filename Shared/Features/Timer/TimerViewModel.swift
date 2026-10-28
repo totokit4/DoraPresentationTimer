@@ -187,7 +187,8 @@ final class TimerViewModel {
                 announceReminder(for: sound)
                 
             case .finished:
-                soundPlayer.play(sessionSoundStyle.sound(for: .dora))
+                let soundStyle: TimerSoundStyle = settingsStore.settings.isIOSDCModeEnabled ? .dora : sessionSoundStyle
+                soundPlayer.play(soundStyle.sound(for: .dora))
                 announce(settingsStore.settings.language.localizedString(forKey: "accessibility.timer.finished"))
                 stopTimer()
                 // 初期値に戻す
