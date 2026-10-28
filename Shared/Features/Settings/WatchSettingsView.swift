@@ -65,6 +65,7 @@ struct WatchSettingsView: View {
                     Text("sound.dora").tag(TimerSoundStyle.dora)
                     Text("sound.bell").tag(TimerSoundStyle.bell)
                 }
+                .disabled(settingsStore.settings.isIOSDCModeEnabled)
             }
 
             Section("section.language") {

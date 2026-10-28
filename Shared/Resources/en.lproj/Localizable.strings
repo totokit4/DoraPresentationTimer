@@ -14,8 +14,10 @@
 "settings.duration" = "Presentation Time";
 "settings.colorMode" = "Color Mode";
 "settings.language" = "Language";
-"section.advanced" = "Advanced Settings";
+"section.other" = "Other";
+"settings.mode" = "Mode Settings";
 "settings.iosdcMode" = "iOSDC LT Mode";
+"settings.iosdcMode.description" = "For lightning talks, silences intermediate reminders and displays messages prompting you to wave a penlight at 1 minute and 30 seconds remaining. The end sound still plays. Penlight Color sets the message text color.";
 "settings.penlightColor" = "Penlight Color";
 "timer.externalDisplayConnected" = "External Display Connected";
 "externalDisplay.title" = "External Display";

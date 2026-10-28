@@ -22,7 +22,7 @@ private enum EditTarget: Identifiable {
 struct SettingsView: View {
     @Environment(SettingsStore.self) var settingsStore
     @State private var editTarget: EditTarget?
-    @State private var isAdvancedSettingsExpanded = false
+    @State private var isModeSettingsExpanded = false
     
     private let soundPlayer = SoundPlayer()
 
@@ -102,6 +102,7 @@ struct SettingsView: View {
                     Text("sound.dora").tag(TimerSoundStyle.dora)
                     Text("sound.bell").tag(TimerSoundStyle.bell)
                 }
+                .disabled(settingsStore.settings.isIOSDCModeEnabled)
             }
 
             Section("section.appearance") {
@@ -121,12 +122,18 @@ struct SettingsView: View {
                 }
             }
 
-            Section {
-                DisclosureGroup("section.advanced", isExpanded: $isAdvancedSettingsExpanded) {
+            Section("section.other") {
+                DisclosureGroup("settings.mode", isExpanded: $isModeSettingsExpanded) {
                     Toggle("settings.iosdcMode", isOn: iOSDCModeBinding)
-                    Picker("settings.penlightColor", selection: penlightColorBinding) {
-                        ForEach(PenlightColor.allCases) { color in
-                            Text(color.displayName).tag(color)
+                    Label("settings.iosdcMode.description", systemImage: "info.circle")
+                        .font(.footnote)
+                        .foregroundStyle(.secondary)
+
+                    if settingsStore.settings.isIOSDCModeEnabled {
+                        Picker("settings.penlightColor", selection: penlightColorBinding) {
+                            ForEach(PenlightColor.allCases) { color in
+                                Text(color.displayName).tag(color)
+                            }
                         }
                     }
                 }
