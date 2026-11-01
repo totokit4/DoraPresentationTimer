@@ -14,7 +14,10 @@
 "settings.duration" = "Tiempo de presentación";
 "settings.colorMode" = "Modo de color";
 "settings.language" = "Idioma";
-"settings.iosdcMode" = "Modo iOSDC";
+"section.other" = "Otros";
+"settings.mode" = "Ajustes del modo";
+"settings.iosdcMode" = "Modo iOSDC LT";
+"settings.iosdcMode.description" = "Para charlas relámpago, silencia los recordatorios intermedios y muestra mensajes para agitar un penlight cuando quedan 1 minuto y 30 segundos. El sonido de fin sigue activo. Color del penlight permite elegir el color del texto de los mensajes.";
 "settings.penlightColor" = "Color del penlight";
 "timer.externalDisplayConnected" = "Pantalla externa conectada";
 "externalDisplay.title" = "Pantalla externa";

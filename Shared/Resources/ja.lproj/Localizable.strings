@@ -14,7 +14,10 @@
 "settings.duration" = "発表時間";
 "settings.colorMode" = "カラーモード";
 "settings.language" = "言語";
-"settings.iosdcMode" = "iOSDCモード";
+"section.other" = "その他";
+"settings.mode" = "モードの設定";
+"settings.iosdcMode" = "iOSDC LTモード";
+"settings.iosdcMode.description" = "LT向けに、途中のリマインダー音を鳴らさず、残り1分・30秒でペンライトを振るよう促すメッセージを表示します。終了音は鳴ります。ペンライトカラーでメッセージの文字色を選べます。";
 "settings.penlightColor" = "ペンライトカラー";
 "timer.externalDisplayConnected" = "外部ディスプレイ 接続中";
 "externalDisplay.title" = "外部ディスプレイ";

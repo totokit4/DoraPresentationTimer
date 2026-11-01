@@ -14,7 +14,10 @@
 "settings.duration" = "演示时长";
 "settings.colorMode" = "颜色模式";
 "settings.language" = "语言";
-"settings.iosdcMode" = "iOSDC 模式";
+"section.other" = "其他";
+"settings.mode" = "模式设置";
+"settings.iosdcMode" = "iOSDC LT 模式";
+"settings.iosdcMode.description" = "适用于闪电演讲：关闭中途提醒音，并在剩余1分钟和30秒时显示提示挥动荧光棒的消息。结束提示音仍会播放。荧光棒颜色设置用于选择消息的文字颜色。";
 "settings.penlightColor" = "荧光棒颜色";
 "timer.externalDisplayConnected" = "已连接外接显示器";
 "externalDisplay.title" = "外接显示器";
